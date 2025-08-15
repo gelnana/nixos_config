@@ -5,6 +5,9 @@
   ...
 }:
 {
-  stylix.enable = true;
-  stylix.autoEnable = true;
+  stylix= {
+    enable = true;
+    autoEnable = true;
+    image = ./wallpaper.png;
+  };
 }

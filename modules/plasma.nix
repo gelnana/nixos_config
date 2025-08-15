@@ -4,17 +4,7 @@
   inputs,
   ...
 }:
-
-let
-  myPlasmaTheme = pkgs.stdenv.mkDerivation {
-    name = "klassy";
-    src = ../../.themes/klassy;
-    installPhase = ''
-      mkdir -p $out/share/plasma/desktoptheme
-      cp -r * $out/share/plasma/desktoptheme/
-    '';
-  };
-in {
+{
   catppuccin = {
     enable = true;
     flavor = "mocha";
@@ -27,11 +17,6 @@ in {
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
-
-  programs.plasma-manager.enable = true;
-  programs.plasma-manager.theme = myPlasmaTheme;  # Set your desired theme
-  programs.plasma-manager.iconTheme = "Breeze";  # Set your icon theme
-  programs.plasma-manager.cursorTheme = "Breeze";  # Set your cursor theme
 
   environment.systemPackages =
       (with pkgs; [
