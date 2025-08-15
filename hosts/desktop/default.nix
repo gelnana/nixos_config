@@ -9,6 +9,7 @@
   [
     ../../modules/system.nix
     ../../modules/plasma.nix
+    ../../modules/stylix.nix
     ../../modules/mounts.nix
 
     ./hardware-configuration.nix

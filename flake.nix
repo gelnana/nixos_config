@@ -44,18 +44,21 @@
 
   };
 
-  outputs = inputs @ {
+  outputs = {
     self,
     nixpkgs,
+    stylix,
     home-manager,
+    apple-fonts,
+    plasma-manager,
     ...
-  }: {
+  }@inputs: {
     nixosConfigurations = {
       default = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs;};
         modules = [
           ./configuration.nix
-          inputs.stylix.nixosModules.stylix
+          stylix.nixosModules.stylix
         ];
       };
       desktop = let
@@ -69,9 +72,9 @@
           modules = [
             ./hosts/desktop
             ./users/${username}/nixos.nix
-            inputs.stylix.nixosModules.stylix
+            stylix.nixosModules.stylix
             inputs.catppuccin.nixosModules.catppuccin
-            inputs.home-manager.nixosModules.home-manager
+            home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -79,11 +82,9 @@
               home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
               home-manager.sharedModules = [
-                  inputs.plasma-manager.homeManagerModules.plasma-manager
-              ];
+                plasma-manager.homeManagerModules.plasma-manager
+                ];
               home-manager.backupFileExtension = "backup";
-
-
             }
           ];
         };
@@ -98,9 +99,9 @@
           modules = [
             ./hosts/laptop
             ./users/${username}/nixos.nix
-            inputs.stylix.nixosModules.stylix
+            stylix.nixosModules.stylix
             inputs.catppuccin.nixosModules.catppuccin
-            inputs.home-manager.nixosModules.home-manager
+            home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
