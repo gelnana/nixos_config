@@ -11,11 +11,36 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+
+    kwin-effects-forceblur = {
+      url = "github:taj-ny/kwin-effects-forceblur";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    plasma-manager = {
+      url = "github:pjones/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
+    apple-fonts = {
+      url = "github:Lyndeno/apple-fonts.nix";
+      # inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    sops-nix.url = "github:Mic92/sops-nix";
+
+    # Gaming
+
+    nix-gaming.url = "github:fufexan/nix-gaming";
+
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
 
@@ -53,7 +78,9 @@
 
               home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
-
+              home-manager.sharedModules = [
+                  inputs.plasma-manager.homeManagerModules.plasma-manager
+              ];
               home-manager.backupFileExtension = "backup";
 
 

@@ -6,6 +6,7 @@
 
     ../../home/programs
     ../../home/shell
+    ../../home/styling/stylix.nix
   ];
     # Enable programs
   programs.git = {
