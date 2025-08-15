@@ -5,6 +5,5 @@
     ./git.nix
     ./media.nix
     ./xdg.nix
-    ./encrypt.nix
   ];
 }

@@ -15,6 +15,8 @@
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix.url = "github:Mic92/sops-nix";
+
   };
 
   outputs = inputs @ {
@@ -53,6 +55,8 @@
               home-manager.users.${username} = import ./users/${username}/home.nix;
 
               home-manager.backupFileExtension = "backup";
+
+
             }
           ];
         };
