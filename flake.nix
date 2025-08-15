@@ -78,7 +78,7 @@
         };
       laptop = let
         username = "gelnana";
-        specialArgs = {inherit username;};
+        specialArgs = {inherit username inputs;};
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
