@@ -18,9 +18,6 @@
     kubectl
 
     nodejs
-    nodePackages.npm
-    nodePackages.pnpm
-    yarn
 
     # games
     xivlauncher

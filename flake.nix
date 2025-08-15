@@ -11,15 +11,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-
     kwin-effects-forceblur = {
       url = "github:taj-ny/kwin-effects-forceblur";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-    plasma-manager = {
-      url = "github:pjones/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "home-manager";
     };
 
     apple-fonts = {
@@ -30,12 +24,9 @@
 
     stylix = {
       url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Gaming
-
-    nix-gaming.url = "github:fufexan/nix-gaming";
 
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
@@ -50,7 +41,6 @@
     stylix,
     home-manager,
     apple-fonts,
-    plasma-manager,
     ...
   }@inputs: {
     nixosConfigurations = {
@@ -63,7 +53,7 @@
       };
       desktop = let
         username = "gelnana";
-        specialArgs = {inherit username;};
+        specialArgs = {inherit username inputs;};
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
@@ -81,9 +71,7 @@
 
               home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
-              home-manager.sharedModules = [
-                plasma-manager.homeManagerModules.plasma-manager
-                ];
+
               home-manager.backupFileExtension = "backup";
             }
           ];

@@ -58,12 +58,6 @@
       remotePlay.openFirewall = true;
       dedicatedServer.openFirewall = true;
       };
-    nh = {
-    enable = true;
-    clean.enable = true;
-    clean.extraArgs = "--keep-since 4d --keep 3";
-    flake = "/etc/nixos";
-    };
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
