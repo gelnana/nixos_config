@@ -23,7 +23,8 @@
     xivlauncher
     prismlauncher
 
-    # browser/web
-    firefox
+    # communications
+    discord
+
     ];
 }
