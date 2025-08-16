@@ -25,6 +25,7 @@
 # You can pretty-print and page this file using:
 # config nu --doc | nu-highlight | less -R
 
+fastfetch
 
 # $env.config
 # -----------
@@ -879,14 +880,8 @@ $env.PROMPT_MULTILINE_INDICATOR = "::: "
 # command taking up at least 2 lines, the transient prompt can condense it to a
 # shorter version. The following example shows a rocket emoji before each
 # previously-entered command:
-$env.TRANSIENT_PROMPT_COMMAND = "🚀 "
-$env.TRANSIENT_PROMPT_INDICATOR = ""
-$env.TRANSIENT_PROMPT_INDICATOR_VI_INSERT = ""
-$env.TRANSIENT_PROMPT_INDICATOR_VI_NORMAL = ""
 # Tip: Removing the transient multiline indicator and right-prompt can simplify
 #      copying from the terminal
-$env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = ""
-$env.TRANSIENT_PROMPT_COMMAND_RIGHT = ""
 
 # ENV_CONVERSIONS
 # ---------------

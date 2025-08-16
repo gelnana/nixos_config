@@ -4,6 +4,7 @@
   programs= {
     kitty = {
       enable = true;
+      enableGitIntegration = true;
 
       settings = {
         window_padding_width = 5;
