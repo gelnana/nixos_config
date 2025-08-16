@@ -22,7 +22,7 @@ in
     logo = {
         type = "kitty-icat";
         source = porygonImage;
-        padding = { top = 0; left = 15; right = 15; bottom = 0;};
+        padding = { top = 0; left = 0; right = 0; bottom = 0;};
       };
       display = {
         separator = " | ";
@@ -35,8 +35,6 @@ in
         { type = "cpu"; key = "│ ├ "; keyColor = "red"; }
         { type = "gpu"; key = "│ ├󰒆 "; keyColor = "red"; }
         { type = "disk"; key = "│ ├ "; folders = "/"; format = "{size-used} / {size-total} ({size-percentage})"; keyColor = "red"; }
-        { type = "swap"; key = "│ ├SW "; keyColor = "red"; }
-        { type = "display"; key = "│ ├ "; keyColor = "red"; format = "MONITOR ({name})"; }
         { type = "memory"; key = "└ └󰍛 "; keyColor = "red"; }
         { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
 
@@ -48,10 +46,8 @@ in
         { type = "localip"; key = "│ ├IP "; keyColor = "green"; }
         { type = "shell"; key = "└ └ "; keyColor = "green"; }
         { type = "de"; key = " DE "; keyColor = "blue"; }
-        { type = "lm"; key = "│ ├ "; keyColor = "blue"; }
         { type = "wm"; key = "│ ├ "; keyColor = "blue"; }
         { type = "terminal"; key = "│ ├ "; keyColor = "blue"; }
-        { type = "terminalfont"; key = "└ └ "; keyColor = "blue"; }
         { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
 
         # ───────── Uptime ─────────
