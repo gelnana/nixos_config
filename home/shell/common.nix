@@ -22,7 +22,7 @@ in
     logo = {
         type = "kitty-icat";
         source = porygonImage;
-        padding = { top = 0; left = 25; right = 25; bottom = 0;};
+        padding = { top = 0; left = 15; right = 15; bottom = 0;};
       };
       display = {
         separator = " | ";
