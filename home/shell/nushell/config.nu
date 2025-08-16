@@ -25,8 +25,6 @@
 # You can pretty-print and page this file using:
 # config nu --doc | nu-highlight | less -R
 
-open `starship init nu | save` | each { $it }
-neofetch
 
 # $env.config
 # -----------
