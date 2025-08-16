@@ -21,12 +21,10 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-
     stylix = {
       url = "github:nix-community/stylix";
       # inputs.nixpkgs.follows = "nixpkgs";
     };
-
 
     zen-browser = {
       url = "github:youwen5/zen-browser-flake";
@@ -40,6 +38,8 @@
 
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    selkie.url = "github:gelnana/Selkie";
   };
 
   outputs = {
