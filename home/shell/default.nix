@@ -7,7 +7,7 @@ in {
     ./nushell
     ./common.nix
     ./starship.nix
-    #./terminals.nix
+    ./terminals.nix
   ];
 
   # add environment variables
@@ -20,7 +20,7 @@ in {
     # set default applications
     EDITOR = "vim";
     BROWSER = "firefox";
-    TERMINAL = "konsole";
+    TERMINAL = "kitty";
 
     # enable scrolling in git diff
     DELTA_PAGER = "less -R";

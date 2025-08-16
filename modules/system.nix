@@ -4,11 +4,14 @@
   username,
   ...
 }: {
-
+  environment.shells = [
+    pkgs.nushell
+  ];
   users.users.${username} = {
     isNormalUser = true;
     description = username;
     extraGroups = ["networkmanager" "wheel"];
+    shell = pkgs.nushell;
   };
 
   # Set your time zone.

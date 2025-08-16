@@ -25,6 +25,9 @@
 # You can pretty-print and page this file using:
 # config nu --doc | nu-highlight | less -R
 
+open `starship init nu | save` | each { $it }
+neofetch
+
 # $env.config
 # -----------
 # The $env.config environment variable is a record containing most Nushell
@@ -76,7 +79,7 @@ $env.config.history.isolation = true
 # ----------------------
 
 # show_banner (bool): Enable or disable the welcome banner at startup
-$env.config.show_banner = true
+$env.config.show_banner = false
 
 # rm.always_trash (bool):
 # true: rm behaves as if the --trash/-t option is specified
@@ -94,7 +97,7 @@ $env.config.recursion_limit = 50
 # ---------------------------
 
 # edit_mode (string) "vi" or "emacs" sets the editing behavior of Reedline
-$env.config.edit_mode = "emacs"
+$env.config.edit_mode = "vi"
 
 # Command that will be used to edit the current line buffer with Ctrl+O.
 # If unset, uses $env.VISUAL and then $env.EDITOR
@@ -103,7 +106,7 @@ $env.config.edit_mode = "emacs"
 #      the Alternatives system or equivalent
 $env.config.buffer_editor = "editor"
 # To set arguments for the editor, a list can be used:
-$env.config.buffer_editor = ["emacsclient", "-s", "light", "-t"]
+#$env.config.buffer_editor = ["emacsclient", "-s", "light", "-t"]
 
 # cursor_shape_* (string)
 # -----------------------
@@ -121,7 +124,7 @@ $env.config.cursor_shape.vi_normal = "underscore"  # Cursor shape in normal vi m
 # Apply to the Nushell completion system
 
 # algorithm (string): "prefix", "substring" or "fuzzy"
-$env.config.completions.algorithm = "prefix"
+$env.config.completions.algorithm = "fuzzy"
 
 # sort (string): One of "smart" or "alphabetical"
 # In "smart" mode sort order is based on the "algorithm" setting.
