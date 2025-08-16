@@ -85,7 +85,7 @@
     curl
     mpv
     git
-    neofetch
+    fastfetch
   ];
 
 

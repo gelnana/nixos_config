@@ -587,9 +587,9 @@ $env.config.color_config = (dark-theme)
 # foreground, background, and cursor colors are not handled by Nushell, but can be used by
 # custom-commands such as `theme` from the nu_scripts repository. That `theme` command can be
 # used to set the terminal foreground, background, and cursor colors.
-$env.config.color_config.foreground
-$env.config.color_config.background
-$env.config.color_config.cursor
+#$env.config.color_config.foreground
+#$env.config.color_config.background
+#$env.config.color_config.cursor
 
 # -------------------------------------------------------------------------------------------------
 # shape_: Applies syntax highlighting based on the "shape" (inferred or declared type) of an
@@ -764,11 +764,11 @@ $env.config.color_config.int = {||
 # Additional type values (without examples):
 $env.config.color_config.string      # String
 $env.config.color_config.float       # Float value
-$env.config.color_config.glob        # Glob value (must be declared)
+#$env.config.color_config.glob        # Glob value (must be declared)
 $env.config.color_config.binary      # Binary value
-$env.config.color_config.custom      # Custom value (often from a plugin)
+#$env.config.color_config.custom      # Custom value (often from a plugin)
 $env.config.color_config.nothing     # Not used, since a null is not displayed
-$env.config.color_config.date        # datetime value
+#$env.config.color_config.date        # datetime value
 $env.config.color_config.filesize    # filesize value
 $env.config.color_config.list        # Not currently used. Lists are displayed using their
                                      # members' styles
@@ -777,21 +777,21 @@ $env.config.color_config.record      # Not currently used. Records are displayed
 $env.config.color_config.duration    # Duration type
 $env.config.color_config.range       # Range value
 $env.config.color_config.cell-path   # Cell-path value
-$env.config.color_config.closure     # Not currently used
-$env.config.color_config.block       # Not currently used
+#$env.config.color_config.closure     # Not currently used
+#$env.config.color_config.block       # Not currently used
 
 # Additional UI elements
 # hints: The (usually dimmed) style in which completion hints are displayed
-$env.config.color_config.hints
+#$env.config.color_config.hints
 
 # search_result: The style applied to `find` search results
-$env.config.color_config.search_result
+#$env.config.color_config.search_result
 
 # header: The column names in a table header
-$env.config.color_config.header
+#$env.config.color_config.header
 
 # separator: Used for table/list/record borders
-$env.config.color_config.separator
+#$env.config.color_config.separator
 
 # row_index: The `#` or `index` column of a table or list
 $env.config.color_config.row_index
@@ -846,9 +846,9 @@ $env.config.explore = {
 # --------------
 # Defines the primary prompt. Note that the PROMPT_INDICATOR (below) is appended to this value.
 # Simple example - Static string:
-$env.PROMPT_COMMAND = "Nushell"
+#$env.PROMPT_COMMAND = "Nushell"
 # Simple example - Dynamic closure displaying the path:
-$env.PROMPT_COMMAND = {|| pwd}
+$env.PROMPT_COMMAND = {|| starship prompt}
 
 # PROMPT_COMMAND_RIGHT
 # --------------------
@@ -967,7 +967,7 @@ $env.PATH = [ "~/.local/bin" ] ++ $env.PATH
 # a convenience method for prepending to the path:
 use std/util "path add"
 path add "~/.local/bin"
-path add ($env.CARGO_HOME | path join "bin")
+#path add ($env.CARGO_HOME | path join "bin")
 
 # You can remove duplicate directories from the path using:
 $env.PATH = ($env.PATH | uniq)
