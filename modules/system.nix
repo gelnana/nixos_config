@@ -89,7 +89,7 @@
     overrideFolders = true;
     openDefaultPorts = true;
     settings = {
-      devices = 
+      devices = { 
         "desktop" = { id = "ANPIQQR-UEBYECU-2ZM33TI-LBOGQXV-IVAP5VR-CGNRAH2-BCE6TU3-UMQQDAX"; };
         "laptop" = { id = "CRWBDUU-V6ZIOWN-TBP6RPJ-UEA3ZYU-SP53UN5-MLNFT7J-KPSDODH-YQHCZQR"; };
     };
@@ -107,6 +107,7 @@
         user = "${username}";
         password = "j4bb3rw0cky";
       }
+    };
   };
 
   environment.systemPackages = with pkgs; [
