@@ -106,7 +106,7 @@
       gui = {
         user = "${username}";
         password = "j4bb3rw0cky";
-      }
+      };
     };
   };
 
