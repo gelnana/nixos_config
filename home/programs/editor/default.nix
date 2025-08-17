@@ -84,7 +84,6 @@ in {
             mini-nvim
             nvim-lspconfig
             vim-startuptime
-            neo-tree-nvim
             blink-cmp
             nvim-treesitter.withAllGrammars
             lualine-nvim
@@ -93,11 +92,9 @@ in {
             which-key-nvim
             nvim-lint
             conform-nvim
-            mason
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
-            trouble
           ];
         };
 
@@ -129,14 +126,6 @@ in {
           #   '' --set CATTESTVAR2 "It worked again!"''
           # ];
         };
-        extraConfigLua = ''
-              vim.api.nvim_create_autocmd("ColorScheme", {
-                callback = function()
-                  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-                  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-                end
-              })
-            '';
       });
 
       # see :help nixCats.flake.outputs.packageDefinitions
