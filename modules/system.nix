@@ -85,6 +85,7 @@
     group = "maingroup";
     user  = "${username}";
     dataDir = "/home/${username}/Documents";
+    configDir = "/home/${username}/.config/syncthing";
     overrideDevices = true;
     overrideFolders = true;
     openDefaultPorts = true;

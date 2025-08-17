@@ -28,7 +28,7 @@
     mailspring
 
     # creative tools
-    bitwig
+    bitwig-studio
     yabridge
     krita
     gimp
