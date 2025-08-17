@@ -84,7 +84,7 @@ in {
             mini-nvim
             nvim-lspconfig
             vim-startuptime
-            neo-tree
+            neo-tree-nvim
             blink-cmp
             nvim-treesitter.withAllGrammars
             lualine-nvim
