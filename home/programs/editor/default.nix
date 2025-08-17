@@ -84,6 +84,7 @@ in {
             mini-nvim
             nvim-lspconfig
             vim-startuptime
+            neo-tree
             blink-cmp
             nvim-treesitter.withAllGrammars
             lualine-nvim
@@ -92,9 +93,11 @@ in {
             which-key-nvim
             nvim-lint
             conform-nvim
+            mason
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
+            trouble
           ];
         };
 
