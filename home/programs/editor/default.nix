@@ -18,7 +18,7 @@ in {
       ];
       # see the packageDefinitions below.
       # This says which of those to install.
-      packageNames = [ "Selkie" ];
+      packageNames = [ "selkie" ];
 
       luaPath = ./.;
 
@@ -132,7 +132,7 @@ in {
       packageDefinitions.replace = {
         # These are the names of your packages
         # you can include as many as you wish.
-        Selkie = {pkgs, name, ... }: {
+        selkie = {pkgs, name, ... }: {
           # they contain a settings set defined above
           # see :help nixCats.flake.outputs.settings
           settings = {

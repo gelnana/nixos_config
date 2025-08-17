@@ -82,16 +82,16 @@
 
   services.syncthing = {
     enable = true;
-    group = "maingroup";
+    group = "users";
     user  = "${username}";
     dataDir = "/home/${username}/Documents";
     configDir = "/home/${username}/.config/syncthing";
-    overrideDevices = true;
-    overrideFolders = true;
+    overrideDevices = false;
+    overrideFolders = false;
     openDefaultPorts = true;
     settings = {
       devices = { 
-        "desktop" = { id = "ANPIQQR-UEBYECU-2ZM33TI-LBOGQXV-IVAP5VR-CGNRAH2-BCE6TU3-UMQQDAX"; };
+        "desktop" = { id = "GMVTI4B-DZRE3OZ-DSQS7MI-MAKOQIB-LO37DD7-VQXCZMM-OFVR6NB-6VXY3AH"; };
         "laptop" = { id = "CRWBDUU-V6ZIOWN-TBP6RPJ-UEA3ZYU-SP53UN5-MLNFT7J-KPSDODH-YQHCZQR"; };
     };
       folders = {
