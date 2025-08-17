@@ -40,7 +40,7 @@ in
 
         # ───────── Software ─────────
         { type = "custom"; format = "┌─────────────Software─────────────┐"; outputColor = "cyan"; }
-        { type = "os"; key = "􀣺 OS "; keyColor = "green"; }
+        { type = "os"; key = "󰜗 OS "; keyColor = "green"; }
         { type = "kernel"; key = "│ ├ "; keyColor = "green"; }
         { type = "packages"; key = "│ ├󰏖 "; keyColor = "green"; }
         { type = "localip"; key = "│ ├IP "; keyColor = "green"; }
