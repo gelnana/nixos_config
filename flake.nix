@@ -39,7 +39,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    Selkie.url = "github:gelnana/Selkie";
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
   };
 
   outputs = {

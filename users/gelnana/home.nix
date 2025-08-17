@@ -12,6 +12,7 @@
     userName = "gelnana";
     userEmail = "chloe@semios.is";
   };
+  stylix.targets.neovim.enable = true;
 
 
 }

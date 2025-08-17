@@ -18,7 +18,7 @@ in {
       ];
       # see the packageDefinitions below.
       # This says which of those to install.
-      packageNames = [ "myHomeModuleNvim" ];
+      packageNames = [ "Selkie" ];
 
       luaPath = ./.;
 
@@ -66,7 +66,7 @@ in {
             lze
             lzextras
             snacks-nvim
-            onedark-nvim
+            catppuccin-nvim
             vim-sleuth
           ];
         };
@@ -126,13 +126,21 @@ in {
           #   '' --set CATTESTVAR2 "It worked again!"''
           # ];
         };
+        extraConfigLua = ''
+              vim.api.nvim_create_autocmd("ColorScheme", {
+                callback = function()
+                  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+                  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+                end
+              })
+            '';
       });
 
       # see :help nixCats.flake.outputs.packageDefinitions
       packageDefinitions.replace = {
         # These are the names of your packages
         # you can include as many as you wish.
-        myHomeModuleNvim = {pkgs, name, ... }: {
+        Selkie = {pkgs, name, ... }: {
           # they contain a settings set defined above
           # see :help nixCats.flake.outputs.settings
           settings = {
@@ -159,6 +167,12 @@ in {
           # anything else to pass and grab in lua with `nixCats.extra`
           extra = {
             nixdExtras.nixpkgs = ''import ${pkgs.path} {}'';
+
+            colorscheme = {
+              translucent = true;
+            };
+
+
           };
         };
       };
