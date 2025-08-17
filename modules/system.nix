@@ -90,12 +90,10 @@
     overrideFolders = false;
     openDefaultPorts = true;
 
-    cert = "/home/${username}/.config/syncthing/cert.pem";
-    key = "/home/${username}/.config/syncthing/key.pem";
     settings = {
-      devices = { 
+      devices = {
         "desktop" = { id = "GMVTI4B-DZRE3OZ-DSQS7MI-MAKOQIB-LO37DD7-VQXCZMM-OFVR6NB-6VXY3AH"; };
-        "laptop" = { id = "CRWBDUU-V6ZIOWN-TBP6RPJ-UEA3ZYU-SP53UN5-MLNFT7J-KPSDODH-YQHCZQR"; };
+        "laptop" = { id = "4MXB6CU-FRYORZH-FLGKYOB-NNSINZP-Q2EZ5VC-QIEMVGM-GNPNIRV-LFRQJQH"; };
     };
       folders = {
         "Documents" = {
