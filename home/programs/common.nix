@@ -25,6 +25,18 @@
 
     # communications
     discord
+    mailspring
+
+    # creative tools
+    bitwig
+    yabridge
+    krita
+    gimp
+    inkscape
+    libreoffice-fresh
+
+    # multimedia
+    clementine
 
     ];
 }
