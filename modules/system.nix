@@ -89,6 +89,9 @@
     overrideDevices = false;
     overrideFolders = false;
     openDefaultPorts = true;
+
+    cert = "/home/${username}/.config/syncthing/cert.pem";
+    key = "/home/${username}/.config/syncthing/key.pem";
     settings = {
       devices = { 
         "desktop" = { id = "GMVTI4B-DZRE3OZ-DSQS7MI-MAKOQIB-LO37DD7-VQXCZMM-OFVR6NB-6VXY3AH"; };
