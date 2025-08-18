@@ -15,13 +15,28 @@
     pulsemixer
     # images
     imv
+    # video
+    mpv
+    yt-dlp
+    aria2
   ];
 
   programs = {
     mpv = {
       enable = true;
-      defaultProfiles = ["gpu-hq"];
-      scripts = [pkgs.mpvScripts.mpris];
+      config = {
+        profile = "gpu-hq";
+        hwdec = "auto";
+        vo = "gpu";
+        ytdl = "yes";
+        ytdl-format = "bestvideo+bestaudio/best";
+      };
+      scripts = with pkgs.mpvScripts; [
+        mpris
+        quality-menu
+        uosc
+        sponsorblock
+      ];
     };
 
     obs-studio.enable = true;
