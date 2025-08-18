@@ -2,8 +2,8 @@
   imports = [
     ./browsers.nix
     ./common.nix
-    ./mpv.nix
     ./git.nix
+    ./mpv.nix
     ./media.nix
     ./xdg.nix
   ];

@@ -37,6 +37,5 @@
 
     # multimedia
     clementine
-
     ];
 }
