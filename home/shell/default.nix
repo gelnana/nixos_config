@@ -18,7 +18,7 @@ in {
     WINEPREFIX = d + "/wine";
 
     # set default applications
-    EDITOR = "Selkie";
+    EDITOR = "selkie";
     BROWSER = "firefox";
     TERMINAL = "kitty";
 

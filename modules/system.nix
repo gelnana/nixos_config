@@ -115,7 +115,6 @@
   environment.systemPackages = with pkgs; [
     wget
     curl
-    mpv
     git
     fastfetch
   ];

@@ -2,7 +2,7 @@
   imports = [
     ./browsers.nix
     ./common.nix
-    ./editor
+    ./mpv.nix
     ./git.nix
     ./media.nix
     ./xdg.nix
