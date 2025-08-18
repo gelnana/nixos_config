@@ -40,6 +40,18 @@
     };
 
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "hyprland";
+    };
   };
 
   outputs = {
@@ -48,6 +60,7 @@
     stylix,
     home-manager,
     apple-fonts,
+    hyprland,
     ...
   }@inputs: {
     nixosConfigurations = {
