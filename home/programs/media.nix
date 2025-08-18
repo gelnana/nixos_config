@@ -16,7 +16,6 @@
     # images
     imv
     # video
-    mpv
     yt-dlp
     aria2
   ];
