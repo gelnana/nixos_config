@@ -16,12 +16,20 @@
     # cloud
     docker-compose
     kubectl
-
     nodejs
 
     # games
     xivlauncher
     prismlauncher
+    parallel-launcher
+    wine
+    bottles
+    heroic
+    umu-launcher
+
+    ## Modding
+    limo
+    nexusmods-app-unfree
 
     # communications
     discord

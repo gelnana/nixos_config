@@ -1,4 +1,12 @@
 {
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     catppuccin.url = "github:catppuccin/nix";
@@ -14,6 +22,10 @@
     kwin-effects-forceblur = {
       url = "github:taj-ny/kwin-effects-forceblur";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+    kwin-effects-kinetic = {
+      url = "github:gurrgur/kwin-effects-kinetic";
+      flake = false;
     };
 
     apple-fonts = {
@@ -52,6 +64,9 @@
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "hyprland";
     };
+
+    nix-gaming.url = "github:fufexan/nix-gaming";
+    umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
   };
 
   outputs = {
