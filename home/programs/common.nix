@@ -36,14 +36,19 @@
     mailspring
 
     # creative tools
-    bitwig-studio
+    ## Music
+    reaper
+    reaper-sws-extension
+    reaper-reapack-extension
     yabridge
+    ## Art
     krita
     gimp
     inkscape
-    libreoffice-fresh
 
     # multimedia
     clementine
+    libreoffice-fresh
+
     ];
 }
