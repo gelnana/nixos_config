@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  porygonImage = "${config.home.homeDirectory}/.nixos/.icons/porygon2.gif";
+  Image = "${config.home.homeDirectory}/.nixos/.icons/porygon2.gif";
 in
 {
 
@@ -21,7 +21,7 @@ in
     settings = {
     logo = {
         type = "kitty-icat";
-        source = porygonImage;
+        source = Image;
         padding = { top = 0; left = 0; right = 0; bottom = 0;};
       };
       display = {
@@ -35,20 +35,20 @@ in
         type = "host";
         key = " PC";
         keyColor = "red";
-        format = "{name}"; # Remove vendor/version if too long
+        format = "{name}";
       }
       {
         type = "cpu";
         key = "│ ├ ";
         keyColor = "red";
-        format = "{name}"; # Remove @ frequency and core count
+        format = "{name}";
         showPeCoreCount = false;
       }
       {
         type = "gpu";
         key = "│ ├󰒆 ";
         keyColor = "red";
-        format = "{name}"; # Remove vendor prefix and memory info
+        format = "{name}";
         hideType = true;
         hideMemory = true;
       }
@@ -56,14 +56,14 @@ in
         type = "disk";
         key = "│ ├ ";
         folders = "/";
-        format = "{size-used}/{size-total}"; # Removed percentage for brevity
+        format = "{size-used}/{size-total}";
         keyColor = "red";
       }
       {
         type = "memory";
-        key = "└ └󰍛 ";
+        key = "│ └󰍛 ";
         keyColor = "red";
-        format = "{used}/{total}"; # Simplified format
+        format = "{used}/{total}";
       }
       { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
 
@@ -73,42 +73,42 @@ in
         type = "os";
         key = "󰜗 OS ";
         keyColor = "green";
-        format = "{pretty-name}"; # Use pretty name instead of full name
+        format = "{pretty-name}";
       }
       {
         type = "kernel";
         key = "│ ├ ";
         keyColor = "green";
-        format = "{release}"; # Just version, no architecture
+        format = "{release}";
       }
       {
         type = "packages";
         key = "│ ├󰏖 ";
         keyColor = "green";
-        format = "{all}"; # Just total count
+        format = "{all}";
       }
       {
         type = "localip";
         key = "│ ├IP";
         keyColor = "green";
-        format = "{ipv4}"; # IPv4 only, shorter
+        format = "{ipv4}";
       }
       {
         type = "shell";
-        key = "└ └ ";
+        key = "│ └ ";
         keyColor = "green";
       }
       {
         type = "de";
         key = " DE ";
         keyColor = "blue";
-        format = "{pretty-name}"; # Shorter DE name
+        format = "{pretty-name}";
       }
       {
         type = "wm";
         key = "│ ├ ";
         keyColor = "blue";
-        format = "{pretty-name}"; # Shorter WM name
+        format = "{pretty-name}";
       }
       {
         type = "terminal";
@@ -123,7 +123,7 @@ in
         type = "uptime";
         key = "  Uptime ";
         keyColor = "magenta";
-        format = "{days}d {hours}h {minutes}m"; # Compact uptime format
+        format = "{days}d {hours}h {minutes}m";
       }
       { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
     ];

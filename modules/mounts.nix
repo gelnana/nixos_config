@@ -8,6 +8,12 @@
     ];
   };
 
+  fileSystems."/mnt/pleiades" = {
+  device = "/dev/disk/by-uuid/bb864d2d-b66c-4f78-91ac-ddabe2fa2350";
+  fsType = "ext4";
+  options = [ "nofail" "noatime" "defaults" ];
+  };
+
   # Binding mounts
   # Pictures
   fileSystems."/home/gelnana/Pictures" = {

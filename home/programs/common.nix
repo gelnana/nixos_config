@@ -24,6 +24,11 @@
     parallel-launcher
     wine
     bottles
+    winetricks
+    protontricks
+    lutris
+    vulkan-loader
+    dxvk
     heroic
     umu-launcher
 

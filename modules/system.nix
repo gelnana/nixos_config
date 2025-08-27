@@ -41,7 +41,7 @@
   nix.gc = {
     automatic = lib.mkDefault true;
     dates = lib.mkDefault "weekly";
-    options = lib.mkDefault "--delete-older-than 7d";
+    options = lib.mkDefault "--delete-older-than 2d";
   };
 
   # Allow unfree packages
@@ -114,6 +114,7 @@
 
   environment.systemPackages = with pkgs; [
     wget
+    unrar
     curl
     git
     fastfetch
