@@ -5,8 +5,6 @@
     ../../home/core.nix
     ../../home/programs
     ../../home/shell
-
-    ../../home/desktop/hypr
   ];
     # Enable programs
   programs.git = {
