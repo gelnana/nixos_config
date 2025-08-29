@@ -8,9 +8,10 @@
   imports =
   [
     ../../modules/system.nix
-    ../../modules/plasma.nix
     ../../modules/stylix.nix
     ../../modules/mounts.nix
+    ../../modules/plasma.nix
+
 
     ./hardware-configuration.nix
   ];

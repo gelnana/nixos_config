@@ -6,7 +6,6 @@
     ../../home/programs
     ../../home/shell
 
-    ../../home/desktop/plasma
     ../../home/desktop/hypr
   ];
     # Enable programs
