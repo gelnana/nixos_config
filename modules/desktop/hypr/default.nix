@@ -3,6 +3,5 @@
 {
   imports = [
     ./hyprland.nix
-    ./hyprland-config.nix
   ];
   }
