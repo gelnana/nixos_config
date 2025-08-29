@@ -10,7 +10,9 @@
     ../../modules/system.nix
     ../../modules/stylix.nix
     ../../modules/mounts.nix
-    ../../modules/plasma.nix
+    ../../modules/desktop/plasma
+    ../../modules/desktop/hypr
+
 
 
     ./hardware-configuration.nix
