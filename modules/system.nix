@@ -118,6 +118,7 @@
     curl
     git
     fastfetch
+    devenv
   ];
 
   nix.settings = {
