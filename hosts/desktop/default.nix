@@ -11,7 +11,6 @@
     ../../modules/stylix.nix
     ../../modules/mounts.nix
     ../../modules/desktop/plasma
-    ../../modules/desktop/hypr
 
 
 

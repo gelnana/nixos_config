@@ -18,42 +18,8 @@
     kubectl
     nodejs
 
-    # games
-    xivlauncher
-    prismlauncher
-    parallel-launcher
-    wine
-    bottles
-    winetricks
-    protontricks
-    lutris
-    vulkan-loader
-    dxvk
-    heroic
-    umu-launcher
-
-    ## Modding
-    limo
-    nexusmods-app-unfree
-
     # communications
     discord
     mailspring
-
-    # creative tools
-    ## Music
-    reaper
-    reaper-sws-extension
-    reaper-reapack-extension
-    yabridge
-    ## Art
-    krita
-    gimp
-    inkscape
-
-    # multimedia
-    clementine
-    libreoffice-fresh
-
     ];
 }
