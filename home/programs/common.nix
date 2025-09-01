@@ -21,5 +21,9 @@
     # communications
     discord
     mailspring
+
+    # download client
+    qbittorrent
+    nicotine-plus
     ];
 }
