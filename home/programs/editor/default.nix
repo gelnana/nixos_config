@@ -68,6 +68,9 @@ in {
             snacks-nvim
             catppuccin-nvim
             vim-sleuth
+            nui-nvim
+            plenary-nvim
+            nvim-web-devicons
           ];
         };
 
@@ -81,11 +84,15 @@ in {
             lazydev-nvim
           ];
           general = with pkgs.vimPlugins; [
+            neo-tree-nvim
             mini-nvim
             nvim-lspconfig
+            nvim-ufo
+            leap-nvim
             vim-startuptime
             blink-cmp
             nvim-treesitter.withAllGrammars
+            bufferline-nvim
             lualine-nvim
             lualine-lsp-progress
             gitsigns-nvim

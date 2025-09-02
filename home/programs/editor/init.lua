@@ -167,9 +167,36 @@ vim.keymap.set('n', "<leader>sq", function() Snacks.picker.qflist() end, { desc 
 vim.keymap.set('n', "<leader>sR", function() Snacks.picker.resume() end, { desc = "Resume" })
 vim.keymap.set('n', "<leader>su", function() Snacks.picker.undo() end, { desc = "Undo History" })
 require('lze').load {
+  { "nui",
+    enabled = nixCats('general') or false,
+    event = "DeferredUIEnter",
+  },
+    {
+      "neo-tree.nvim",
+      enabled = nixCats('general') or false,
+      event = "DeferredUIEnter",
+        keys = {
+          { "<C-e>", "<cmd>Neotree toggle<cr>", desc = "Toggle Neo-tree" },
+        },
+        after = function()
+        require("neo-tree").setup({
+          close_if_last_window = true,
+          popup_border_style = "rounded",
+          float = { enable = true, winblend = 100 },
+          window = { width = 30 },
+          filesystem = {
+            follow_current_file = { enabled = true },
+          },
+        })
 
-
-
+        -- Auto-open Neo-tree on launch
+        vim.api.nvim_create_autocmd("VimEnter", {
+          callback = function()
+          require("neo-tree.command").execute({ reveal = true })
+          end,
+        })
+        end,
+    },
   {
     "blink.cmp",
     enabled = nixCats('general') or false,

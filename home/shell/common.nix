@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  Image = "${config.home.homeDirectory}/.nixos/.icons/porygon2.gif";
+  Image = "${config.home.homeDirectory}/.nixos/.icons/noelle.gif";
 in
 {
 
@@ -22,7 +22,8 @@ in
     logo = {
         type = "kitty-icat";
         source = Image;
-        padding = { top = 0; left = 0; right = 0; bottom = 0;};
+        height = 21;
+        padding = { left = 10; right = 10;};
       };
       display = {
         separator = " | ";
@@ -114,16 +115,6 @@ in
         type = "terminal";
         key = "│ └ ";
         keyColor = "blue";
-      }
-      { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
-
-      # ───────── Uptime ─────────
-      { type = "custom"; format = "┌──────────────Uptime──────────────┐"; outputColor = "cyan"; }
-      {
-        type = "uptime";
-        key = "  Uptime ";
-        keyColor = "magenta";
-        format = "{days}d {hours}h {minutes}m";
       }
       { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
     ];
