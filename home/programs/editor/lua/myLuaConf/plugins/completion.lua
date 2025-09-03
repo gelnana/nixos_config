@@ -21,6 +21,7 @@ return {
     dep_of = { "blink.cmp" },
     after = function (_)
       local luasnip = require 'luasnip'
+      require'luasnip'.add_snippets('supercollider', require'scnvim.utils'.get_snippets())
       require('luasnip.loaders.from_vscode').lazy_load()
       luasnip.config.setup {}
 

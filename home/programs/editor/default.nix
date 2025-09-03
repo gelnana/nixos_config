@@ -56,6 +56,93 @@ in {
             go-tools
             go
           ];
+          rust = with pkgs; [
+            rust-analyzer
+            rustfmt
+            clippy
+            cargo
+            rustc
+            cargo-watch
+            cargo-expand
+            cargo-edit
+          ];
+
+          # Python development
+          python = with pkgs; [
+            pyright
+            black
+            isort
+            mypy
+            ruff
+          ];
+
+          # JavaScript/TypeScript
+          web = with pkgs; [
+            typescript-language-server
+            nodePackages.eslint
+            nodePackages.prettier
+            tailwindcss-language-server
+            vscode-langservers-extracted
+          ];
+
+          # Haskell
+          haskell = with pkgs; [
+            haskell-language-server
+            ormolu
+            hlint
+            ghc
+            cabal-install
+          ];
+
+          # C/C++
+          cpp = with pkgs; [
+            clang-tools
+            cmake-language-server
+            cmake
+            gdb
+          ];
+
+          # Zig
+          zig = with pkgs; [
+            zls
+            zig
+          ];
+
+          # OCaml
+          ocaml = with pkgs; [
+            ocaml-lsp
+            ocamlformat
+            dune_3
+            ocaml
+            opam
+          ];
+
+          # Database tools
+          database = with pkgs; [
+            sqlite
+            postgresql
+            # sqls  # SQL language server
+          ];
+
+          # Documentation and writing
+          writing = with pkgs; [
+            ltex-ls
+            texlab
+            pandoc
+          ];
+
+          # Container/DevOps
+          devops = with pkgs; [
+            docker-compose-language-service
+            dockerfile-language-server-nodejs
+            yaml-language-server
+            ansible-language-server
+            terraform-ls
+            helm-ls
+          ];
+          supercollider = with pkgs; [
+            supercollider
+          ];
         };
 
         # This is for plugins that will load at startup without using packadd:
@@ -83,6 +170,52 @@ in {
           lua = with pkgs.vimPlugins; [
             lazydev-nvim
           ];
+
+          rust = with pkgs.vimPlugins; [
+            rustaceanvim
+            crates-nvim
+          ];
+
+          python = with pkgs.vimPlugins; [
+            nvim-dap-python
+          ];
+
+          web = with pkgs.vimPlugins; [
+            nvim-ts-autotag
+            emmet-vim
+          ];
+
+          haskell = with pkgs.vimPlugins; [
+            haskell-tools-nvim
+          ];
+
+          languages = with pkgs.vimPlugins; [
+            vim-polyglot
+          ];
+
+          # Database
+          database = with pkgs.vimPlugins; [
+            vim-dadbod
+            vim-dadbod-ui
+            vim-dadbod-completion
+          ];
+
+          git = with pkgs.vimPlugins; [
+            fugitive
+            diffview-nvim
+          ];
+
+          # Testing
+          testing = with pkgs.vimPlugins; [
+            neotest
+            neotest-python
+            neotest-go
+            neotest-rust
+          ];
+
+          supercollider = with pkgs.vimPlugins; [
+            scnvim
+          ];
           general = with pkgs.vimPlugins; [
             neo-tree-nvim
             mini-nvim
@@ -102,6 +235,11 @@ in {
             nvim-dap
             nvim-dap-ui
             nvim-dap-virtual-text
+            trouble-nvim
+            todo-comments-nvim
+            nvim-surround
+            comment-nvim
+            indent-blankline-nvim
           ];
         };
 
@@ -115,9 +253,7 @@ in {
         # this section is for environmentVariables that should be available
         # at RUN TIME for plugins. Will be available to path within neovim terminal
         environmentVariables = {
-          # test = {
-          #   CATTESTVAR = "It worked!";
-          # };
+
         };
 
         # categories of the function you would have passed to withPackages
@@ -161,7 +297,20 @@ in {
             general = true;
             lua = true;
             nix = true;
+            rust = true;
+            python = true;
+            web = true;
+            haskell = true;
+            cpp = true;
+            zig = false;
+            ocaml = false;
             go = false;
+            supercollider = true;
+            database = true;
+            writing = true;
+            devops = true;
+            git = true;
+            testing = false;
           };
           # anything else to pass and grab in lua with `nixCats.extra`
           extra = {

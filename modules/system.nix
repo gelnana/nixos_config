@@ -123,7 +123,28 @@
     git
     fastfetch
     devenv
+    wineWowPackages.stagingFull
+    bottles-unwrapped
+    winetricks
+    dxvk
   ];
+
+  hardware.opengl = {
+    enable = true;
+
+    extraPackages = with pkgs; [
+      mesa.drivers
+      vulkan-loader
+      vulkan-tools
+      vulkan-validation-layers
+    ];
+
+    # 32-bit packages for running Wine
+    extraPackages32 = with pkgs.pkgsi686Linux; [
+      mesa.drivers
+      vulkan-loader
+    ];
+  };
 
   nix.settings = {
     substituters = ["https://nix-gaming.cachix.org"];

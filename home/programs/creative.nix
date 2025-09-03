@@ -9,6 +9,7 @@ in
     reaper
     (pkgs.yabridge.override { inherit wine; })
     (pkgs.yabridgectl.override { inherit wine; })
+    supercollider-with-sc3-plugins
 
     # art
     krita

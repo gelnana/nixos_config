@@ -167,6 +167,20 @@ vim.keymap.set('n', "<leader>sq", function() Snacks.picker.qflist() end, { desc 
 vim.keymap.set('n', "<leader>sR", function() Snacks.picker.resume() end, { desc = "Resume" })
 vim.keymap.set('n', "<leader>su", function() Snacks.picker.undo() end, { desc = "Undo History" })
 require('lze').load {
+  {"catppuccin-nvim",
+    enabled = nixCats('general') or false,
+    after = function()
+    require('catppuccin').setup({
+      flavour = "mocha",
+      transparent_background = true,
+      styles = {
+        sidebars = "transparent",
+        floats = "transparent",
+      },
+      auto_integrations = true,
+    })
+    end,
+  },
   { "nui",
     enabled = nixCats('general') or false,
     event = "DeferredUIEnter",
@@ -793,5 +807,299 @@ require('lze').load {
         }
       },
     },
+  },
+  {
+    "scnvim",
+    enabled = nixCats('supercollider') or false,
+    ft = { "supercollider", "sc" },
+    after = function()
+    local scnvim = require('scnvim')
+
+    scnvim.setup({
+      ensure_installed = true,
+      keymaps = {
+        ['<leader>e'] = {
+          map = 'editor.send_line',
+          args = {},
+          options = { desc = 'Send line' }
+        },
+        ['<c-e>'] = {
+          map = 'editor.send_block',
+          args = {},
+          options = { desc = 'Send block' }
+        },
+        ['<CR>'] = {
+          map = 'postwin.toggle',
+          args = {},
+          options = { desc = 'Toggle post window' }
+        },
+        ['<M-CR>'] = {
+          map = 'postwin.toggle',
+          args = { 'current_line' },
+          options = { desc = 'Toggle post window and clear' }
+        },
+        ['<c-k>'] = {
+          map = 'signature.show',
+          args = {},
+          options = { desc = 'Show signature' }
+        },
+        ['<F12>'] = {
+          map = 'sclang.hard_stop',
+          args = {},
+          options = { desc = 'Hard stop' }
+        },
+        ['<leader>st'] = {
+          map = 'sclang.start',
+          args = {},
+          options = { desc = 'Start SuperCollider' }
+        },
+        ['<leader>sk'] = {
+          map = 'sclang.recompile',
+          args = {},
+          options = { desc = 'Recompile SuperCollider' }
+        },
+        ['<F1>'] = {
+          map = 'sclang.stop',
+          args = {},
+          options = { desc = 'Stop SuperCollider' }
+        },
+      },
+
+      editor = {
+        highlight = {
+          color = 'IncSearch',
+          type = 'flash',
+          flash = {
+            duration = 100,
+            repeats = 2,
+          },
+        },
+        signature = {
+          float = true,
+          auto = true,
+        },
+      },
+
+      postwin = {
+        highlight = true,
+        auto_toggle_error = true,
+        scrollback = 5000,
+        horizontal = true,
+        direction = 'right',
+        size = 25,
+      },
+
+      documentation = {
+        cmd = nil,
+        horizontal = true,
+        direction = 'top',
+        keymaps = true,
+      },
+
+      snippet = {
+        engine = {
+          name = 'luasnip',
+          options = {
+            descriptions = true,
+          },
+        },
+      },
+    })
+
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "SCNvimStart",
+      callback = function()
+      vim.cmd("SCNvimTags")
+      end,
+    })
+
+    if nixCats('general') then
+      require('which-key').add({
+        { "<leader>s", group = "[s]upercollider", ft = "supercollider" },
+        { "<leader>s_", hidden = true, ft = "supercollider" },
+      })
+      end
+      end,
+  },
+  {
+    "lua_ls",
+    enabled = nixCats('lua') or false,
+    lsp = {
+      filetypes = { 'lua' },
+      settings = {
+        Lua = {
+          runtime = { version = 'LuaJIT' },
+          formatters = { ignoreComments = true },
+            signatureHelp = { enabled = true },
+            diagnostics = {
+              globals = { "nixCats", "vim", },
+              disable = { 'missing-fields' },
+            },
+            telemetry = { enabled = false },
+        },
+      },
+    },
+  },
+
+  {
+    "rustaceanvim",
+    enabled = nixCats('rust') or false,
+    ft = { "rust" },
+    after = function()
+    vim.g.rustaceanvim = {
+      tools = {
+        hover_actions = {
+          auto_focus = true,
+        },
+      },
+      server = {
+        on_attach = lsp_on_attach, -- Use your existing on_attach function
+        default_settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+              runBuildScripts = true,
+            },
+            checkOnSave = {
+              allFeatures = true,
+              command = 'clippy',
+              extraArgs = { '--no-deps' },
+            },
+            procMacro = {
+              enable = true,
+              ignored = {
+                ['async-trait'] = { 'async_trait' },
+                ['napi-derive'] = { 'napi' },
+                ['async-recursion'] = { 'async_recursion' },
+              },
+            },
+          },
+        },
+      },
+    }
+    end,
+  },
+
+  {
+    "pyright",
+    enabled = nixCats('python') or false,
+    lsp = {
+      filetypes = { "python" },
+      settings = {
+        python = {
+          analysis = {
+            autoSearchPaths = true,
+            diagnosticMode = "workspace",
+            useLibraryCodeForTypes = true,
+          },
+        },
+      },
+    },
+  },
+
+  {
+    "ruff_lsp",
+    enabled = nixCats('python') or false,
+    lsp = {
+      filetypes = { "python" },
+      init_options = {
+        settings = {
+          args = {},
+        }
+      }
+    },
+  },
+    {
+    "tsserver",
+    enabled = nixCats('web') or false,
+    lsp = {
+      filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact" },
+      init_options = {
+        preferences = {
+          disableSuggestions = true,
+        }
+      },
+    },
+  },
+  {
+    "tailwindcss",
+    enabled = nixCats('web') or false,
+    lsp = {
+      filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    },
+  },
+  {
+    "html",
+    enabled = nixCats('web') or false,
+    lsp = {
+      filetypes = { "html" },
+    },
+  },
+  {
+    "cssls",
+    enabled = nixCats('web') or false,
+    lsp = {
+      filetypes = { "css", "scss", "less" },
+    },
+  },
+  {
+    "haskell-tools.nvim",
+    enabled = nixCats('haskell') or false,
+    ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
+    after = function()
+    local ht = require('haskell-tools')
+    ht.setup {
+      hls = {
+        on_attach = lsp_on_attach,
+      },
+    }
+    end,
+  },
+  {
+    "clangd",
+    enabled = nixCats('cpp') or false,
+    lsp = {
+      filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+      cmd = { "clangd", "--background-index" },
+      init_options = {
+        usePlaceholders = true,
+      },
+    },
+  },
+  {
+    "crates.nvim",
+    enabled = nixCats('rust') or false,
+    ft = { "toml" },
+    after = function()
+    require('crates').setup({
+      src = {
+        cmp = {
+          enabled = true,
+        },
+      },
+    })
+    end,
+  },
+
+  {
+    "trouble.nvim",
+    enabled = nixCats('general') or false,
+    keys = {
+      { "<leader>tt", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+      { "<leader>tT", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
+    },
+    after = function()
+    require("trouble").setup({})
+    end,
+  },
+
+  {
+    "todo-comments.nvim",
+    enabled = nixCats('general') or false,
+    event = "DeferredUIEnter",
+    after = function()
+    require("todo-comments").setup({})
+    end,
   },
 }
