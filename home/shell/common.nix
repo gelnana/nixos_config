@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  Image = "${config.home.homeDirectory}/.nixos/.icons/noelle.gif";
+  Image = "${config.home.homeDirectory}/.nixos/.icons/deer.gif";
 in
 {
 
