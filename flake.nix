@@ -96,7 +96,7 @@
               home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
 
-              home-manager.backupFileExtension = "backup";
+              home-manager.backupFileExtension = null;
             }
           ];
         };
@@ -121,7 +121,7 @@
               home-manager.extraSpecialArgs = inputs // specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
 
-              home-manager.backupFileExtension = "backup";
+              home-manager.backupFileExtension = null;
             }
           ];
         };

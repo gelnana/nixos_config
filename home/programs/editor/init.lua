@@ -133,7 +133,12 @@ require("snacks").setup({
   bigfile = {},
   image = {},
   lazygit = {},
-  terminal = {},
+  terminal = {
+    win = {
+      position = "bottom",
+      height = 0.3,
+    },
+  },
   rename = {},
   notifier = {},
   indent = {},
@@ -921,26 +926,6 @@ require('lze').load {
       end
       end,
   },
-  {
-    "lua_ls",
-    enabled = nixCats('lua') or false,
-    lsp = {
-      filetypes = { 'lua' },
-      settings = {
-        Lua = {
-          runtime = { version = 'LuaJIT' },
-          formatters = { ignoreComments = true },
-            signatureHelp = { enabled = true },
-            diagnostics = {
-              globals = { "nixCats", "vim", },
-              disable = { 'missing-fields' },
-            },
-            telemetry = { enabled = false },
-        },
-      },
-    },
-  },
-
   {
     "rustaceanvim",
     enabled = nixCats('rust') or false,

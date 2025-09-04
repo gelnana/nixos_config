@@ -10,6 +10,7 @@ in
     (pkgs.yabridge.override { inherit wine; })
     (pkgs.yabridgectl.override { inherit wine; })
     supercollider-with-sc3-plugins
+    haskellPackages.tidal
 
     # art
     krita

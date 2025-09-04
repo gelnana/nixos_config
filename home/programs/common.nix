@@ -17,6 +17,7 @@
     docker-compose
     kubectl
     nodejs
+    ansible
 
     # communications
     discord

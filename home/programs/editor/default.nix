@@ -38,6 +38,10 @@ in {
         lspsAndRuntimeDeps = {
           general = with pkgs; [
             lazygit
+            fd
+            ripgrep
+            gcc
+            ghostscript
           ];
           lua = with pkgs; [
             lua-language-server
