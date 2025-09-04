@@ -217,6 +217,10 @@ in {
             neotest-rust
           ];
 
+          writing = with pkgs.vimPlugins; [
+            render-markdown-nvim
+          ];
+
           supercollider = with pkgs.vimPlugins; [
             scnvim
           ];
