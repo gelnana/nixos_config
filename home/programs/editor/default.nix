@@ -18,7 +18,7 @@ in {
       ];
       # see the packageDefinitions below.
       # This says which of those to install.
-      packageNames = [ "selkie" ];
+      packageNames = ["neovim"];
 
       luaPath = ./.;
 
@@ -283,7 +283,7 @@ in {
       packageDefinitions.replace = {
         # These are the names of your packages
         # you can include as many as you wish.
-        selkie = {pkgs, name, ... }: {
+        neovim = {pkgs, name, ... }: {
           # they contain a settings set defined above
           # see :help nixCats.flake.outputs.settings
           settings = {

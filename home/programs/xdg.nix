@@ -1,7 +1,6 @@
-{config, ...}: let
-  browser = ["firefox.desktop"];
+{ config, ... }: let
+  browser = [ "firefox.desktop" ];
 
-  # XDG MIME types
   associations = {
     "application/x-extension-htm" = browser;
     "application/x-extension-html" = browser;
@@ -11,20 +10,21 @@
     "application/xhtml+xml" = browser;
     "text/html" = browser;
     "x-scheme-handler/about" = browser;
-    "x-scheme-handler/chrome" = ["chromium-browser.desktop"];
+    "x-scheme-handler/chrome" = [ "chromium-browser.desktop" ];
     "x-scheme-handler/ftp" = browser;
     "x-scheme-handler/http" = browser;
     "x-scheme-handler/https" = browser;
     "x-scheme-handler/unknown" = browser;
 
-    "audio/*" = ["mpv.desktop"];
-    "video/*" = ["mpv.desktop"];
-    "image/*" = ["imv.desktop"];
+    "audio/*" = [ "mpv.desktop" ];
+    "video/*" = [ "mpv.desktop" ];
+    "image/*" = [ "imv.desktop" ];
     "application/json" = browser;
-    "application/pdf" = ["org.pwmt.zathura.desktop.desktop"];
-    "x-scheme-handler/discord" = ["discordcanary.desktop"];
-    "x-scheme-handler/spotify" = ["spotify.desktop"];
-    "x-scheme-handler/tg" = ["telegramdesktop.desktop"];
+    "application/pdf" = [ "org.pwmt.zathura.desktop.desktop" ];
+    "x-scheme-handler/discord" = [ "discordcanary.desktop" ];
+    "x-scheme-handler/spotify" = [ "spotify.desktop" ];
+    "x-scheme-handler/tg" = [ "telegramdesktop.desktop" ];
+    "text/plain" = [ "nvim.desktop" ];
   };
 in {
   xdg = {
@@ -34,6 +34,17 @@ in {
     mimeApps = {
       enable = true;
       defaultApplications = associations;
+    };
+
+    desktopEntries.nvim = {
+      name = "Neovim (NixCats)";
+      genericName = "Text Editor";
+      comment = "Edit text files with Neovim (NixCats wrapper)";
+      exec = "neovim %F";
+      terminal = true;
+      categories = [ "Utility" "TextEditor" ];
+      mimeType = [ "text/plain" ];
+      icon = "nvim";
     };
 
     userDirs = {
