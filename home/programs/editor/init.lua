@@ -651,6 +651,13 @@ require('lze').load {
     end,
   },
   {
+  "startup-nvim/startup.nvim",
+  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim" },
+  config = function()
+    require "startup".setup({theme = "dashboard"})   
+  end
+  },
+  {
     -- lazydev makes your lsp way better in your config without needing extra lsp configuration.
     "lazydev.nvim",
     enabled = nixCats('lua') or false,

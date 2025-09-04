@@ -158,6 +158,7 @@ in {
             lzextras
             snacks-nvim
             catppuccin-nvim
+            startup-nvim
             vim-sleuth
             nui-nvim
             plenary-nvim
