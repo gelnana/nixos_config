@@ -797,10 +797,10 @@ require('lze').load {
       },
     },
   },
-  {
+{
     "scnvim",
     enabled = nixCats('supercollider') or false,
-    ft = { "supercollider", "sc" },
+    ft = { "supercollider", "sc", "haskell", "tidal" },
     after = function()
     local scnvim = require('scnvim')
 
@@ -895,10 +895,13 @@ require('lze').load {
       },
     })
 
+    -- Force install scnvim classes
+    vim.cmd('SCNvimGenerateAssets')
+
     vim.api.nvim_create_autocmd("User", {
       pattern = "SCNvimStart",
       callback = function()
-      vim.cmd("SCNvimTags")
+        vim.cmd("SCNvimTags")
       end,
     })
 
@@ -907,8 +910,8 @@ require('lze').load {
         { "<leader>s", group = "[s]upercollider", ft = "supercollider" },
         { "<leader>s_", hidden = true, ft = "supercollider" },
       })
-      end
-      end,
+    end
+    end,
   },
   {
     "rustaceanvim",
