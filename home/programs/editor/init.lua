@@ -1020,6 +1020,7 @@ require('lze').load {
 {
   "haskell-tools.nvim",
   enabled = nixCats('haskell') or false,
+  lazy = false,
   ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
   after = function()
     local ht = require('haskell-tools')
