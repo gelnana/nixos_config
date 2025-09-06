@@ -96,6 +96,11 @@ in {
             hlint
             ghc
             cabal-install
+            haskellPackages.fast-tags
+            haskellPackages.haskell-debug-adapter
+            haskellPackages.ghci-dap
+            haskellPackages.hoogle
+            
           ];
 
           # C/C++
