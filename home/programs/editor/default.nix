@@ -158,7 +158,7 @@ in {
             lzextras
             snacks-nvim
             catppuccin-nvim
-            startup-nvim
+            dashboard-nvim
             vim-sleuth
             nui-nvim
             plenary-nvim

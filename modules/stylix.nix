@@ -19,7 +19,6 @@ in
         applications = 0.93;
         terminal = 0.93;
       };
-
     # Fonts
     fonts = {
       serif = {

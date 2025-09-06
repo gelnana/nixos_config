@@ -42,9 +42,9 @@ in {
       comment = "Edit text files with Neovim (NixCats wrapper)";
       exec = "neovim %F";
       terminal = true;
-      categories = [ "Utility" "TextEditor" ];
+      categories = [ "Utility" "TextEditor" "Development" ];
       mimeType = [ "text/plain" ];
-      icon = "nvim";
+      icon = "vim";
     };
 
     userDirs = {

@@ -6,6 +6,7 @@ in
 {
 
   home.packages = with pkgs; [
+    devenv
     alejandra
     deadnix
     statix
@@ -14,7 +15,7 @@ in
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
-    enableZshIntegration = true;
+    enableNushellIntegration = true;
   };
   programs.fastfetch = {
     enable = true;

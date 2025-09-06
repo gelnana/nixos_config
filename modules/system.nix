@@ -122,7 +122,6 @@
     curl
     git
     fastfetch
-    devenv
     wineWowPackages.stagingFull
     bottles-unwrapped
     winetricks

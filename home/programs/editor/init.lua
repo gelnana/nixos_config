@@ -190,32 +190,6 @@ require('lze').load {
     enabled = nixCats('general') or false,
     event = "DeferredUIEnter",
   },
-    {
-      "neo-tree.nvim",
-      enabled = nixCats('general') or false,
-      event = "DeferredUIEnter",
-        keys = {
-          { "<C-e>", "<cmd>Neotree toggle<cr>", desc = "Toggle Neo-tree" },
-        },
-        after = function()
-        require("neo-tree").setup({
-          close_if_last_window = true,
-          popup_border_style = "rounded",
-          float = { enable = true, winblend = 100 },
-          window = { width = 30 },
-          filesystem = {
-            follow_current_file = { enabled = true },
-          },
-        })
-
-        -- Auto-open Neo-tree on launch
-        vim.api.nvim_create_autocmd("VimEnter", {
-          callback = function()
-          require("neo-tree.command").execute({ reveal = true })
-          end,
-        })
-        end,
-    },
   {
     "blink.cmp",
     enabled = nixCats('general') or false,
@@ -650,12 +624,15 @@ require('lze').load {
       require("dap-go").setup()
     end,
   },
-  {
-  "startup-nvim/startup.nvim",
-  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim", "nvim-telescope/telescope-file-browser.nvim" },
-  config = function()
-    require "startup".setup({theme = "dashboard"})   
-  end
+ {
+  'dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+        theme = 'hyper'
+      }
+    end,
+    dependencies = { {'nvim-tree/nvim-web-devicons'}}
   },
   {
     -- lazydev makes your lsp way better in your config without needing extra lsp configuration.
@@ -691,7 +668,7 @@ local function lsp_on_attach(_, bufnr)
 
   if nixCats('general') then
     nmap('gr', function() Snacks.picker.lsp_references() end, '[G]oto [R]eferences')
-    nmap('gI', function() Snacks.picker.lsp_implementations() end, '[G]oto [I]mplementation')
+        nmap('gI', function() Snacks.picker.lsp_implementations() end, '[G]oto [I]mplementation')
     nmap('<leader>ds', function() Snacks.picker.lsp_symbols() end, '[D]ocument [S]ymbols')
     nmap('<leader>ws', function() Snacks.picker.lsp_workspace_symbols() end, '[W]orkspace [S]ymbols')
   end
