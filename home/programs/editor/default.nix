@@ -149,9 +149,6 @@ in {
             terraform-ls
             helm-ls
           ];
-          supercollider = with pkgs; [
-            supercollider
-          ];
         };
 
         # This is for plugins that will load at startup without using packadd:
@@ -227,9 +224,6 @@ in {
             render-markdown-nvim
           ];
 
-          supercollider = with pkgs.vimPlugins; [
-            scnvim
-          ];
           general = with pkgs.vimPlugins; [
             neo-tree-nvim
             mini-nvim
@@ -319,7 +313,6 @@ in {
             zig = false;
             ocaml = false;
             go = false;
-            supercollider = true;
             database = true;
             writing = true;
             devops = true;
