@@ -95,10 +95,6 @@
         "laptop" = { id = "4MXB6CU-FRYORZH-FLGKYOB-NNSINZP-Q2EZ5VC-QIEMVGM-GNPNIRV-LFRQJQH"; };
     };
       folders = {
-        "Documents" = {
-          path = "/home/${username}/Documents";
-          devices = ["desktop" "laptop"];
-        };
         "Pictures" = {
           path = "/home/${username}/Pictures/";
           devices = ["desktop" "laptop"];

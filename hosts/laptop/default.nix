@@ -31,7 +31,7 @@
 
   hardware.bluetooth = {
   enable = true;
-  powerOnBoot = true;
+  # powerOnBoot = true;
   settings = {
     General = {
       Experimental = true; # Show battery charge of Bluetooth devices
@@ -65,6 +65,29 @@
     enable = true;
   };
 
+  # Power Management
+  services.power-profiles-daemon.enable = false;
+  services.tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 20;
+
+       START_CHARGE_THRESH_BAT0 = 40; 
+       STOP_CHARGE_THRESH_BAT0 = 80;
+
+       RUNTIME_PM_ENABLE="01:0.0";
+      };
+};
+
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
 
@@ -77,11 +100,11 @@
     # Enable this if you have graphical corruption issues or application crashes after waking
     # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
     # of just the bare essentials.
-    powerManagement.enable = true;
+    # powerManagement.enable = true;
 
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = true;
+    # powerManagement.finegrained = true;
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
@@ -98,11 +121,11 @@
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
-    prime = {
-      offload.enable = true;
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
+    #prime = {
+    #  offload.enable = true;
+    #  intelBusId = "PCI:0:2:0";
+    #  nvidiaBusId = "PCI:1:0:0";
+    # };
   };
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
