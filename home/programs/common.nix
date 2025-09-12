@@ -26,5 +26,8 @@
     # download client
     qbittorrent
     nicotine-plus
+
+    # organization
+    calibre
     ];
 }
