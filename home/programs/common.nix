@@ -30,5 +30,7 @@
 
     # organization
     calibre
+    zotero
+    qnotero
     ];
 }
