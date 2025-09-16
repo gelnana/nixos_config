@@ -12,6 +12,7 @@
     ripgrep
     yq-go
     htop
+    souffle
 
     # cloud
     docker-compose

@@ -149,6 +149,10 @@ in {
             terraform-ls
             helm-ls
           ];
+          supercollider = with pkgs; [
+            supercollider-with-sc3-plugins
+            haskellPackages.tidal
+          ];
         };
 
         # This is for plugins that will load at startup without using packadd:
@@ -313,6 +317,7 @@ in {
             zig = false;
             ocaml = false;
             go = false;
+            supercollider = true;
             database = true;
             writing = true;
             devops = true;
