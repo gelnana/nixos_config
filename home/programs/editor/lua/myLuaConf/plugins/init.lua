@@ -70,6 +70,7 @@ require('lze').load {
   { import = "myLuaConf.plugins.bufferline", },
   { import = "myLuaConf.plugins.leap", },
   { import = "myLuaConf.plugins.ufo", },
+  { import = "myLuaConf.plugins.tidal", },
   {
     "markdown-preview.nvim",
     -- NOTE: for_cat is a custom handler that just sets enabled value for us,
