@@ -12,7 +12,8 @@
     ripgrep
     yq-go
     htop
-    souffle
+    jupyter-all
+    
 
     # cloud
     docker-compose

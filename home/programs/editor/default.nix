@@ -78,6 +78,7 @@ in {
             isort
             mypy
             ruff
+            jupyter-all
           ];
 
           # JavaScript/TypeScript
@@ -135,6 +136,7 @@ in {
 
           # Documentation and writing
           writing = with pkgs; [
+            texlive.combined.scheme-full
             ltex-ls
             texlab
             pandoc
@@ -148,10 +150,6 @@ in {
             ansible-language-server
             terraform-ls
             helm-ls
-          ];
-          supercollider = with pkgs; [
-            supercollider-with-sc3-plugins
-            haskellPackages.tidal
           ];
         };
 
@@ -189,6 +187,7 @@ in {
 
           python = with pkgs.vimPlugins; [
             nvim-dap-python
+            molten-nvim
           ];
 
           web = with pkgs.vimPlugins; [
@@ -226,6 +225,8 @@ in {
 
           writing = with pkgs.vimPlugins; [
             render-markdown-nvim
+            vimtex
+            texpresso-vim
           ];
 
           general = with pkgs.vimPlugins; [
