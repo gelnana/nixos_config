@@ -15,6 +15,19 @@ in {
       # It will not apply to overall system, just nixCats.
       addOverlays = /* (import ./overlays inputs) ++ */ [
         (utils.standardPluginOverlay inputs)
+          (final: prev: {
+    neovimPlugins = prev.neovimPlugins // {
+      tidal-nvim = prev.vimUtils.buildVimPlugin {
+        name = "tidal-nvim";
+        src = prev.fetchFromGitHub {
+          owner = "thgrund";
+          repo = "tidal.nvim";
+          rev = "main";
+          sha256 = "sbxBIybZdQptiD3zDJtitOcuy5bZSwgf9EPpMlik8Ds="; # leave empty first, nix will tell you the correct hash
+        };
+      };
+    };
+  })
       ];
       # see the packageDefinitions below.
       # This says which of those to install.
@@ -222,6 +235,10 @@ in {
             neotest-python
             neotest-go
             neotest-rust
+          ];
+
+          supercollider = with pkgs.vimPlugins; [
+            pkgs.neovimPlugins.tidal-nvim
           ];
 
           writing = with pkgs.vimPlugins; [
