@@ -28,15 +28,19 @@ vim.wo.number = true
 -- Enable mouse mode
 vim.o.mouse = 'a'
 
+-- Conceal level
+vim.o.conceallevel = 2
+vim.o.concealcursor = "nc"
+
 -- Indent
 vim.o.smarttab = true
 vim.opt.cpoptions:append('I')
 vim.o.expandtab = true
 vim.o.smartindent = true
--- vim.o.autoindent = true
--- vim.o.tabstop = 4
--- vim.o.softtabstop = 4
--- vim.o.shiftwidth = 4
+vim.o.autoindent = true
+vim.o.tabstop = 4
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
 
 -- stops line wrapping from being confusing
 vim.o.breakindent = true
@@ -122,6 +126,14 @@ vim.keymap.set({"n", "v", "x"}, '<leader>Y', '"+yy', { noremap = true, silent = 
 vim.keymap.set({'n', 'v', 'x'}, '<leader>p', '"+p', { noremap = true, silent = true, desc = 'Paste from clipboard' })
 vim.keymap.set('i', '<C-p>', '<C-r><C-p>+', { noremap = true, silent = true, desc = 'Paste from clipboard from within insert mode' })
 vim.keymap.set("x", "<leader>P", '"_dP', { noremap = true, silent = true, desc = 'Paste over selection without erasing unnamed register' })
+
+-- keymaps for vimtex
+vim.keymap.set('n', '<leader>ll', '<cmd>VimtexCompile<cr>', { desc = 'LaTeX: Compile' })
+vim.keymap.set('n', '<leader>lv', '<cmd>VimtexView<cr>', { desc = 'LaTeX: View PDF' })
+vim.keymap.set('n', '<leader>lc', '<cmd>VimtexClean<cr>', { desc = 'LaTeX: Clean aux files' })
+vim.keymap.set('n', '<leader>le', '<cmd>VimtexErrors<cr>', { desc = 'LaTeX: Show errors' })
+vim.keymap.set('n', '<leader>lt', '<cmd>VimtexTocToggle<cr>', { desc = 'LaTeX: Toggle TOC' })
+vim.keymap.set('n', '<leader>lp', '<cmd>TexpressoStart<cr>', { desc = 'LaTeX: Start live preview' })
 
 vim.cmd.colorscheme('catppuccin')
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -226,7 +238,10 @@ require('lze').load {
       -- [[ Configure Treesitter ]]
       -- See `:help nvim-treesitter`
       require('nvim-treesitter.configs').setup {
-        highlight = { enable = true, },
+        highlight = { 
+          enable = true, 
+          disable = { "latex", },
+        },
         indent = { enable = false, },
         incremental_selection = {
           enable = true,
@@ -457,6 +472,8 @@ require('lze').load {
         { "<leader>t_", hidden = true },
         { "<leader>w", group = "[w]orkspace" },
         { "<leader>w_", hidden = true },
+        { "<leader>l", group = "[l]atex" },
+        { "<leader>l_", hidden = true },
       }
     end,
   },
@@ -800,7 +817,6 @@ require('lze').load {
   {
     "rustaceanvim",
     enabled = nixCats('rust') or false,
-    ft = { "rust" },
     after = function()
     vim.g.rustaceanvim = {
       tools = {
@@ -905,7 +921,6 @@ require('lze').load {
   "haskell-tools.nvim",
   enabled = nixCats('haskell') or false,
   lazy = false,
-  ft = { "haskell", "lhaskell", "cabal", "cabalproject" },
   after = function()
     local ht = require('haskell-tools')
     
@@ -982,4 +997,152 @@ require('lze').load {
     require("todo-comments").setup({})
     end,
   },
+{
+  "vimtex",
+  enabled = nixCats('writing') or false,
+  after = function()
+    -- VimTeX configuration
+    vim.g.vimtex_view_method = 'general' 
+    vim.g.vimtex_view_general_viewer = 'xdg-open'
+    vim.g.vimtex_compiler_method = 'latexmk'
+    
+    -- Disable some features for better performance
+    vim.g.vimtex_quickfix_mode = 0
+    vim.g.vimtex_syntax_enabled = 1
+    vim.g.vimtex_syntax_conceal = {
+      ["accents"] = 1,
+      ["ligatures"] = 1,
+      ["cites"] = 0,
+      ["fancy"] = 1,
+      ["spacing"] = 1,
+      ["greek"] = 1,
+      ["math_bounds"] = 1,
+      ["math_delimiters"] = 1,
+      ["math_fractions"] = 1,
+      ["math_super_sub"] = 1,
+      ["math_symbols"] = 1,
+      ["sections"] = 0,
+      ["styles"] = 1,
+    }
+    
+    -- Folding
+    vim.g.vimtex_fold_enabled = 1
+    vim.g.vimtex_fold_types = {
+      preamble = { enabled = 1 },
+      comments = { enabled = 1 },
+      envs = {
+        enabled = 1,
+        whitelist = { 'figure', 'table', 'equation', 'align' },
+      },
+      sections = {
+        enabled = 1,
+        sections = { 'part', 'chapter', 'section', 'subsection' },
+      },
+    }
+    
+    -- Completion
+    vim.g.vimtex_complete_enabled = 1
+    vim.g.vimtex_complete_close_braces = 1
+    
+    -- Error/warning suppression (optional)
+    vim.g.vimtex_quickfix_ignore_filters = {
+      'Underfull \\hbox',
+      'Overfull \\hbox',
+      'LaTeX Warning: .\\+ float specifier changed to',
+      'LaTeX hooks Warning',
+      'Package siunitx Warning: Detected the "physics" package:',
+      'Package hyperref Warning: Token not allowed in a PDF string',
+    }
+    
+    -- Note: Keymaps will be defined separately below to match init.lua structure
+  end,
+},
+
+{
+  "texpresso-vim",
+  enabled = nixCats('writing') or false,
+  keys = {
+    { "<leader>lp", "<cmd>TexpressoStart<cr>", desc = "LaTeX: Start live preview" },
+  },
+},
+
+{
+  "render-markdown.nvim",
+  enabled = nixCats('writing') or false,
+  dependencies = {'tree-sitter', 'mini'},
+  after = function()
+    require('render-markdown').setup({
+      latex_enabled = true,
+      highlights = {
+        heading = {
+          backgrounds = { 'DiffAdd', 'DiffChange', 'DiffDelete' },
+          foregrounds = { 'markdownH1', 'markdownH2', 'markdownH3' },
+        },
+      },
+    })
+  end,
+},
+
+-- LSP configurations for LaTeX
+{
+  "texlab",
+  enabled = nixCats('writing') or false,
+  lsp = {
+    filetypes = { "tex", "latex", "plaintex" },
+    settings = {
+      texlab = {
+        build = {
+          executable = "latexmk",
+          args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+          onSave = true, 
+        },
+        auxDirectory = ".",
+        bibtexFormatter = "texlab",
+        diagnosticsDelay = 300,
+        formatterLineLength = 80,
+        forwardSearch = {
+          executable = "okular",
+          args = { "--synctex-forward", "%l:1:%f", "%p" },
+        },
+        latexFormatter = "latexindent",
+        latexindent = {
+          modifyLineBreaks = false,
+        },
+      },
+    },
+  },
+},
+
+{
+  "ltex-ls", 
+  enabled = nixCats('writing') or false,
+  lsp = {
+    filetypes = { "tex", "latex", "markdown", "text", "plaintex" },
+    settings = {
+      ltex = {
+        language = "en-US",
+        checkFrequency = "save", 
+        additionalRules = {
+          enablePickyRules = true,
+        },
+        dictionary = {
+          ["en-US"] = {}, 
+        },
+
+        latex = {
+          commands = {
+            ["\\cite{}"] = "ignore",
+            ["\\citep{}"] = "ignore", 
+            ["\\citet{}"] = "ignore",
+          },
+          environments = {
+            equation = "ignore",
+            align = "ignore",
+            tikzpicture = "ignore",
+          },
+        },
+      },
+    },
+  },
+}
 }

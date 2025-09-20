@@ -247,7 +247,6 @@ in {
           ];
 
           general = with pkgs.vimPlugins; [
-            neo-tree-nvim
             mini-nvim
             nvim-lspconfig
             nvim-ufo
