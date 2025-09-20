@@ -1069,7 +1069,6 @@ require('lze').load {
 {
   "render-markdown.nvim",
   enabled = nixCats('writing') or false,
-  dependencies = {'tree-sitter', 'mini'},
   after = function()
     require('render-markdown').setup({
       latex_enabled = true,

@@ -287,7 +287,7 @@ in {
 
         # categories of the function you would have passed to withPackages
         python3.libraries = {
-          # test = [ (_:[]) ];
+            latex = (_: [ pkgs.python313Packages.pylatexenc pkgs.python313Packages.pylatex ]);
         };
 
         # If you know what these are, you can provide custom ones by category here.
