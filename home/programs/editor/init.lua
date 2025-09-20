@@ -29,10 +29,10 @@ vim.wo.number = true
 vim.o.mouse = 'a'
 
 -- Indent
--- vim.o.smarttab = true
+vim.o.smarttab = true
 vim.opt.cpoptions:append('I')
 vim.o.expandtab = true
--- vim.o.smartindent = true
+vim.o.smartindent = true
 -- vim.o.autoindent = true
 -- vim.o.tabstop = 4
 -- vim.o.softtabstop = 4
