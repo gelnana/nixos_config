@@ -4,6 +4,14 @@
   username,
   ...
 }: {
+
+  boot = {
+      plymouth = {
+        enable = true;
+        theme = lib.mkForce "stylix";
+      };
+    };
+  
   environment.shells = [
     pkgs.nushell
   ];
