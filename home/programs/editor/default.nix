@@ -13,22 +13,9 @@ in {
       # this will add the overlays from ./overlays and also,
       # add any plugins in inputs named "plugins-pluginName" to pkgs.neovimPlugins
       # It will not apply to overall system, just nixCats.
-      addOverlays = /* (import ./overlays inputs) ++ */ [
-        (utils.standardPluginOverlay inputs)
-          (final: prev: {
-    neovimPlugins = prev.neovimPlugins // {
-      tidal-nvim = prev.vimUtils.buildVimPlugin {
-        name = "tidal-nvim";
-        src = prev.fetchFromGitHub {
-          owner = "thgrund";
-          repo = "tidal.nvim";
-          rev = "main";
-          sha256 = "sbxBIybZdQptiD3zDJtitOcuy5bZSwgf9EPpMlik8Ds="; # leave empty first, nix will tell you the correct hash
-        };
-      };
-    };
-  })
-      ];
+      # addOverlays = /* (import ./overlays inputs) ++ */ [
+      # 
+      # ];
       # see the packageDefinitions below.
       # This says which of those to install.
       packageNames = ["neovim"];
@@ -154,8 +141,14 @@ in {
             texlab
             pandoc
           ];
-
-          # Container/DevOps
+          tidal = with pkgs; [
+            haskellPackages.tidal
+            supercollider-with-plugins
+            ghc
+            cabal-install
+          ]  ++ (lib.optionals (pkgs ? superdirt) [ pkgs.superdirt ])
+            ++ (lib.optionals (pkgs ? sc3-plugins) [ pkgs.sc3-plugins ]);
+            # Container/DevOps
           devops = with pkgs; [
             docker-compose-language-service
             dockerfile-language-server-nodejs
@@ -236,9 +229,8 @@ in {
             neotest-rust
           ];
 
-          supercollider = with pkgs.vimPlugins; [
-            pkgs.neovimPlugins.tidal-nvim
-          ];
+          tidal = with pkgs.vimPlugins; [
+          ] ++ ( lib.optionals (pkgs ? vim-tidal) [ pkgs.vim-tidal ]);
 
           writing = with pkgs.vimPlugins; [
             render-markdown-nvim
@@ -332,9 +324,9 @@ in {
             haskell = true;
             cpp = true;
             zig = false;
+            tidal = true;
             ocaml = false;
             go = false;
-            supercollider = true;
             database = true;
             writing = true;
             devops = true;

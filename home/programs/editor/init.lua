@@ -882,6 +882,20 @@ require('lze').load {
       }
     },
   },
+  {
+    "molten-nvim",
+    enabled = nixCats('python') or false,
+    build = ":UpdateRemotePlugins",
+    after = function()
+    local map = vim.keymap.set
+      map("n", "<localleader>mi", ":MoltenInit<CR>", { silent = true, desc = "Molten: Init kernel" })
+      map("n", "<localleader>mk", ":MoltenKill<CR>", { silent = true, desc = "Molten: Kill kernel" })
+      map("n", "<localleader>rl", ":MoltenEvaluateLine<CR>", { silent = true, desc = "Molten: Eval line" })
+      map("v", "<localleader>r", ":<C-u>MoltenEvaluateVisual<CR>gv", { silent = true, desc = "Molten: Eval visual" })
+      map("n", "<localleader>rr", ":MoltenReevaluateCell<CR>", { silent = true, desc = "Molten: Re-eval cell" })
+      map("n", "<localleader>ro", ":MoltenShowOutput<CR>", { silent = true, desc = "Molten: Show output window" })
+    end,
+  },
     {
     "tsserver",
     enabled = nixCats('web') or false,
@@ -1143,5 +1157,5 @@ require('lze').load {
       },
     },
   },
-}
+},
 }
