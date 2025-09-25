@@ -63,6 +63,8 @@
 
     nix-gaming.url = "github:fufexan/nix-gaming";
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
+
+    tidalcycles.url = "github:mitchmindtree/tidalcycles.nix"; 
   };
 
   outputs = {
