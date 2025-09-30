@@ -6,16 +6,15 @@
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
+    experimental-features = "nix-command flakes";
   };
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     catppuccin.url = "github:catppuccin/nix";
+
     home-manager = {
       url = "github:nix-community/home-manager";
-      # The `follows` keyword in inputs is used for inheritance.
-      # Here, `inputs.nixpkgs` of home-manager is kept consistent with
-      # the `inputs.nixpkgs` of the current flake,
-      # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -23,27 +22,20 @@
       url = "github:taj-ny/kwin-effects-forceblur";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     kwin-effects-kinetic = {
       url = "github:gurrgur/kwin-effects-kinetic";
       flake = false;
     };
 
-    apple-fonts = {
-      url = "github:Lyndeno/apple-fonts.nix";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    apple-fonts.url = "github:Lyndeno/apple-fonts.nix";
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      # inputs.nixpkgs.follows = "nixpkgs";
-    };
+    musnix.url = "github:musnix/musnix";
 
+    stylix.url = "github:nix-community/stylix";
 
     nixvim = {
       url = "github:nix-community/nixvim";
-      # If you are not running an unstable channel of nixpkgs, select the corresponding branch of nixvim.
-      # url = "github:nix-community/nixvim/nixos-25.05";
-
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -58,75 +50,92 @@
 
     hyprland-contrib = {
       url = "github:hyprwm/contrib";
-      inputs.nixpkgs.follows = "hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nix-gaming.url = "github:fufexan/nix-gaming";
+
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
 
-    tidalcycles.url = "github:mitchmindtree/tidalcycles.nix"; 
+    tidalcycles.url = "github:mitchmindtree/tidalcycles.nix";
+
+    alejandra = {
+      url = "github:kamadorueda/alejandra/4.0.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs = {
     self,
     nixpkgs,
-    stylix,
     home-manager,
-    apple-fonts,
-    hyprland,
     ...
-  }@inputs: {
-    nixosConfigurations = {
-      desktop = let
-        username = "gelnana";
-        specialArgs = {inherit username inputs;};
-      in
-        nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          system = "x86_64-linux";
+  } @ inputs: let
+    username = "gelnana";
+    system = "x86_64-linux";
+    allModules = [
+      # Core system
+      ./modules/utilities/system.nix
+      ./modules/utilities/main-user.nix
 
-          modules = [
-            ./hosts/desktop
-            ./users/${username}/nixos.nix
-            stylix.nixosModules.stylix
-            inputs.catppuccin.nixosModules.catppuccin
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+      # Roles
+      ./modules/roles/audio.nix
+      ./modules/roles/gaming.nix
+      ./modules/roles/mounts.nix
+      ./modules/roles/dev.nix
 
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
+      # Hardware
+      ./modules/hardware/nvidia.nix
+      ./modules/hardware/bluetooth.nix
+      ./modules/hardware/laptop.nix
 
-              home-manager.backupFileExtension = null;
-            }
-          ];
-        };
-      laptop = let
-        username = "gelnana";
-        specialArgs = {inherit username inputs;};
-      in
-        nixpkgs.lib.nixosSystem {
-          inherit specialArgs;
-          system = "x86_64-linux";
+      # Services
+      ./modules/services/ssh.nix
+      ./modules/services/soulseek.nix
+      ./modules/services/syncthing.nix
+      ./modules/services/plasma.nix
 
-          modules = [
-            ./hosts/laptop
-            ./users/${username}/nixos.nix
-            stylix.nixosModules.stylix
-            inputs.catppuccin.nixosModules.catppuccin
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
+      # External modules
+      inputs.stylix.nixosModules.stylix
+      inputs.catppuccin.nixosModules.catppuccin
+      inputs.musnix.nixosModules.musnix
+    ];
 
-              home-manager.extraSpecialArgs = inputs // specialArgs;
-              home-manager.users.${username} = import ./users/${username}/home.nix;
-
-              home-manager.backupFileExtension = null;
-            }
-          ];
-        };
+    homeManagerModule = {
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
+        extraSpecialArgs = inputs // {inherit username;};
+        users.${username} = import ./users/${username}/home.nix;
+        backupFileExtension = null;
+      };
     };
+
+    mkSystem = hostname:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {inherit username inputs;};
+        modules =
+          allModules
+          ++ (if hostname == "laptop"
+                then [ inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia ]
+                else [])
+          ++ [
+            ./hosts/${hostname}
+            ./users/${username}/nixos.nix
+            home-manager.nixosModules.home-manager
+            homeManagerModule
+          ];
+
+      };
+  in {
+    nixosConfigurations = {
+      desktop = mkSystem "desktop";
+      laptop = mkSystem "laptop";
+    };
+
+    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
   };
 }

@@ -1,37 +1,77 @@
-{lib,
- pkgs,
- ...
-}: {
-    home.packages = with pkgs; [
-    # archives
-    zip
-    unzip
-    p7zip
+{ lib, pkgs, config, ... }:
+let
+  cfg = config.custom.programs.common;
+in {
+  options.custom.programs.common = {
+    enable = lib.mkEnableOption "common utilities and applications";
 
-    # utils
-    ripgrep
-    yq-go
-    htop
-    jupyter-all
-    
+    archives = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Install archive tools (zip, unzip, p7zip)";
+    };
 
-    # cloud
-    docker-compose
-    kubectl
-    nodejs
-    ansible
+    utils = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Install common utilities (ripgrep, htop, etc)";
+    };
 
-    # communications
-    discord
-    mailspring
+    cloud = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Install cloud/devops tools (docker-compose, kubectl)";
+    };
 
-    # download client
-    qbittorrent
-    nicotine-plus
+    communications = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Install Discord and Mailspring";
+    };
 
-    # organization
-    calibre
-    zotero_7
-    qnotero
-    ];
+    downloads = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Install download clients (qBittorrent, Nicotine+)";
+    };
+
+    organization = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Install organization tools (Calibre, Zotero)";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    home.packages = with pkgs;
+      lib.optionals cfg.archives [
+        zip
+        unzip
+        p7zip
+      ]
+      ++ lib.optionals cfg.utils [
+        ripgrep
+        yq-go
+        htop
+        jupyter-all
+      ]
+      ++ lib.optionals cfg.cloud [
+        docker-compose
+        kubectl
+        nodejs
+        ansible
+      ]
+      ++ lib.optionals cfg.communications [
+        discord
+        mailspring
+      ]
+      ++ lib.optionals cfg.downloads [
+        qbittorrent
+      ]
+      ++ lib.optionals cfg.organization [
+        calibre
+        zotero_7
+        qnotero
+      ];
+  };
 }

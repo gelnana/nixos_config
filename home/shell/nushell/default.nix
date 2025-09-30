@@ -30,9 +30,10 @@
        )
        '';
        shellAliases = {
-       vi = "hx";
-       vim = "hx";
-       nano = "hx";
+        vi = "neovim";
+        vim = "neovim";
+        nvim = "neovim";
+        nix-template = "def [template-name] { nix flake init --template .#templates.$template-name }";
        };
    };
    programs.carapace = {
