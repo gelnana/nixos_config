@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, lib, ... }:
+
 let
   cfg = config.custom.programs.art;
 in {
@@ -41,12 +37,14 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    home.packages =
-      (lib.optionals cfg.enableKrita [ pkgs.krita ])
-      ++ (lib.optionals cfg.enableGimp [ pkgs.gimp ])
-      ++ (lib.optionals cfg.enableInkscape [ pkgs.inkscape ])
-      ++ (lib.optionals cfg.enableClementine [ pkgs.clementine ])
-      ++ (lib.optionals cfg.enableLibreOffice [ pkgs.libreoffice-fresh ]);
+  config = {
+    home.packages = with pkgs; lib.concatLists [
+      (if cfg.enable && cfg.enableKrita then [ pkgs.krita ] else [])
+      (if cfg.enable && cfg.enableGimp then [ pkgs.gimp ] else [])
+      (if cfg.enable && cfg.enableInkscape then [ pkgs.inkscape ] else [])
+      (if cfg.enable && cfg.enableClementine then [ pkgs.clementine ] else [])
+      (if cfg.enable && cfg.enableLibreOffice then [ pkgs.libreoffice-fresh ] else [])
+    ];
   };
 }
+

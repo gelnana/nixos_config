@@ -1,20 +1,10 @@
 { config, lib, inputs, ... }: let
-  cfg = config.custom.programs.editor;
   utils = inputs.nixCats.utils;
 in {
   imports = [
     inputs.nixCats.homeModule
   ];
-  options.custom.programs.editor = {
-    enable = lib.mkEnableOption "Neovim editor";
-
-    useNixvim = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Use nixvim configuration";
-    };
-  };
-  config = lib.mkIf cfg.enable {
+  config = {
     # this value, nixCats is the defaultPackageName you pass to mkNixosModules
     # it will be the namespace for your options.
     nixCats = {
@@ -24,7 +14,7 @@ in {
       # add any plugins in inputs named "plugins-pluginName" to pkgs.neovimPlugins
       # It will not apply to overall system, just nixCats.
       # addOverlays = /* (import ./overlays inputs) ++ */ [
-      # 
+      #
       # ];
       # see the packageDefinitions below.
       # This says which of those to install.
@@ -111,7 +101,7 @@ in {
             haskellPackages.haskell-debug-adapter
             haskellPackages.ghci-dap
             haskellPackages.hoogle
-            
+
           ];
 
           # C/C++

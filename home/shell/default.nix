@@ -1,31 +1,51 @@
-{config, ...}: let
+{ config, lib, ... }:
+let
+  cfg = config.custom.shell;
   d = config.xdg.dataHome;
   c = config.xdg.configHome;
   cache = config.xdg.cacheHome;
 in {
   imports = [
-    ./nushell
     ./common.nix
+    ./nushell
     ./starship.nix
     ./terminals.nix
   ];
 
-  # add environment variables
-  home.sessionVariables = {
-    # clean up ~
-    LESSHISTFILE = cache + "/less/history";
-    LESSKEY = c + "/less/lesskey";
-    WINEPREFIX = d + "/wine";
+  options.custom.shell = {
+    enable = lib.mkEnableOption "shell configuration";
 
-    # set default applications
-    EDITOR = "neovim";
-    BROWSER = "firefox";
-    TERMINAL = "kitty";
+    defaultEditor = lib.mkOption {
+      type = lib.types.str;
+      default = "neovim";
+      description = "Default editor";
+    };
 
-    # enable scrolling in git diff
-    DELTA_PAGER = "less -R";
+    defaultBrowser = lib.mkOption {
+      type = lib.types.str;
+      default = "firefox";
+      description = "Default browser";
+    };
 
-    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+    defaultTerminal = lib.mkOption {
+      type = lib.types.str;
+      default = "kitty";
+      description = "Default terminal";
+    };
   };
 
+  config = lib.mkIf cfg.enable {
+    home.sessionVariables = {
+      LESSHISTFILE = cache + "/less/history";
+      LESSKEY = c + "/less/lesskey";
+      WINEPREFIX = d + "/wine";
+
+      EDITOR = cfg.defaultEditor;
+      BROWSER = cfg.defaultBrowser;
+      TERMINAL = cfg.defaultTerminal;
+
+      DELTA_PAGER = "less -R";
+      MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+    };
+  };
 }

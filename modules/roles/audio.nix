@@ -1,4 +1,4 @@
-{ pkgs, lib, config, user, ... }:
+{ pkgs, lib, config, username, ... }:
 let
   cfg = config.custom.audio;
 in {
@@ -36,7 +36,7 @@ in {
       rtcqs.enable = true;
     };
 
-    users.users.${user}.extraGroups = ["audio"]
+    users.users.${username}.extraGroups = ["audio"]
       ++ lib.optional cfg.enableJack "jackaudio";
 
     environment.systemPackages = with pkgs; [

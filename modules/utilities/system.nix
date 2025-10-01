@@ -2,24 +2,13 @@
   # Enable main user
   main-user = {
     enable = true;
-    userName = username;  # Uses username from flake
-    shell = pkgs.nushell;
+    userName = username;
   };
   # Boot configuration
   boot.plymouth = {
     enable = true;
     theme = lib.mkForce "stylix";
   };
-
-  # User configuration
-  users.users.${username} = {
-    isNormalUser = true;
-    description = username;
-    extraGroups = ["networkmanager" "wheel"];
-    shell = pkgs.nushell;
-  };
-
-  environment.shells = [ pkgs.nushell ];
 
   # Locale & Time
   time.timeZone = "America/Vancouver";

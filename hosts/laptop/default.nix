@@ -11,6 +11,15 @@
 
   # Enable custom features
   custom = {
+    # Plasma desktop
+    programs.plasma = {
+      enable = true;
+      enableSddm = true;
+      enablePlasma = true;
+      enableKdePackages = true;
+      enableKdeconnect = true;
+      enableForceBlur = true;
+    };
     # Software roles
     gaming = {
       enable = true;

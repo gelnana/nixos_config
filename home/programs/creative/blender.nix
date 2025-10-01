@@ -1,4 +1,5 @@
 { lib, config, pkgs, ... }:
+
 let
   cfg = config.custom.programs.blender;
 in {
@@ -12,7 +13,8 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+  config = {
+    home.packages = if cfg.enable then [ cfg.package ] else [];
   };
 }
+

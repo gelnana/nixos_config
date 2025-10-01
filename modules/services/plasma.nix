@@ -6,18 +6,6 @@ in {
   options.custom.programs.plasma = {
     enable = lib.mkEnableOption "Plasma desktop";
 
-    enableCatppuccin = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable Catppuccin KDE theme integration";
-    };
-
-    catppuccinFlavor = lib.mkOption {
-      type = lib.types.str;
-      default = "mocha";
-      description = "Catppuccin theme flavour";
-    };
-
     enableSddm = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -41,22 +29,26 @@ in {
       default = true;
       description = "Enable KDE Connect";
     };
+
+    enableForceBlur = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable KWin ForceBlur effect";
+    };
   };
 
   config = lib.mkIf cfg.enable ({
-
-    services.catppuccin = lib.mkIf cfg.enableCatppuccin {
-      enable = true;
-      flavor = cfg.catppuccinFlavor;
-    };
 
     services.xserver.enable = lib.mkIf (cfg.enableSddm || cfg.enablePlasma) true;
     services.displayManager.sddm.enable = lib.mkIf cfg.enableSddm true;
     services.desktopManager.plasma6.enable = lib.mkIf cfg.enablePlasma true;
 
-    environment.systemPackages = lib.mkIf cfg.enableKdePackages [
-      pkgs.kdePackages.full
+    environment.systemPackages = lib.concatLists [
+      (if cfg.enableKdePackages then [ pkgs.kdePackages.full ] else [])
+      (if cfg.enableForceBlur then [ inputs.kwin-effects-forceblur.packages.${pkgs.system}.default ] else [])
     ];
+
+
 
     programs.kdeconnect.enable = lib.mkIf cfg.enableKdeconnect true;
   });

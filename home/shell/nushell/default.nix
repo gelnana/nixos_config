@@ -1,43 +1,57 @@
-{
-  programs.nushell = {
-    enable = true;
-    configFile.source = ./config.nu;
+{ lib, config, ... }:
+let
+  cfg = config.custom.shell.nushell;
+in {
+  options.custom.shell.nushell = {
+    enable = lib.mkEnableOption "Nushell with custom configuration";
 
-    extraConfig = ''
-       let carapace_completer = {|spans|
-       carapace $spans.0 nushell ...$spans | from json
-       }
-       $env.config = {
-        show_banner: false,
-        completions: {
-        case_sensitive: false # case-sensitive completions
-        quick: true    # set to false to prevent auto-selecting completions
-        partial: true    # set to false to prevent partial filling of the prompt
-        algorithm: "fuzzy"    # prefix or fuzzy
-        external: {
-        # set to false to prevent nushell looking into $env.PATH to find more suggestions
-            enable: true
-        # set to lower can improve completion performance at the cost of omitting some options
-            max_results: 100
-            completer: $carapace_completer # check 'carapace_completer'
+    enableCarapace = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable Carapace completions";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    programs.nushell = {
+      enable = true;
+      configFile.source = ./config.nu;
+
+      extraConfig = ''
+        let carapace_completer = {|spans|
+          carapace $spans.0 nushell ...$spans | from json
+        }
+        $env.config = {
+          show_banner: false,
+          completions: {
+            case_sensitive: false
+            quick: true
+            partial: true
+            algorithm: "fuzzy"
+            external: {
+              enable: true
+              max_results: 100
+              completer: $carapace_completer
+            }
           }
         }
-       }
-       $env.PATH = ($env.PATH |
-       split row (char esep) |
-       prepend /home/myuser/.apps |
-       append /usr/bin/env
-       )
-       '';
-       shellAliases = {
+        $env.PATH = ($env.PATH |
+          split row (char esep) |
+          prepend /home/myuser/.apps |
+          append /usr/bin/env
+        )
+      '';
+
+      shellAliases = {
         vi = "neovim";
         vim = "neovim";
         nvim = "neovim";
-        nix-template = "def [template-name] { nix flake init --template .#templates.$template-name }";
-       };
-   };
-   programs.carapace = {
+      };
+    };
+
+    programs.carapace = lib.mkIf cfg.enableCarapace {
       enable = true;
       enableNushellIntegration = true;
+    };
   };
 }

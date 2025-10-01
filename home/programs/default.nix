@@ -1,12 +1,34 @@
+{ config, pkgs, ... }:
+
 {
   imports = [
-    ./browsers.nix
     ./editor
-    ./common.nix
-    ./git.nix
-    ./media.nix
-    ./creative.nix
-    ./games.nix
+  ]
+  ++ [
+    ./common/archives.nix
+    ./common/communications.nix
+    ./common/downloads.nix
+    ./common/organization.nix
+  ]
+  ++ [
+    ./dev/git.nix
+    ./dev/cloud.nix
+    ./dev/utils.nix
+  ]
+  ++ [
+    ./creative/video.nix
+    ./creative/art.nix
+    ./creative/blender.nix
+    ./creative/reaper.nix
+  ]
+  ++ [
+    ./games/launchers.nix
+    ./games/modding.nix
+    ./games/utilities.nix
+  ]
+  ++ [
+    ./web/firefox.nix
     ./xdg.nix
+    ./media.nix
   ];
 }

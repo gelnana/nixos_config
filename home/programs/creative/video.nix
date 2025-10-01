@@ -1,9 +1,5 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ lib, config, pkgs, ... }:
+
 let
   cfg = config.custom.programs.video;
 in {
@@ -17,8 +13,10 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    home.packages =
-      (lib.optionals cfg.enableDavinciResolve [ pkgs.davinci-resolve ]);
+  config = {
+    home.packages = with pkgs; lib.concatLists [
+      (if cfg.enable && cfg.enableDavinciResolve then [ pkgs.davinci-resolve ] else [])
+    ];
   };
 }
+

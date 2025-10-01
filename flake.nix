@@ -11,6 +11,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     catppuccin.url = "github:catppuccin/nix";
 
     home-manager = {
@@ -65,77 +66,88 @@
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
-  };
 
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    ...
-  } @ inputs: let
-    username = "gelnana";
-    system = "x86_64-linux";
-    allModules = [
-      # Core system
-      ./modules/utilities/system.nix
-      ./modules/utilities/main-user.nix
-
-      # Roles
-      ./modules/roles/audio.nix
-      ./modules/roles/gaming.nix
-      ./modules/roles/mounts.nix
-      ./modules/roles/dev.nix
-
-      # Hardware
-      ./modules/hardware/nvidia.nix
-      ./modules/hardware/bluetooth.nix
-      ./modules/hardware/laptop.nix
-
-      # Services
-      ./modules/services/ssh.nix
-      ./modules/services/soulseek.nix
-      ./modules/services/syncthing.nix
-      ./modules/services/plasma.nix
-
-      # External modules
-      inputs.stylix.nixosModules.stylix
-      inputs.catppuccin.nixosModules.catppuccin
-      inputs.musnix.nixosModules.musnix
-    ];
-
-    homeManagerModule = {
-      home-manager = {
-        useGlobalPkgs = true;
-        useUserPackages = true;
-        extraSpecialArgs = inputs // {inherit username;};
-        users.${username} = import ./users/${username}/home.nix;
-        backupFileExtension = null;
-      };
+    sops-nix = {
+        url = "github:Mic92/sops-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    mkSystem = hostname:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit username inputs;};
-        modules =
-          allModules
-          ++ (if hostname == "laptop"
-                then [ inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia ]
-                else [])
-          ++ [
-            ./hosts/${hostname}
-            ./users/${username}/nixos.nix
-            home-manager.nixosModules.home-manager
-            homeManagerModule
-          ];
-
-      };
-  in {
-    nixosConfigurations = {
-      desktop = mkSystem "desktop";
-      laptop = mkSystem "laptop";
-    };
-
-    formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    impermanence.url = "github:nix-community/impermanence";
   };
+
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+    let
+      username = "gelnana";
+      system = "x86_64-linux";
+
+      # specialArgs shared between NixOS + Home Manager
+      specialArgs = { inherit username inputs; };
+
+      allModules = [
+        # External modules
+        inputs.stylix.nixosModules.stylix
+        inputs.catppuccin.nixosModules.catppuccin
+        inputs.musnix.nixosModules.musnix
+        inputs.impermanence.nixosModules.impermanence
+        inputs.sops-nix.nixosModules.sops
+
+        # Core system
+        ./modules/utilities/system.nix
+        ./modules/utilities/main-user.nix
+
+        # Roles
+        ./modules/roles/audio.nix
+        ./modules/roles/gaming.nix
+        ./modules/roles/dev.nix
+
+        # Hardware
+        ./modules/hardware/nvidia.nix
+        ./modules/hardware/bluetooth.nix
+        ./modules/hardware/laptop.nix
+        ./modules/hardware/mounts.nix
+
+        # Services
+        ./modules/services/ssh.nix
+        ./modules/services/soulseek.nix
+        ./modules/services/syncthing.nix
+        ./modules/services/plasma.nix
+
+        # Themes
+        ./modules/utilities/catppuccin.nix
+        ./modules/utilities/stylix.nix
+      ];
+
+      homeManagerModule = {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          extraSpecialArgs = inputs // specialArgs;
+          users.${username} = import ./users/${username}/home.nix;
+          backupFileExtension = null;
+        };
+      };
+
+      mkSystem = hostname:
+        nixpkgs.lib.nixosSystem {
+          inherit system specialArgs;
+          modules =
+            allModules
+            ++ (if hostname == "laptop"
+                  then [ inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia ]
+                  else [])
+            ++ [
+              ./hosts/${hostname}
+              ./users/${username}/nixos.nix
+              home-manager.nixosModules.home-manager
+              homeManagerModule
+            ];
+        };
+    in {
+      nixosConfigurations = {
+        desktop = mkSystem "desktop";
+        laptop = mkSystem "laptop";
+      };
+
+      formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
+    };
 }
