@@ -30,6 +30,12 @@ in
       default = true;
       description = "Install jupyter";
     };
+
+    age = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Install age encryption";
+      };
   };
 
   config = lib.mkIf cfg.enable {
@@ -38,6 +44,7 @@ in
       (if cfg.yqGo then [ pkgs.yq ] else [])
       (if cfg.htop then [ pkgs.htop ] else [])
       (if cfg.jupyterAll then [ pkgs.jupyter ] else [])
+      (if cfg.age then [ pkgs.age ] else [])
     ];
   };
 }

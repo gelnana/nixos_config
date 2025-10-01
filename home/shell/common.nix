@@ -20,7 +20,7 @@ in {
 
     fastfetchLogo = lib.mkOption {
       type = lib.types.str;
-      default = "${config.home.homeDirectory}/.nixos/.icons/eye.gif";
+      default = Image;
       description = "Path to fastfetch logo image";
     };
 
@@ -36,7 +36,6 @@ in {
       lib.optional cfg.enableDevTools julia-mono
       ++ lib.optional cfg.enableDevTools devenv
       ++ lib.optionals cfg.enableDevTools [
-        alejandra
         deadnix
         statix
       ];
