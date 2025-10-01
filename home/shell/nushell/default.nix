@@ -43,9 +43,11 @@ in {
       '';
 
       shellAliases = {
+        # for editor
         vi = "neovim";
         vim = "neovim";
         nvim = "neovim";
+        # for development
       };
     };
 
