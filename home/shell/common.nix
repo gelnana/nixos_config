@@ -64,13 +64,13 @@ in {
           { type = "custom"; format = "┌─────────────Hardware─────────────┐"; outputColor = "cyan"; }
           {
             type = "host";
-            key = " PC";
+            key = "  PC";
             keyColor = "red";
             format = "{name}";
           }
           {
             type = "cpu";
-            key = "│ ├ ";
+            key = "│ ├ ";
             keyColor = "red";
             format = "{name}";
             showPeCoreCount = false;
@@ -85,7 +85,7 @@ in {
           }
           {
             type = "disk";
-            key = "│ ├ ";
+            key = "│ ├ ";
             folders = "/";
             format = "{size-used}/{size-total}";
             keyColor = "red";
@@ -108,7 +108,7 @@ in {
           }
           {
             type = "kernel";
-            key = "│ ├ ";
+            key = "│ ├ ";
             keyColor = "green";
             format = "{release}";
           }
@@ -126,24 +126,24 @@ in {
           }
           {
             type = "shell";
-            key = "│ └ ";
+            key = "│ └ ";
             keyColor = "green";
           }
           {
             type = "de";
-            key = " DE ";
+            key = " DE ";
             keyColor = "blue";
             format = "{pretty-name}";
           }
           {
             type = "wm";
-            key = "│ ├ ";
+            key = "│ ├ ";
             keyColor = "blue";
             format = "{pretty-name}";
           }
           {
             type = "terminal";
-            key = "│ └ ";
+            key = "│ └ ";
             keyColor = "blue";
           }
           { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }

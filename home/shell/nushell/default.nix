@@ -47,7 +47,6 @@ in {
         vi = "neovim";
         vim = "neovim";
         nvim = "neovim";
-        # for development
       };
     };
 
