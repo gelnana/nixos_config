@@ -81,6 +81,7 @@
         inputs.stylix.nixosModules.stylix
         inputs.catppuccin.nixosModules.catppuccin
         inputs.musnix.nixosModules.musnix
+        inputs.disko.nixosModules.disko
         inputs.impermanence.nixosModules.impermanence
         inputs.sops-nix.nixosModules.sops
 
