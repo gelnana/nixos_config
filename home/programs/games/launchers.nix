@@ -59,8 +59,8 @@ in
           default = true;
           description = "";        
         };
-      
-    }
+    };
+
     config = lib.mkIf cfg.enable {
     home.packages = with pkgs; lib.concatLists [
       (if cfg.minecraft then [ pkgs.prismlauncher ] else [])
