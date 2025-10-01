@@ -1,6 +1,6 @@
 { lib, pkgs, config, ... }:
 let 
-  cfg = cfg.custom.programs.game-launchers;
+  cfg = config.custom.programs.game-launchers;
 in 
 {
   options.custom.programs.game-launchers = {
