@@ -42,18 +42,6 @@
 
     nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
-    hyprland.url = "github:hyprwm/Hyprland";
-
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
-    hyprland-contrib = {
-      url = "github:hyprwm/contrib";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-gaming.url = "github:fufexan/nix-gaming";
 
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging/nix";
