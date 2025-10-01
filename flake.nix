@@ -60,6 +60,11 @@
         inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
     impermanence.url = "github:nix-community/impermanence";
   };
 
@@ -135,7 +140,7 @@
         desktop = mkSystem "desktop";
         laptop = mkSystem "laptop";
       };
-
+      packages.${system}.live = self.nixosConfigurations.live.config.system.build.isoImage;
       formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
 }
