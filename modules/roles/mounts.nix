@@ -1,4 +1,12 @@
-{ 
+{ lib, config, pkgs, ... }:
+
+let cfg = config.custom.mounts; in
+{
+  options.custom.mounts = {
+    enable = lib.mkEnableOption "Enable custom mounts";
+  };
+
+  config = lib.mkIf cfg.enable {
  fileSystems."/mnt/galatea" = {
     device = "/dev/disk/by-uuid/cd7fb9d4-168b-4004-a434-9fe331d76fd3";
     fsType = "ext4";
