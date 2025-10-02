@@ -59,7 +59,12 @@
         url = "github:Mic92/sops-nix";
         inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+   
+    secrets = {
+        url = "git+ssh:gelnana/secrets.git?shallow=1";
+        flake = false;
+      }
+   
     impermanence.url = "github:nix-community/impermanence";
   };
 
@@ -100,7 +105,6 @@
         # Services
         ./modules/services/ssh.nix
         ./modules/services/soulseek.nix
-        ./modules/services/syncthing.nix
         ./modules/services/plasma.nix
         # ./modules/services/persist.nix
 
