@@ -49,8 +49,8 @@ in
       hideMounts = true;
       files = [ "/etc/machine-id" ] ++ cfg.root.files;
       directories = [
-        "/var/log" # systemd journal is stored in /var/log/journal
-        "/var/lib/nixos" # for persisting user uids and gids
+        "/var/log"
+        "/var/lib/nixos"
       ] ++ cfg.root.directories;
 
       users.${user} = {

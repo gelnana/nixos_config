@@ -21,6 +21,12 @@
       enableForceBlur = true;
     };
 
+    disko = {
+      device = "/dev/nvme0n1";
+      bootSize = "1G";
+      useZfs = false;
+    };
+
     # Software roles
     gaming = {
       enable = true;

@@ -59,11 +59,6 @@
         url = "github:Mic92/sops-nix";
         inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     
     impermanence.url = "github:nix-community/impermanence";
   };
@@ -81,9 +76,8 @@
         inputs.stylix.nixosModules.stylix
         inputs.catppuccin.nixosModules.catppuccin
         inputs.musnix.nixosModules.musnix
-        inputs.disko.nixosModules.disko
-        inputs.impermanence.nixosModules.impermanence
-        inputs.sops-nix.nixosModules.sops
+        # inputs.impermanence.nixosModules.impermanence
+        # inputs.sops-nix.nixosModules.sops
 
         # Core system
         ./modules/utilities/system.nix
@@ -93,18 +87,22 @@
         ./modules/roles/audio.nix
         ./modules/roles/gaming.nix
         ./modules/roles/dev.nix
+        # ./modules/roles/impermanence.nix
 
         # Hardware
         ./modules/hardware/nvidia.nix
         ./modules/hardware/bluetooth.nix
         ./modules/hardware/laptop.nix
         ./modules/hardware/mounts.nix
+        # ./modules/disko-config.nix
+    
 
         # Services
         ./modules/services/ssh.nix
         ./modules/services/soulseek.nix
         ./modules/services/syncthing.nix
         ./modules/services/plasma.nix
+        # ./modules/services/persist.nix
 
         # Themes
         ./modules/utilities/catppuccin.nix

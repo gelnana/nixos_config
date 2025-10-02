@@ -29,11 +29,32 @@ in {
 
   config = lib.mkIf cfg.enable {
     services.openssh.enable = true;
-    services.openssh.settings = {
-      X11Forwarding = cfg.enableX11Forwarding;
-      PermitRootLogin = cfg.permitRootLogin;
-      PasswordAuthentication = cfg.passwordAuthentication;
+    services.openssh = {
+      settings = {
+        X11Forwarding = cfg.enableX11Forwarding;
+        PermitRootLogin = cfg.permitRootLogin;
+        PasswordAuthentication = cfg.passwordAuthentication;
+        };
+      openFirewall = cfg.openFirewall;
+      allowSFTP = true;
     };
-    services.openssh.openFirewall = cfg.openFirewall;
   };
+
+        # persist keyring and misc other secrets
+      custom.persist.home = {
+        directories = [
+          ".pki"
+          ".ssh"
+          ".local/share/.gnupg"
+          ".local/share/keyrings"
+        ];
+      };
+      custom.persist.root = {
+        directories = [
+          "/root/.pki"
+          "/root/.ssh"
+          "/root/.local/share/.gnupg"
+          "/root/.local/share/keyrings"
+        ];
+      };
 }
