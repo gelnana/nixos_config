@@ -99,7 +99,6 @@
         ./modules/hardware/bluetooth.nix
         ./modules/hardware/laptop.nix
         ./modules/hardware/mounts.nix
-        # ./modules/disko-config.nix
     
 
         # Services

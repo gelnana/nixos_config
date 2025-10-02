@@ -27,26 +27,10 @@ let
                 ++ (with pkgs; [
                   btop
                   git
-                  eza
-                  yazi
-                  helix
+                  nu
+                  neovim
                 ]);
-              shellAliases = {
-                eza = "eza '--icons' '--group-directories-first' '--header' '--octal-permissions' '--hyperlink'";
-                ls = "eza";
-                ll = "eza -l";
-                la = "eza -a";
-                lla = "eza -la";
-                t = "eza -la --git-ignore --icons --tree --hyperlink --level 3";
-                tree = "eza -la --git-ignore --icons --tree --hyperlink --level 3";
-                zz = "zellij";
-                # y = "yazi";
               };
-            };
-
-            programs = {
-              # bye bye nano
-              nano.enable = false;
             };
 
             # quality of life

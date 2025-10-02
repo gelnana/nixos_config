@@ -3,7 +3,7 @@
 set -e
 
 echo "Current latest remote commit:"
-git ls-remote -h https://github.com/gelnana/nixos_config/tree/refactor
+git ls-remote -h https://github.com/gelnana/nixos_config.git 
 echo ""
 
 # Check for fzf
