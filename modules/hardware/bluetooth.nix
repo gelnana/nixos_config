@@ -34,10 +34,11 @@ in {
     };
 
     services.blueman.enable = cfg.enableBlueman;
-  };
+
     custom.persist = {
       root.directories = [
         "/var/lib/bluetooth"
       ];
     };
+  };
 }

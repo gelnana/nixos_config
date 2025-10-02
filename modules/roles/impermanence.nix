@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  user,
+  username,
   ...
 }:
 let
@@ -53,7 +53,7 @@ in
         "/var/lib/nixos"
       ] ++ cfg.root.directories;
 
-      users.${user} = {
+      users.${username} = {
         files = cfg.home.files ++ hmPersistCfg.home.files;
         directories = [
           "pr"
@@ -68,7 +68,7 @@ in
       hideMounts = true;
       directories = cfg.root.cache;
 
-      users.${user} = {
+      users.${username} = {
         directories = hmPersistCfg.home.cache;
       };
     };
