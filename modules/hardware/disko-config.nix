@@ -1,123 +1,163 @@
 {
-  disko.devices = {
-    disk = {
-      x = {
-        type = "disk";
-        device = "/dev/sdx";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              size = "64M";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = [ "umask=0077" ];
-              };
-            };
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zroot";
-              };
-            };
-          };
-        };
-      };
-      y = {
-        type = "disk";
-        device = "/dev/sdy";
-        content = {
-          type = "gpt";
-          partitions = {
-            zfs = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "zroot";
-              };
-            };
-          };
-        };
-      };
+  config,
+  lib,
+  ...
+}:
+let
+  cfg = config.custom.disko;
+in
+{
+  options.custom.disko = {
+    device = lib.mkOption {
+      type = lib.types.str;
+      description = "Primary disk device path";
+      example = "/dev/nvme0n1";
     };
-    zpool = {
-      zroot = {
-        type = "zpool";
-        mode = "mirror";
-        # Workaround: cannot import 'zroot': I/O error in disko tests
-        options.cachefile = "none";
-        rootFsOptions = {
-          compression = "zstd";
-          "com.sun:auto-snapshot" = "false";
-        };
-        mountpoint = "/";
-        postCreateHook = "zfs list -t snapshot -H -o name | grep -E '^zroot@blank$' || zfs snapshot zroot@blank";
 
-        datasets = {
-          zfs_fs = {
-            type = "zfs_fs";
-            mountpoint = "/zfs_fs";
-            options."com.sun:auto-snapshot" = "true";
-          };
-          zfs_unmounted_fs = {
-            type = "zfs_fs";
-            options.mountpoint = "none";
-          };
-          zfs_legacy_fs = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = "/zfs_legacy_fs";
-          };
-          zfs_volume = {
-            type = "zfs_volume";
-            size = "10M";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/ext4onzfs";
+    bootSize = lib.mkOption {
+      type = lib.types.str;
+      default = "1G";
+      description = "Size of the boot partition";
+    };
+
+    useZfs = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Use ZFS with snapshots instead of btrfs";
+    };
+  };
+
+  config = lib.mkIf (cfg.device != null) {
+    disko.devices = {
+      disk = {
+        main = {
+          type = "disk";
+          device = cfg.device;
+          content = {
+            type = "gpt";
+            partitions = {
+              ESP = {
+                size = cfg.bootSize;
+                type = "EF00";
+                content = {
+                  type = "filesystem";
+                  format = "vfat";
+                  mountpoint = "/boot";
+                  mountOptions = [ "umask=0077" ];
+                };
+              };
+
+              primary = lib.mkMerge [
+                {
+                  size = "100%";
+                }
+
+                # ZFS
+                (lib.mkIf cfg.useZfs {
+                  content = {
+                    type = "zfs";
+                    pool = "zroot";
+                  };
+                })
+
+                # Btrfs
+                (lib.mkIf (!cfg.useZfs) {
+                  content = {
+                    type = "btrfs";
+                    extraArgs = [ "-f" ];
+                    subvolumes = {
+                      "/nix" = {
+                        mountpoint = "/nix";
+                        mountOptions = [ "compress=zstd" "noatime" ];
+                      };
+                      "/persist" = {
+                        mountpoint = "/persist";
+                        mountOptions = [ "compress=zstd" ];
+                      };
+                      "/persist/cache" = {
+                        mountpoint = "/persist/cache";
+                        mountOptions = [ "compress=zstd" "noatime" ];
+                      };
+                    };
+                  };
+                })
+              ];
             };
           };
-          zfs_volume_no_content = {
-            type = "zfs_volume";
-            size = "10M";
+        };
+      };
+
+      # ZFS pool configuration (only if using ZFS)
+      zpool = lib.mkIf cfg.useZfs {
+        zroot = {
+          type = "zpool";
+          rootFsOptions = {
+            compression = "zstd";
+            acltype = "posixacl";
+            xattr = "sa";
+            atime = "off";
+            "com.sun:auto-snapshot" = "false";
           };
-          zfs_encryptedvolume = {
-            type = "zfs_volume";
-            size = "10M";
-            options = {
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "file:///tmp/secret.key";
+
+          postCreateHook = ''
+            zfs snapshot zroot/root@blank
+          '';
+
+          datasets = {
+            root = {
+              type = "zfs_fs";
+              mountpoint = "/";
+              options.mountpoint = "legacy";
+              postCreateHook = ''
+                zfs snapshot zroot/root@blank
+              '';
             };
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/ext4onzfsencrypted";
+
+            nix = {
+              type = "zfs_fs";
+              mountpoint = "/nix";
+              options = {
+                atime = "off";
+                canmount = "on";
+                mountpoint = "legacy";
+              };
             };
-          };
-          encrypted = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "none";
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "file:///tmp/secret.key";
+
+            persist = {
+              type = "zfs_fs";
+              mountpoint = "/persist";
+              options = {
+                canmount = "on";
+                mountpoint = "legacy";
+              };
             };
-            # use this to read the key during boot
-            # postCreateHook = ''
-            #   zfs set keylocation="prompt" "zroot/$name";
-            # '';
-          };
-          "encrypted/test" = {
-            type = "zfs_fs";
-            mountpoint = "/zfs_crypted";
+
+            "persist/cache" = {
+              type = "zfs_fs";
+              mountpoint = "/persist/cache";
+              options = {
+                canmount = "on";
+                mountpoint = "legacy";
+                "com.sun:auto-snapshot" = "false";
+              };
+            };
           };
         };
       };
     };
+
+    fileSystems = {
+      "/nix".neededForBoot = true;
+      "/persist".neededForBoot = true;
+      "/persist/cache".neededForBoot = true;
+    };
+
+    # Enable ZFS support if using ZFS
+    boot.supportedFilesystems = lib.mkIf cfg.useZfs [ "zfs" ];
+
+    # ZFS requires a unique hostId
+    networking.hostId = lib.mkIf cfg.useZfs (
+      lib.mkDefault (builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName))
+    );
   };
 }
