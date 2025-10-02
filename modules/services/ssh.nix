@@ -39,21 +39,22 @@ in {
       allowSFTP = true;
     };
         # persist keyring and misc other secrets
-#      custom.persist.home = {
-#        directories = [
-#          ".pki"
-#          ".ssh"
-#          ".local/share/.gnupg"
-#          ".local/share/keyrings"
-#        ];
-#      };
-#      custom.persist.root = {
-#        directories = [
-#          "/root/.pki"
-#          "/root/.ssh"
-#          "/root/.local/share/.gnupg"
-#          "/root/.local/share/keyrings"
-#        ];
-#      };
+      custom.persist.home = {
+        directories = [
+          ".pki"
+          ".ssh"
+          ".secrets"
+          ".local/share/.gnupg"
+          ".local/share/keyrings"
+        ];
+      };
+      custom.persist.root = {
+        directories = [
+          "/root/.pki"
+          "/root/.ssh"
+          "/root/.local/share/.gnupg"
+          "/root/.local/share/keyrings"
+        ];
+      };
 };
 }

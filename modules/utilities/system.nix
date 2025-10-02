@@ -52,4 +52,8 @@
     unrar
     fastfetch
   ];
+  custom.persist.home.directories = [
+  ".nixos"
+  ".secrets"
+  ];
 }

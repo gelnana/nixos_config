@@ -4,9 +4,10 @@
   # NixOS Configuration
   #
   ##################################################################################################################
+sops.secrets.gelnana-password.neededForUsers = true;
 
   users.users.gelnana = {
-
+    
   };
 }
 

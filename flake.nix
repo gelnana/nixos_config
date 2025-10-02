@@ -63,7 +63,7 @@
     secrets = {
         url = "git+ssh:gelnana/secrets.git?shallow=1";
         flake = false;
-      }
+      };
    
     impermanence.url = "github:nix-community/impermanence";
   };
@@ -81,8 +81,8 @@
         inputs.stylix.nixosModules.stylix
         inputs.catppuccin.nixosModules.catppuccin
         inputs.musnix.nixosModules.musnix
-        # inputs.impermanence.nixosModules.impermanence
-        # inputs.sops-nix.nixosModules.sops
+        inputs.impermanence.nixosModules.impermanence
+        inputs.sops-nix.nixosModules.sops
 
         # Core system
         ./modules/utilities/system.nix
@@ -92,20 +92,19 @@
         ./modules/roles/audio.nix
         ./modules/roles/gaming.nix
         ./modules/roles/dev.nix
-        # ./modules/roles/impermanence.nix
+        ./modules/roles/impermanence.nix
 
         # Hardware
         ./modules/hardware/nvidia.nix
         ./modules/hardware/bluetooth.nix
         ./modules/hardware/laptop.nix
-        ./modules/hardware/mounts.nix
-    
-
+        ./modules/hardware/zfs.nix
+        
         # Services
         ./modules/services/ssh.nix
         ./modules/services/soulseek.nix
         ./modules/services/plasma.nix
-        # ./modules/services/persist.nix
+        ./modules/services/persist.nix
 
         # Themes
         ./modules/utilities/catppuccin.nix
@@ -141,8 +140,11 @@
       nixosConfigurations = {
         desktop = mkSystem "desktop";
         laptop = mkSystem "laptop";
+        live = (import ./default.nix {
+          inherit inputs system;
+          lib = nixpkgs.lib;
+        }).gnome-iso;
       };
-      packages.${system}.live = self.nixosConfigurations.live.config.system.build.isoImage;
       formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
 }
