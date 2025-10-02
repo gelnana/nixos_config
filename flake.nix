@@ -125,7 +125,9 @@
         nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
           modules =
-            allModules
+            (if hostname == "live"
+                      then []
+                      else allModules)
             ++ (if hostname == "laptop"
                   then [ inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia ]
                   else [])
@@ -133,7 +135,9 @@
               ./hosts/${hostname}
               ./users/${username}/nixos.nix
               home-manager.nixosModules.home-manager
-              homeManagerModule
+              (if hostname != "live"
+                      then homeManagerModule
+                      else {})
             ];
         };
     in {

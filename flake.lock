@@ -724,6 +724,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_5",
         "nixvim": "nixvim",
+        "secrets": "secrets",
         "sops-nix": "sops-nix",
         "stylix": "stylix",
         "tidalcycles": "tidalcycles",
@@ -745,6 +746,23 @@
         "ref": "nightly",
         "repo": "rust-analyzer",
         "type": "github"
+      }
+    },
+    "secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759438706,
+        "narHash": "sha256-lbvIzvmtnXlRlW1J11yv9rwQdtYZs/DdZ7YQ4KKzrFQ=",
+        "ref": "refs/heads/main",
+        "rev": "292144701b7673a9cd23910f1675518fed4a3671",
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/gelnana/secrets.git"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "ssh://git@github.com/gelnana/secrets.git"
       }
     },
     "sf-arabic": {
