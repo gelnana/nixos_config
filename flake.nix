@@ -61,9 +61,9 @@
     };
    
     secrets = {
-        url = "git+ssh:gelnana/secrets.git?shallow=1";
-        flake = false;
-      };
+      url = "git+ssh://git@github.com/gelnana/secrets.git?shallow=1";
+      flake = false;
+    };
    
     impermanence.url = "github:nix-community/impermanence";
   };
