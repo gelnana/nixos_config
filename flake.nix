@@ -125,9 +125,7 @@
         nixpkgs.lib.nixosSystem {
           inherit system specialArgs;
           modules =
-            (if hostname == "live"
-                      then []
-                      else allModules)
+            allModules
             ++ (if hostname == "laptop"
                   then [ inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia ]
                   else [])
@@ -135,16 +133,17 @@
               ./hosts/${hostname}
               ./users/${username}/nixos.nix
               home-manager.nixosModules.home-manager
-              (if hostname != "live"
-                      then homeManagerModule
-                      else {})
+              homeManagerModule
             ];
         };
     in {
       nixosConfigurations = {
         desktop = mkSystem "desktop";
         laptop = mkSystem "laptop";
-        live = mkSystem "live";
+        live = (import ./hosts/live {
+          inherit inputs system;
+          lib = nixpkgs.lib;
+        }).gnome-iso;
       };
       formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
