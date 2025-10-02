@@ -444,7 +444,7 @@ zfs list -t filesystem
 
 echo ""
 # use fzf to select host
-host=$(echo -e "desktop\nomen" | fzf --prompt="Select a host to install: ")
+host=$(echo -e "desktop\laptop" | fzf --prompt="Select a host to install: ")
 echo "Selected host: ${host}"
 
 echo ""
@@ -456,5 +456,5 @@ if [[ $flake_path == "y" ]]; then
 else
     read -rp "Enter git rev for flake (default: master): " git_rev
     echo "Recovering NixOS..."
-    sudo nixos-install --flake "github:noisetide/rotfiles/${git_rev:-master}#$host"
+    sudo nixos-install --flake "github:gelnana/nixos_config/${git_rev:-master}#$host"
 fi
