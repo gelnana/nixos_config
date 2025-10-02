@@ -5,7 +5,8 @@
   ...
 }:
 let
-  repo_url = "https://github.com/gelnana/nixos_config";
+  repo_url = "https://github.com/gelnana/nixos-config";
+
   mkIso =
     nixpkgs: isoPath:
     lib.nixosSystem {
@@ -21,19 +22,32 @@ let
                   (pkgs.writeShellApplication {
                     name = "gelnana-install";
                     runtimeInputs = [ pkgs.curl ];
-                    text = "sh <(curl -L ${repo_url}/main/install.sh)";
+                    text = "sh <(curl -L ${repo_url}/raw/refs/heads/main/install.sh)";
                   })
                 ]
                 ++ (with pkgs; [
                   btop
                   git
-                  nu
-                  neovim
+                  eza
+                  yazi
+                  helix
                 ]);
+              shellAliases = {
+                eza = "eza '--icons' '--group-directories-first' '--header' '--octal-permissions' '--hyperlink'";
+                ls = "eza";
+                ll = "eza -l";
+                la = "eza -a";
+                lla = "eza -la";
+                t = "eza -la --git-ignore --icons --tree --hyperlink --level 3";
+                tree = "eza -la --git-ignore --icons --tree --hyperlink --level 3";
+                zz = "zellij";
               };
             };
 
-            # quality of life
+            programs = {
+              nano.enable = false;
+            };
+
             nix.settings = {
               experimental-features = [
                 "nix-command"
@@ -56,10 +70,7 @@ let
     };
 in
 {
-  gnome-iso = mkIso inputs.nixpkgs-stable "installation-cd-graphical-calamares-gnome";
-  kde-iso = mkIso inputs.nixpkgs-stable "installation-cd-graphical-calamares-plasma5";
-  minimal-iso = mkIso inputs.nixpkgs-stable "installation-cd-minimal";
-  gnome-iso-unstable = mkIso inputs.nixpkgs "installation-cd-graphical-calamares-gnome";
-  kde-iso-unstable = mkIso inputs.nixpkgs "installation-cd-graphical-calamares-plasma5";
-  minimal-iso-unstable = mkIso inputs.nixpkgs "installation-cd-minimal";
+  gnome-iso = mkIso inputs.nixpkgs "installation-cd-graphical-calamares-gnome";
+  kde-iso = mkIso inputs.nixpkgs "installation-cd-graphical-calamares-plasma6";
+  minimal-iso = mkIso inputs.nixpkgs "installation-cd-minimal";
 }

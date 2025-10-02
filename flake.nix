@@ -144,10 +144,7 @@
       nixosConfigurations = {
         desktop = mkSystem "desktop";
         laptop = mkSystem "laptop";
-        live = (import ./default.nix {
-          inherit inputs system;
-          lib = nixpkgs.lib;
-        }).gnome-iso;
+        live = mkSystem "live";
       };
       formatter.${system} = nixpkgs.legacyPackages.${system}.alejandra;
     };
