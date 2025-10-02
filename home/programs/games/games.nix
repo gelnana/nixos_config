@@ -25,10 +25,10 @@ in
       description = "Game modding tools";
     };
   };
-    custom.persist = {
-      home.directories = [
-        ".local/share/Steam"
-        ".steam"
-      ];
-    };
+  #  custom.persist = {
+  #    home.directories = [
+  #      ".local/share/Steam"
+  #      ".steam"
+  #    ];
+  #  };
 }

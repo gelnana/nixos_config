@@ -23,10 +23,10 @@ in {
 
     };
 
-    custom.persist = {
-      root.directories = [
-        "/var/lib/bluetooth"
-      ];
-    };
+ #   custom.persist = {
+ #     root.directories = [
+ #       "/var/lib/bluetooth"
+ #     ];
+#    };
   };
 }
