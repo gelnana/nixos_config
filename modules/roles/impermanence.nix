@@ -1,14 +1,7 @@
-{
-  config,
-  lib,
-  username,
-  ...
-}:
+{ config, lib, username, ... }:
 let
   cfg = config.custom.persist;
-  hmPersistCfg = config.home-manager.custom.persist;
-in
-{
+in {
   # NOTE: see zfs.nix for filesystem declarations, filesystem creation is handled via install.sh
 
   boot = {
@@ -23,8 +16,6 @@ in
   };
 
   # replace root filesystem with tmpfs
-  # neededForBoot is required, so there won't be permission errors creating directories or symlinks
-  # https://github.com/nix-community/impermanence/issues/149#issuecomment-1806604102
   fileSystems = {
     "/" = lib.mkIf cfg.tmpfs (
       lib.mkForce {
@@ -40,7 +31,6 @@ in
     );
   };
 
-  # shut sudo up
   security.sudo.extraConfig = "Defaults lecture=never";
 
   # setup persistence
@@ -54,13 +44,13 @@ in
       ] ++ cfg.root.directories;
 
       users.${username} = {
-        files = cfg.home.files ++ hmPersistCfg.home.files;
+        files = cfg.home.files;
         directories = [
           "pr"
           "nt"
           ".cache/dconf"
           ".config/dconf"
-        ] ++ cfg.home.directories ++ hmPersistCfg.home.directories;
+        ] ++ cfg.home.directories;
       };
     };
 
@@ -69,7 +59,7 @@ in
       directories = cfg.root.cache;
 
       users.${username} = {
-        directories = hmPersistCfg.home.cache;
+        directories = cfg.home.cache;
       };
     };
   };
