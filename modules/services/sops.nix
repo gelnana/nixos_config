@@ -34,7 +34,7 @@ in
     };
 
     custom.persist = {
-      home.directories = [ ".ssh" "/.config/sops" ];
+      home.directories = [ ".ssh" ".config/sops/age" ];
       root = {
         files = [
           "/etc/shadow/root"
