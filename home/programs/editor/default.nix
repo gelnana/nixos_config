@@ -151,9 +151,8 @@ in {
             # Container/DevOps
           devops = with pkgs; [
             docker-compose-language-service
-            dockerfile-language-server-nodejs
+            dockerfile-language-server
             yaml-language-server
-            ansible-language-server
             terraform-ls
             helm-ls
           ];
