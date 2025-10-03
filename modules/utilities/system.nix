@@ -46,11 +46,15 @@
     git
     unrar
     fastfetch
+    sops
+    age
   ];
+
   custom.persist.home.directories = [
     ".nixos"
     ".secrets"
   ];
+
   custom.persist.root.directories = [
     "/etc/NetworkManager"
   ];
