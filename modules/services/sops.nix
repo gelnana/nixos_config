@@ -19,6 +19,7 @@ in
   config = lib.mkIf config.custom.sops.enable {
     sops = {
       defaultSopsFile = "${secretspath}/secrets.yaml";
+      validateSopsFiles = false;
       age = {
         sshKeyPaths = [ "/persist${homeDir}/.ssh/id_ed25519-desk" ];
         keyFile = "/persist${homeDir}/.config/sops/age/keys.txt";
