@@ -19,7 +19,7 @@ in {
 
     hashedPasswordFile = lib.mkOption {
       type = lib.types.nullOr lib.types.path;
-      default = "/persist/etc/shadow/${username}";
+      default = "/etc/shadow/${username}";
       description = "Path to file containing hashed password";
     };
 
