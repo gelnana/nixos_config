@@ -1,9 +1,4 @@
 { pkgs, lib, username, ... }: {
-  # Enable main user
-  main-user = {
-    enable = true;
-    userName = username;
-  };
   # Boot configuration
   boot.plymouth = {
     enable = true;
