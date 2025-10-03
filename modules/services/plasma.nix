@@ -52,5 +52,12 @@ in {
 
 
     programs.kdeconnect.enable = lib.mkIf cfg.enableKdeconnect true;
+
+    custom.persist = lib.mkIf cfg.enable {
+      root.directories = [
+        "~/.local/share/plasma"
+        "~/.local/share/plasmoid*"
+      ];
+    };
   });
 }
