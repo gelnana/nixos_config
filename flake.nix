@@ -104,6 +104,7 @@
         ./modules/services/ssh.nix
         ./modules/services/soulseek.nix
         ./modules/services/plasma.nix
+        ./modules/services/persist.nix
 
         # Themes
         ./modules/utilities/catppuccin.nix

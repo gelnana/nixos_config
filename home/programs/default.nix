@@ -30,6 +30,5 @@
     ./web/firefox.nix
     ./xdg.nix
     ./media.nix
-    ./persist.nix
   ];
 }
