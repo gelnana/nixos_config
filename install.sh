@@ -444,7 +444,7 @@ zfs list -t filesystem
 
 echo ""
 # use fzf to select host
-host=$(echo -e "desktop\laptop" | fzf --prompt="Select a host to install: ")
+host=$(echo -e "desktop\nlaptop" | fzf --prompt="Select a host to install: ")
 echo "Selected host: ${host}"
 
 echo ""

@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.custom.persist;
-  hmPersistCfg = config.hm.custom.persist;
+  hmPersistCfg = config.home-manager.custom.persist;
 in
 {
   # NOTE: see zfs.nix for filesystem declarations, filesystem creation is handled via install.sh
