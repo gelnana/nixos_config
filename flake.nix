@@ -88,7 +88,7 @@
         ./modules/utilities/system.nix
         # ./modules/roles/sops.nix
         ./modules/utilities/main-user.nix
-        ./modules/hardware/persist.nix
+        # ./modules/hardware/persist.nix
 
         # Roles
         ./modules/roles/audio.nix
