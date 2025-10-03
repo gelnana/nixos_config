@@ -58,6 +58,11 @@ in {
         ];
         description = "Files to persist in home directory";
       };
+        cache = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          default = [ ".cache" ];
+          description = "Cache directories in home that persist separately";
+      };
     };
 
     tmpfs = lib.mkEnableOption "Use tmpfs for root instead of snapshots" // {
