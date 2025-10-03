@@ -53,7 +53,10 @@
     fastfetch
   ];
   custom.persist.home.directories = [
-  ".nixos"
-  ".secrets"
+    ".nixos"
+    ".secrets"
+  ];
+  custom.persist.root.directories = [
+    "/etc/NetworkManager"
   ];
 }
