@@ -19,13 +19,15 @@ in
   config = lib.mkIf config.custom.sops.enable {
     sops = {
       defaultSopsFile = "${secretspath}/secrets.yaml";
-      validateSopsFiles = false;
       age = {
-        sshKeyPaths = [ "/persist${homeDir}/.ssh/id_ed25519-desk" ];
-        keyFile = "/persist/etc/sops/age/keys.txt";
+        sshKeyPaths = [];
+        keyFile = "/etc/sops/age/keys.txt";
         generateKey = false;
       };
       secrets = {
+        root-password = {
+          neededForUsers = true;
+        };
         gelnana-password = {
           neededForUsers = true;
         };
@@ -37,17 +39,20 @@ in
       };
     };
 
+    users.users = {
+      root.hashedPasswordFile = lib.mkForce config.sops.secrets.root-password.path;
+      ${username}.hashedPasswordFile = lib.mkForce config.sops.secrets.gelnana-password.path;
+    };
+
     users.users.${username}.extraGroups = [ config.users.groups.keys.name ];
 
     custom.persist = {
-      home = {
-        directories = [
-          ".ssh"
-        ];
-      };
+      home.directories = [ ".ssh" ];
       root = {
-        directories = [
-          "/etc/sops"
+        files = [
+          "/etc/shadow/root"
+          "/etc/shadow/${username}"
+          "/etc/sops/age/keys.txt"
         ];
       };
     };

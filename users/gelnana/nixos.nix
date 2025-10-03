@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, pkgs, username, ... }:
 {
   ##################################################################################################################
   #
@@ -6,9 +6,22 @@
   #
   ##################################################################################################################
 
-  main-user = {
-    enable = true;
-    userName = "gelnana";
-    hashedPasswordFile = config.sops.secrets.gelnana-password.path;
+  users = {
+    mutableUsers = false;
+
+    users.${username} = {
+      isNormalUser = true;
+      description = username;
+      shell = pkgs.nushell;
+      extraGroups = [ "wheel" "networkmanager" "video" "audio" "input" ];
+      initialPassword = "password";
+      hashedPasswordFile = "/persist/etc/shadow/${username}";
+    };
+
+    users.root = {
+      initialPassword = "password";
+      hashedPasswordFile = "/persist/etc/shadow/root";
+    };
   };
+
 }
