@@ -22,7 +22,7 @@ in
       validateSopsFiles = false;
       age = {
         sshKeyPaths = [ "/persist${homeDir}/.ssh/id_ed25519-desk" ];
-        keyFile = "/persist${homeDir}/.config/sops/age/keys.txt";
+        keyFile = "/persist/etc/sops/age/keys.txt";
         generateKey = false;
       };
       secrets = {
@@ -39,11 +39,17 @@ in
 
     users.users.${username}.extraGroups = [ config.users.groups.keys.name ];
 
-    custom.persist.home = {
-      directories = [
-        ".config/sops"
-        ".ssh"
-      ];
+    custom.persist = {
+      home = {
+        directories = [
+          ".ssh"
+        ];
+      };
+      root = {
+        directories = [
+          "/etc/sops"
+        ];
+      };
     };
   };
 }
