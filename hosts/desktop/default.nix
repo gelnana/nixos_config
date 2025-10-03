@@ -44,7 +44,7 @@
     };
 
     # Extra storage!
-    custom.zfs.storage = {
+    zfs.storage = {
       enable = true;
       nvme2tb = true;
       stsea4tb = true;
