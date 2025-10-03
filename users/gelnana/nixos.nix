@@ -1,4 +1,4 @@
-{ config, lib, pkgs, username, ... }:
+{ config, lib, pkgs, ... }:
 {
   ##################################################################################################################
   #
@@ -6,22 +6,16 @@
   #
   ##################################################################################################################
 
-  users = {
+  # Configure main user with persisted password fallback
+  main-user = {
+    enable = true;
+    userName = "gelnana";
     mutableUsers = false;
-
-    users.${username} = {
-      isNormalUser = true;
-      description = username;
-      shell = pkgs.nushell;
-      extraGroups = [ "wheel" "networkmanager" "video" "audio" "input" ];
-      initialPassword = "password";
-      hashedPasswordFile = "/persist/etc/shadow/${username}";
-    };
-
-    users.root = {
-      initialPassword = "password";
-      hashedPasswordFile = "/persist/etc/shadow/root";
-    };
   };
 
+  # Configure root user with same fallback strategy
+  users.users.root = {
+    initialPassword = "changeme";  # Emergency fallback
+    hashedPasswordFile = "/persist/etc/shadow/root";  # Primary fallback
+  };
 }
