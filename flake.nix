@@ -87,7 +87,7 @@
         # Core system
         ./modules/utilities/system.nix
         ./modules/utilities/main-user.nix
-        ./modules/utilities/persist.nix
+        ./modules/hardware/persist.nix
 
         # Roles
         ./modules/roles/audio.nix
@@ -132,6 +132,7 @@
                   else [])
             ++ [
               ./hosts/${hostname}
+              ./hosts/${hostname}/hardware.nix
               ./users/${username}/nixos.nix
               home-manager.nixosModules.home-manager
               homeManagerModule
