@@ -20,8 +20,8 @@ in
     sops = {
       defaultSopsFile = "${secretspath}/secrets.yaml";
       age = {
-        sshKeyPaths = [/persist${homeDir}/.ssh/id_ed25519-desk];
-        keyFile = "";
+        sshKeyPaths = [ "/persist${homeDir}/.ssh/id_ed25519-desk" ];
+        keyFile = "/persist${homeDir}/.config/sops/age/keys.txt";
         generateKey = false;
       };
       secrets = {
