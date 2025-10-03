@@ -49,13 +49,13 @@
     };
 
 
-      bluetooth = {
+      hardware.bluetooth = {
         enable = true;
         powerOnBoot = false;
         showBattery = true;
       };
 
-      laptop = {
+      hardware.laptop = {
         enable = true;
         powerManagement = "tlp";
         tlp = {
