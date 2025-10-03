@@ -78,14 +78,15 @@
 
       allModules = [
         # External modules
+        # inputs.sops-nix.nixosModules.sops
         inputs.stylix.nixosModules.stylix
         inputs.catppuccin.nixosModules.catppuccin
         inputs.musnix.nixosModules.musnix
         inputs.impermanence.nixosModules.impermanence
-        inputs.sops-nix.nixosModules.sops
 
         # Core system
         ./modules/utilities/system.nix
+        # ./modules/roles/sops.nix
         ./modules/utilities/main-user.nix
         ./modules/hardware/persist.nix
 
