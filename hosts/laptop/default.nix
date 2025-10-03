@@ -46,8 +46,8 @@
     };
 
     zfs.storage = {
-      enable = false;
-      data = false;
+      enable = true;
+      data = true;
       archive = false;
     };
 
