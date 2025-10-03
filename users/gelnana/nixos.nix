@@ -13,9 +13,4 @@
     mutableUsers = false;
   };
 
-  # Configure root user with same fallback strategy
-  users.users.root = {
-    initialPassword = "changeme";  # Emergency fallback
-    hashedPasswordFile = "/persist/etc/shadow/root";  # Primary fallback
-  };
 }

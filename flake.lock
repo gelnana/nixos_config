@@ -751,10 +751,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1759525973,
-        "narHash": "sha256-tEyd8oYgTQXf8hc9tNuKKl/rY3AlqCEVAbkmIeNMVys=",
+        "lastModified": 1759531793,
+        "narHash": "sha256-iD1lNvt8tOBha7y6VqubHoAbo72hJ1DTDlmVpabOYGs=",
         "ref": "refs/heads/main",
-        "rev": "083d7d55a6a5ca9758da2628d00a6b87533e0145",
+        "rev": "f4d5921ec812527ffe579a2d9b77177b5594c3b1",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gelnana/secrets.git"

@@ -63,9 +63,9 @@ in {
       shell = cfg.shell;
       extraGroups = cfg.extraGroups;
       initialPassword = cfg.initialPassword;
-    } // (if cfg.hashedPasswordFile != null
-          then { hashedPasswordFile = cfg.hashedPasswordFile; }
-          else {});
+    #} // (if cfg.hashedPasswordFile != null
+    #      then { hashedPasswordFile = cfg.hashedPasswordFile; }
+    #      else {});
 
     security.sudo.enable = cfg.enableSudo;
     environment.shells = [ cfg.shell ];

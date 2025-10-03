@@ -20,17 +20,11 @@ in
     sops = {
       defaultSopsFile = "${secretspath}/secrets.yaml";
       age = {
-        sshKeyPaths = [];
-        keyFile = "/etc/sops/age/keys.txt";
+        sshKeyPaths = [/persist${homeDir}/.ssh/id_ed25519-desk];
+        keyFile = "";
         generateKey = false;
       };
       secrets = {
-        root-password = {
-          neededForUsers = true;
-        };
-        gelnana-password = {
-          neededForUsers = true;
-        };
         github_ssh_key = {
           owner = username;
           mode = "0600";
@@ -39,15 +33,8 @@ in
       };
     };
 
-    users.users = {
-      root.hashedPasswordFile = lib.mkForce config.sops.secrets.root-password.path;
-      ${username}.hashedPasswordFile = lib.mkForce config.sops.secrets.gelnana-password.path;
-    };
-
-    users.users.${username}.extraGroups = [ config.users.groups.keys.name ];
-
     custom.persist = {
-      home.directories = [ ".ssh" ];
+      home.directories = [ ".ssh" "/.config/sops" ];
       root = {
         files = [
           "/etc/shadow/root"
