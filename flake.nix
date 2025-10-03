@@ -96,6 +96,7 @@
         ./modules/roles/impermanence.nix
 
         # Hardware
+        ./modules/hardware/hardware.nix
         ./modules/hardware/nvidia.nix
         ./modules/hardware/bluetooth.nix
         ./modules/hardware/laptop.nix

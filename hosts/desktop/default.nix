@@ -1,13 +1,11 @@
 { config, lib, pkgs, ... }: {
-  imports = [
-    ./hardware-configuration.nix
-  ];
 
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "jabberwocky-desktop";
+  networking.hostId = "9f0b8720";
 
   # Enable custom features
   custom = {
