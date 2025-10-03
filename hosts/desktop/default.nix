@@ -46,23 +46,11 @@
     # Extra storage!
     zfs.storage = {
       enable = true;
-      nvme2tb = true;
-      stsea4tb = true;
+      data = true;
+      archive = true;
     };
 
-    # Hardware
-    hardware = {
-      nvidia = {
-        enable = false;
-        openSource = false;
-        enableSettings = false;
-        # If you have hybrid graphics (Intel + NVIDIA), uncomment and configure:
-        # enablePrime = true;
-        # intelBusId = "PCI:0:2:0";
-        # nvidiaBusId = "PCI:1:0:0";
-      };
-
-      bluetooth = {
+    hardware.bluetooth = {
         enable = true;
         powerOnBoot = true;
         showBattery = true;
@@ -79,7 +67,6 @@
       #     };
       #   };
       # };
-    };
   };
 
   system.stateVersion = "25.05";

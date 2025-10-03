@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, username, ... }:
 
 let
   cfg = config.custom.zfs.storage;
@@ -6,18 +6,18 @@ in {
   options.custom.zfs.storage = {
     enable = lib.mkEnableOption "Additional ZFS storage pools";
 
-    nvme2tb = lib.mkEnableOption "Samsung 980 PRO 2TB NVMe (data pool)";
+    data = lib.mkEnableOption "Data pool";
 
-    stsea4tb = lib.mkEnableOption "Seagate 4TB HDD (archives pool)";
+    archive = lib.mkEnableOption "Archive pool";
   };
 
   config = lib.mkIf cfg.enable {
     boot.zfs.extraPools =
-      lib.optional cfg.nvme2tb "data" ++
-      lib.optional cfg.stsea4tb "archives";
+      lib.optional cfg.data "data" ++
+      lib.optional cfg.archive "archives";
 
     fileSystems = lib.mkMerge [
-      (lib.mkIf cfg.nvme2tb {
+      (lib.mkIf cfg.data {
         "/data/active" = {
           device = "data/active";
           fsType = "zfs";
@@ -30,7 +30,7 @@ in {
         };
       })
 
-      (lib.mkIf cfg.stsea4tb {
+      (lib.mkIf cfg.archive {
         "/archives/media" = {
           device = "archives/media";
           fsType = "zfs";
@@ -44,16 +44,10 @@ in {
       })
     ];
 
-    systemd.tmpfiles.rules =
-      lib.optionals cfg.nvme2tb [
-        "d /data 0755 root root -"
-        "d /data/active 0755 root root -"
-        "d /data/projects 0755 root root -"
-      ] ++
-      lib.optionals cfg.stsea4tb [
-        "d /archives 0755 root root -"
-        "d /archives/media 0755 root root -"
-        "d /archives/backups 0755 root root -"
-      ];
+    systemd.tmpfiles.rules = [
+      "L+ /home/${username}/Data - - - - /data/active"
+      "L+ /home/${username}/Archives - - - - /archives/media"
+    ];
   };
+
 }

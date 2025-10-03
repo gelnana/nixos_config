@@ -48,7 +48,7 @@ in {
       (if cfg.enableForceBlur then [ inputs.kwin-effects-forceblur.packages.${pkgs.system}.default ] else [])
     ];
 
-    environment.plasma6.excludePackages = [ pkgs.kdePackages.konsole ];
+    environment.plasma6.excludePackages = with pkgs; [ pkgs.kdePackages.konsole ];
 
 
     programs.kdeconnect.enable = lib.mkIf cfg.enableKdeconnect true;

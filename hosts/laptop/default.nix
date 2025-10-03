@@ -8,6 +8,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "jabberwocky-laptop";
+  networking.hostId = "0cac4cea";
 
   # Enable custom features
   custom = {
@@ -44,24 +45,12 @@
       enableX11Forwarding = false;
     };
 
-    syncthing = {
-      enable = true;
-      syncPictures = true;
+    zfs.storage = {
+      enable = false;
+      data = false;
+      archive = false;
     };
 
-    mounts.enable = false;
-
-    # Hardware
-    hardware = {
-      nvidia = {
-        enable = true;
-        openSource = true;
-        enableSettings = true;
-        # If you have hybrid graphics (Intel + NVIDIA), uncomment and configure:
-        enablePrime = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:1:0:0";
-      };
 
       bluetooth = {
         enable = true;
