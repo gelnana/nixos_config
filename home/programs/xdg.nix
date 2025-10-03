@@ -36,17 +36,6 @@ in {
       defaultApplications = associations;
     };
 
-    desktopEntries.nvim = {
-      name = "Neovim (NixCats)";
-      genericName = "Text Editor";
-      comment = "Edit text files with Neovim (NixCats wrapper)";
-      exec = "neovim %F";
-      terminal = true;
-      categories = [ "Utility" "TextEditor" "Development" ];
-      mimeType = [ "text/plain" ];
-      icon = "vim";
-    };
-
     userDirs = {
       enable = true;
       createDirectories = true;

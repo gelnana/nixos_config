@@ -88,11 +88,13 @@
       inputs.catppuccin.nixosModules.catppuccin
       inputs.musnix.nixosModules.musnix
       inputs.impermanence.nixosModules.impermanence
+      inputs.sops-nix.nixosModules.sops
 
       ./modules/utilities/system.nix
       ./modules/utilities/main-user.nix
       ./modules/hardware/mounts.nix
 
+      ./modules/services/sops.nix
       ./modules/roles/audio.nix
       ./modules/roles/gaming.nix
       ./modules/roles/dev.nix

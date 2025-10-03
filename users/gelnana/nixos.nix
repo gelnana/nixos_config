@@ -6,6 +6,6 @@
   ##################################################################################################################
 
   users.users.gelnana = {
-  };
+    hashedPasswordFile = config.sops.secrets.gelnana-password.path;
 }
 
