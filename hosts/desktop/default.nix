@@ -43,8 +43,12 @@
       enableX11Forwarding = false;
     };
 
-
-    # mounts.enable = true;
+    # Extra storage!
+    custom.zfs.storage = {
+      enable = true;
+      nvme2tb = true;
+      stsea4tb = true;
+    };
 
     # Hardware
     hardware = {
