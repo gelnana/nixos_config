@@ -34,14 +34,7 @@ in
     };
 
     custom.persist = {
-      home.directories = [ ".ssh" ".config/sops/age" ];
-      root = {
-        files = [
-          "/etc/shadow/root"
-          "/etc/shadow/${username}"
-          "/etc/sops/age/keys.txt"
-        ];
-      };
+      home.directories = [ ".config/sops/age" ];
     };
   };
 }

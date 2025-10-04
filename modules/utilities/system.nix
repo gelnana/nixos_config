@@ -52,7 +52,6 @@
 
   custom.persist.home.directories = [
     ".nixos"
-    ".secrets"
   ];
 
   custom.persist.root.directories = [

@@ -69,19 +69,26 @@
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
   let
     username = "gelnana";
-
-    createCommonArgs = system: let
-        pkgs = import nixpkgs {
-          inherit system;
-          config = { allowUnfree = true; };
-      };
-    in {
-      inherit self inputs nixpkgs pkgs system;
-      inherit username;
-      specialArgs = { inherit self inputs pkgs username; };
+    system = "x86_64-linux";
+    pkgs = import nixpkgs {
+      inherit system;
+      config = { allowUnfree = true; };
     };
 
-    commonArgs = createCommonArgs "x86_64-linux";
+    lib = import ./lib.nix {
+      inherit (nixpkgs) lib;
+      inherit pkgs;
+      inherit (inputs) home-manager;
+    };
+
+    createCommonArgs = system: {
+      inherit self inputs nixpkgs lib pkgs system username;
+      specialArgs = { inherit self inputs username lib; };
+    };
+
+    commonArgs = createCommonArgs system;
+
+    aliasHmModule = pkgs.lib.mkAliasOptionModule ["hm"] [ "home-manager" "users" username ];
 
     allModules = [
       inputs.stylix.nixosModules.stylix
@@ -91,6 +98,7 @@
       inputs.sops-nix.nixosModules.sops
 
       ./modules/utilities/system.nix
+      ./modules/roles/impermanence.nix
       ./modules/utilities/main-user.nix
       ./modules/hardware/mounts.nix
 
@@ -98,12 +106,11 @@
       ./modules/roles/audio.nix
       ./modules/roles/gaming.nix
       ./modules/roles/dev.nix
-      ./modules/roles/impermanence.nix
 
+      ./modules/hardware/zfs.nix
       ./modules/hardware/hardware.nix
       ./modules/hardware/bluetooth.nix
       ./modules/hardware/laptop.nix
-      ./modules/hardware/zfs.nix
 
       ./modules/services/ssh.nix
       ./modules/services/soulseek.nix
@@ -117,7 +124,7 @@
       home-manager = {
         useGlobalPkgs = true;
         useUserPackages = true;
-        extraSpecialArgs = commonArgs;
+        extraSpecialArgs = commonArgs.specialArgs;
         users.${username} = import ./users/${username}/home.nix;
         backupFileExtension = null;
       };
@@ -133,6 +140,7 @@
                 then [ inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia ]
                 else [])
           ++ [
+            aliasHmModule
             ./hosts/${hostname}
             ./hosts/${hostname}/hardware.nix
             ./users/${username}/nixos.nix

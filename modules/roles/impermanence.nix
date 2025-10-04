@@ -4,118 +4,89 @@ let
   cfg = config.custom.persist;
 in {
   options.custom.persist = {
-    root.directories = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        "/etc/nixos"
-        "/var/log"
-        "/var/lib/bluetooth"
-        "/var/lib/nixos"
-        "/var/lib/systemd/coredump"
-      ];
-      description = "Directories to persist in root filesystem";
+    root = {
+      directories = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [
+          "/etc/nixos"
+          "/var/log"
+          "/var/lib/bluetooth"
+          "/var/lib/nixos"
+          "/var/lib/systemd/coredump"
+        ];
+      };
+      files = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+      };
+      cache = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+      };
     };
 
-    root.files = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ "/etc/machine-id" ];
-      description = "Files to persist in root filesystem";
+    home = {
+      directories = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+        apply = dirs: [
+          "Downloads" "Music" "Pictures" "Documents" "Videos" ".config" ".local" ".cache/mozilla" ".mozilla"
+        ] ++ dirs;
+      };
+      files = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [
+          ".bash_history"
+          ".zsh_history"
+        ];
+      };
+      cache = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [];
+      };
     };
 
-    root.cache = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [];
-      description = "System cache directories to persist (separate dataset)";
-    };
-
-    home.directories = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        "Downloads"
-        "Music"
-        "Pictures"
-        "Documents"
-        "Videos"
-        ".nixos"
-        ".ssh"
-        ".config"
-        ".local"
-        ".mozilla"
-      ];
-      description = "Directories to persist in home directory";
-    };
-
-    home.files = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        ".bash_history"
-        ".zsh_history"
-      ];
-      description = "Files to persist in home directory";
-    };
-
-    # optional: if you want separate home caches
-    home.cache = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [];
-      description = "Cache directories in home that persist separately";
-    };
-
-    tmpfs = lib.mkEnableOption "Use tmpfs for root instead of snapshots" // {
-      default = true;
-    };
-
-    persistentRoot = lib.mkOption {
-      type = lib.types.str;
-      default = "/persist";
-      description = "Path to persistent storage root";
-    };
+    tmpfs = lib.mkEnableOption "Use tmpfs for root instead of snapshots" // { default = true; };
   };
 
   config = {
     boot = {
       tmp.cleanOnBoot = true;
-
       initrd.postDeviceCommands = lib.mkAfter (
         lib.optionalString (!cfg.tmpfs) "zfs rollback -r zroot/root@blank"
       );
     };
 
     fileSystems = {
-      "/" = lib.mkIf cfg.tmpfs (
-        lib.mkForce {
-          device = "tmpfs";
-          fsType = "tmpfs";
-          neededForBoot = true;
-          options = [ "defaults" "size=1G" "mode=755" ];
-        }
-      );
-
-      ${cfg.persistentRoot} = {
+      # use lib.mkIf to avoid setting "/" to null when tmpfs is disabled
+      "/" = lib.mkIf cfg.tmpfs (lib.mkForce {
+        device = "tmpfs";
+        fsType = "tmpfs";
         neededForBoot = true;
-      };
+        options = [ "defaults" "size=1G" "mode=755" ];
+      });
+
+      "/persist" = { neededForBoot = true; };
     };
 
     security.sudo.extraConfig = "Defaults lecture=never";
 
     environment.persistence = {
-      "${cfg.persistentRoot}" = {
+      "/persist" = {
         hideMounts = true;
-        files       = lib.unique cfg.root.files;
-        directories = lib.unique cfg.root.directories;
-
+        files = [ "/etc/machine-id" ] ++ cfg.root.files;
+        directories = [ "/var/log" "/var/lib/nixos" ] ++ cfg.root.directories;
         users.${username} = {
-          files       = lib.unique cfg.home.files;
-          directories = lib.unique cfg.home.directories;
+          files = cfg.home.files;
+          directories = cfg.home.directories;
         };
       };
 
-      "${cfg.persistentRoot}/cache" = {
+      "/persist/cache" = {
         hideMounts = true;
-        directories = lib.unique cfg.root.cache;
-
+        directories = cfg.root.cache;
         users.${username} = {
-          directories = lib.unique cfg.home.cache;
+          directories = cfg.home.cache;
         };
       };
     };

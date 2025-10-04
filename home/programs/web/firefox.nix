@@ -16,6 +16,6 @@ in {
       profiles.default = {
         isDefault = true;
       };
+    };
   };
-};
 }
