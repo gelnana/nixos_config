@@ -34,15 +34,20 @@ in
       };
       mutableUsers = lib.mkOption {
         type = lib.types.bool;
-        default = false;
+        default = true;
         description = "Whether to allow mutable users";
+      };
+      enableSops = lib.mkOption {
+        type = lib.types.bool;
+        default = false;
+        description = "Whether to enable SOPS for password management";
       };
     };
   };
 
   config = lib.mkIf config.main-user.enable (let
     cfg = config.main-user;
-    hasSops = lib.hasAttr (cfg.userName + "-password") sopsSecrets;
+    hasSops = cfg.enableSops && lib.hasAttr (cfg.userName + "-password") sopsSecrets;
   in {
     users.mutableUsers = cfg.mutableUsers;
 

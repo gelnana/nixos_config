@@ -1,7 +1,7 @@
 { inputs, config, lib, username, ... }:
 
 let
-  secretDir = builtins.toString inputs.nix-secrets;
+  secretDir = builtins.toString inputs.secrets;
   homeDir = "/home/${username}";
 in
 {
@@ -11,6 +11,8 @@ in
 
   config = lib.mkIf config.custom.sops.enable {
     sops = {
+      defaultSopsFile = "${secretDir}/secrets.yaml";
+
       age = {
         keyFile     = "/var/lib/sops/age/keys.txt";
         generateKey = false;
@@ -18,13 +20,9 @@ in
       };
 
       secrets = {
-        "${username}-password" = {
-          file = "${secretDir}/${username}-password";
-          neededForUsers = true;
-        };
+        "${username}-password".neededForUsers = true;
 
         github_ssh_key = {
-          file  = "${secretDir}/github_ssh_key";
           path  = "${homeDir}/.ssh/id_github";
           owner = username;
           mode  = "0600";
