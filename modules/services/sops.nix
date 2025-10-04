@@ -1,34 +1,35 @@
-{
-  inputs,
-  config,
-  lib,
-  username,
-  ...
-}:
+{ inputs, config, lib, username, ... }:
+
 let
-  secretspath = builtins.toString inputs.secrets;
-  homeDir = config.users.users.${username}.home;
+  secretDir = if builtins.pathExists inputs.secrets
+              then builtins.toString inputs.secrets
+              else "/home/${username}/.secrets";
+  homeDir = "/home/${username}";
 in
 {
   options.custom = with lib; {
-    sops.enable = mkEnableOption "sops" // {
-      default = true;
-    };
+    sops.enable = mkEnableOption "sops" // { default = true; };
   };
+
   config = lib.mkIf config.custom.sops.enable {
     sops = {
-      defaultSopsFile = "${secretspath}/secrets.yaml";
       age = {
-        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-        keyFile = "${homeDir}/.config/sops/age/keys.txt";
+        keyFile     = "/var/lib/sops/age/keys.txt";
         generateKey = false;
+        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       };
+
       secrets = {
-        "${username}-password".neededForUsers = true;
+        "${username}-password" = {
+          file = "${secretDir}/${username}-password";
+          neededForUsers = true;
+        };
+
         github_ssh_key = {
+          file  = "${secretDir}/github_ssh_key";
+          path  = "${homeDir}/.ssh/id_github";
           owner = username;
-          mode = "0600";
-          path = "${homeDir}/.ssh/id_github";
+          mode  = "0600";
         };
       };
     };
