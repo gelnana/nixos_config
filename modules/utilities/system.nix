@@ -55,6 +55,6 @@
   ];
 
   custom.persist.root.directories = [
-    "/etc/NetworkManager"
+    "/etc/NetworkManager/system-connections"
   ];
 }
