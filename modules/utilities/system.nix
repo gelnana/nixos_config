@@ -36,12 +36,4 @@
     sops
     age
   ];
-
-  custom.persist.home.directories = [
-    ".nixos"
-  ];
-
-  custom.persist.root.directories = [
-    "/etc/NetworkManager/system-connections"
-  ];
 }

@@ -64,13 +64,5 @@ in {
       ];
     };
 
-    custom.persist = {
-      home.directories = [
-        ".local/share/Steam"
-        ".config/mangohud"
-        ".config/unity3d"
-        ".steam"
-      ];
-    };
   };
 }

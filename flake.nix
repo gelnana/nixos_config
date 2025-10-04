@@ -63,7 +63,7 @@
     #   flake = false;
     # };
 
-    impermanence.url = "github:nix-community/impermanence";
+    # impermanence.url = "github:nix-community/impermanence";
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs:
@@ -94,12 +94,12 @@
       inputs.stylix.nixosModules.stylix
       inputs.catppuccin.nixosModules.catppuccin
       inputs.musnix.nixosModules.musnix
-      inputs.impermanence.nixosModules.impermanence
+      # inputs.impermanence.nixosModules.impermanence
       # inputs.sops-nix.nixosModules.sops
 
       ./modules/utilities/system.nix
       ./modules/services/nix.nix
-      ./modules/roles/impermanence.nix
+      # ./modules/roles/impermanence.nix
       ./modules/utilities/main-user.nix
       ./modules/hardware/mounts.nix
 
