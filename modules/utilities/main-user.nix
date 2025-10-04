@@ -1,4 +1,4 @@
-{ lib, config, pkgs, username ? "mainuser", ... }:
+{ lib, config, pkgs, username ? "gelnana", ... }:
 let
   cfg = config.main-user;
 in {
@@ -19,7 +19,7 @@ in {
 
     hashedPasswordFile = lib.mkOption {
       type = lib.types.nullOr lib.types.path;
-      default = "/etc/shadow/${username}";
+      default = "/persist/etc/shadow/${username}";
       description = "Path to file containing hashed password";
     };
 
@@ -57,17 +57,22 @@ in {
   config = lib.mkIf cfg.enable {
     users.mutableUsers = cfg.mutableUsers;
 
-    users.users.${cfg.userName} = {
-      isNormalUser = true;
-      description = cfg.userName;
-      shell = cfg.shell;
-      extraGroups = cfg.extraGroups;
-      initialPassword = cfg.initialPassword;
-    } // (if cfg.hashedPasswordFile != null
-          then { hashedPasswordFile = cfg.hashedPasswordFile; }
-         else {});
+    users = {
+      root = {
+        initialPassword = cfg.initialPassword;
+        hashedPasswordFile = "/persist/etc/shadow/root";
+      };
+      ${cfg.userName} = {
+        isNormalUser = true;
+        description = cfg.userName;
+        shell = cfg.shell;
+        extraGroups = cfg.extraGroups;
+        initialPassword = cfg.initialPassword;
+        hashedPasswordFile = cfg.hashedPasswordFile;
+        };
 
-    security.sudo.enable = cfg.enableSudo;
-    environment.shells = [ cfg.shell ];
+      security.sudo.enable = cfg.enableSudo;
+      environment.shells = [ cfg.shell ];
+    };
   };
 }
