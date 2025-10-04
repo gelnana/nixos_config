@@ -1,5 +1,4 @@
 { lib, config, pkgs, username ? "gelnana", ... }:
-
 {
   options = {
     main-user = {
@@ -14,15 +13,10 @@
         default = pkgs.nushell;
         description = "Default shell for the user";
       };
-      hashedPasswordFile = lib.mkOption {
-        type = lib.types.nullOr lib.types.path;
-        default = "/etc/shadow/${username}";
-        description = "Path to file containing hashed password";
-      };
       initialPassword = lib.mkOption {
         type = lib.types.str;
         default = "changeme";
-        description = "Initial password (fallback if hashedPasswordFile doesn't exist)";
+        description = "Initial password (fallback)";
       };
       extraGroups = lib.mkOption {
         type = lib.types.listOf lib.types.str;
@@ -44,30 +38,26 @@
 
   config = lib.mkIf config.main-user.enable (let
     cfg = config.main-user;
-  in
-    {
-      users.mutableUsers = cfg.mutableUsers;
+    hasSops = config.sops.secrets ? "${cfg.userName}-password";
+  in {
+    users.mutableUsers = cfg.mutableUsers;
 
-      users.users = {
-        root = {
-          isNormalUser = false;
-          initialPassword = cfg.initialPassword;
-          hashedPasswordFile = "/etc/shadow/root";
-        };
+    users.users.${cfg.userName} = {
+      isNormalUser = true;
+      createHome = true;
+      home = "/home/${cfg.userName}";
+      description = "User ${cfg.userName}";
+      shell = cfg.shell;
+      extraGroups = cfg.extraGroups;
+      hashedPasswordFile = lib.mkIf hasSops
+        config.sops.secrets."${cfg.userName}-password".path;
+      initialPassword = lib.mkIf (!hasSops) cfg.initialPassword;
+    };
 
-        ${cfg.userName} = {
-          isNormalUser = true;
-          createHome = true;
-          home = "/home/${cfg.userName}";
-          description = "User ${cfg.userName}";
-          shell = cfg.shell;
-          extraGroups = cfg.extraGroups;
-          initialPassword = cfg.initialPassword;
-          hashedPasswordFile = cfg.hashedPasswordFile;
-        };
-      };
+    security.sudo.enable = cfg.enableSudo;
 
-      security.sudo.enable = cfg.enableSudo;
-    }
-  );
+    sops.secrets = lib.mkIf hasSops {
+      "${cfg.userName}_password".neededForUsers = true;
+    };
+  });
 }

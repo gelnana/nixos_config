@@ -335,21 +335,6 @@
         "type": "github"
       }
     },
-    "impermanence": {
-      "locked": {
-        "lastModified": 1737831083,
-        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "type": "github"
-      }
-    },
     "ixx": {
       "inputs": {
         "flake-utils": [
@@ -715,7 +700,6 @@
         "apple-fonts": "apple-fonts",
         "catppuccin": "catppuccin",
         "home-manager": "home-manager",
-        "impermanence": "impermanence",
         "kwin-effects-forceblur": "kwin-effects-forceblur",
         "kwin-effects-kinetic": "kwin-effects-kinetic",
         "musnix": "musnix",
@@ -751,10 +735,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1759531793,
-        "narHash": "sha256-iD1lNvt8tOBha7y6VqubHoAbo72hJ1DTDlmVpabOYGs=",
+        "lastModified": 1759589410,
+        "narHash": "sha256-nOCP3Hjpkp4qJgJUk7S7Tm3AtsBAsNooQlMKGzValNQ=",
         "ref": "refs/heads/main",
-        "rev": "f4d5921ec812527ffe579a2d9b77177b5594c3b1",
+        "rev": "912756c0c6879469a5846ad6bb15be7b59759239",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/gelnana/secrets.git"
