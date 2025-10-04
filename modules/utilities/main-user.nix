@@ -55,9 +55,5 @@
     };
 
     security.sudo.enable = cfg.enableSudo;
-
-    sops.secrets = lib.mkIf hasSops {
-      "${cfg.userName}-password".neededForUsers = true;
-    };
   });
 }

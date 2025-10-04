@@ -15,16 +15,16 @@ in
       default = true;
     };
   };
-
   config = lib.mkIf config.custom.sops.enable {
     sops = {
       defaultSopsFile = "${secretspath}/secrets.yaml";
       age = {
-        sshKeyPaths = [ "/${homeDir}/.ssh/id_ed25519" ];
-        keyFile = "/${homeDir}/.config/sops/age/keys.txt";
+        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+        keyFile = "${homeDir}/.config/sops/age/keys.txt";
         generateKey = false;
       };
       secrets = {
+        "${username}-password".neededForUsers = true;
         github_ssh_key = {
           owner = username;
           mode = "0600";
