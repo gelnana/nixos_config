@@ -16,6 +16,9 @@
     variant = "";
   };
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Networking
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
