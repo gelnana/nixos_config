@@ -1,9 +1,7 @@
 { inputs, config, lib, username, ... }:
 
 let
-  secretDir = if builtins.pathExists inputs.secrets
-              then builtins.toString inputs.secrets
-              else "/home/${username}/.secrets";
+  secretDir = builtins.toString inputs.nix-secrets;
   homeDir = "/home/${username}";
 in
 {

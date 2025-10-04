@@ -1,8 +1,12 @@
 { lib, config, pkgs, username ? "gelnana", ... }:
+let
+  sopsSecrets = if lib.hasAttr "sops" config && lib.hasAttr "secrets" config.sops
+                then config.sops.secrets else {};
+in
 {
   options = {
     main-user = {
-      enable = lib.mkEnableOption "main‑user module";
+      enable = lib.mkEnableOption "main-user module";
       userName = lib.mkOption {
         type = lib.types.str;
         default = username;
@@ -38,21 +42,28 @@
 
   config = lib.mkIf config.main-user.enable (let
     cfg = config.main-user;
-    hasSops = config.sops.secrets ? "${cfg.userName}-password";
+    hasSops = lib.hasAttr (cfg.userName + "-password") sopsSecrets;
   in {
     users.mutableUsers = cfg.mutableUsers;
 
-    users.users.${cfg.userName} = {
-      isNormalUser = true;
-      createHome = true;
-      home = "/home/${cfg.userName}";
-      description = "User ${cfg.userName}";
-      shell = cfg.shell;
-      extraGroups = cfg.extraGroups;
-      hashedPasswordFile = lib.mkIf hasSops
-        config.sops.secrets."${cfg.userName}-password".path;
-      initialPassword = lib.mkIf (!hasSops) cfg.initialPassword;
-    };
+    users.users.${cfg.userName} = lib.mkMerge [
+      {
+        isNormalUser = true;
+        createHome   = true;
+        home         = "/home/${cfg.userName}";
+        description  = "${cfg.userName}";
+        shell        = cfg.shell;
+        extraGroups  = cfg.extraGroups;
+      }
+
+      (lib.mkIf hasSops {
+        hashedPasswordFile = sopsSecrets."${cfg.userName}-password".path;
+      })
+
+      (lib.mkIf (!hasSops) {
+        initialPassword = cfg.initialPassword;
+      })
+    ];
 
     security.sudo.enable = cfg.enableSudo;
   });
