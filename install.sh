@@ -26,28 +26,6 @@ function yesno() {
     done
 }
 
-function prompt_for_password() {
-    while true; do
-        # Prompt for password
-        read -rs -p "Enter root password: " password
-        printf "\n"
-
-        # Prompt for password confirmation
-        read -rs -p "Confirm root password: " confirm_password
-        printf "\n"
-
-        # Check if passwords match
-        if [ "$password" == "$confirm_password" ]; then
-            break
-        else
-            echo "Passwords do not match. Please try again."
-        fi
-    done
-
-    # Return the entered password
-    echo "$password"
-}
-
 cat << Introduction
 This script will format the *entire* disk with a 1GB boot partition
 (labelled NIXBOOT), 16GB of swap, then allocating the rest to ZFS.
@@ -58,11 +36,9 @@ This script will format selected by user boot, swap, root partitions
 on already existing partition table.
 
 The following ZFS datasets will be created on the root:
-    - zroot/root (mounted at / with blank snapshot)
+    - zroot/root (mounted at /)
     - zroot/nix (mounted at /nix)
-    - zroot/tmp (mounted at /tmp)
-    - zroot/persist (mounted at /persist)
-    - zroot/persist/cache (mounted at /persist/cache)
+    - zroot/home (mounted at /home)
 
 Introduction
 
@@ -73,9 +49,7 @@ if [[ -b "/dev/vda" ]]; then
     BOOTDISK="${DISK}3"
     SWAPDISK="${DISK}2"
     ZFSDISK="${DISK}1"
-    # normal disk
 else
-
 
 cat << FormatWarning
 YOUR DISK IS ABOUT TO BE FORMATTED
@@ -159,7 +133,7 @@ DISKINPUT=$(ls -r /dev/disk/by-id/ | fzf --prompt="Select disk to install nixos 
         fi
 
         echo "Checking for zpool 'zroot' if exists"
-        if zpool list zroot; then
+        if zpool list zroot 2>/dev/null; then
             do_reinstall=$(yesno "'zroot' zfs pool already exists. Reinstall? [This will DESTROY zpool 'zroot'!]")
             if [[ $do_reinstall != "y" ]]; then
                 echo "Make sure there is no zpool 'zroot' pool to install!"
@@ -242,13 +216,13 @@ DISKINPUT=$(ls -r /dev/disk/by-id/ | fzf --prompt="Select disk to install nixos 
         if [[ -e $SWAPDISK && ! -d $SWAPDISK ]]; then
             echo "    SWAP Partiton [SWAP] - '$SWAPDISK'"
         else
-            echo "'$BOOTDISK' does not exist!"
+            echo "'$SWAPDISK' does not exist!"
             exit
         fi
         if [[ -e $ZFSDISK && ! -d $ZFSDISK ]]; then
             echo "    ZFS Root Partiton [zroot] - '$ZFSDISK'"
         else
-            echo "'$BOOTDISK' does not exist"
+            echo "'$ZFSDISK' does not exist"
             exit
         fi
 
@@ -294,7 +268,7 @@ DISKINPUT=$(ls -r /dev/disk/by-id/ | fzf --prompt="Select disk to install nixos 
         fi
 
         echo "Checking for zpool 'zroot' if exists"
-        if zpool list zroot; then
+        if zpool list zroot 2>/dev/null; then
             do_reinstall=$(yesno "'zroot' zfs pool already exists. Reinstall? [This will DESTROY zpool 'zroot'!]")
             if [[ $do_reinstall != "y" ]]; then
                 echo "Make sure there is no zpool 'zroot' pool to install!"
@@ -349,7 +323,7 @@ DISKINPUT=$(ls -r /dev/disk/by-id/ | fzf --prompt="Select disk to install nixos 
     fi
 fi
 
-# ZFS
+# ZFS - WITHOUT PERSISTENCE
 
 echo "Creating base zpool"
 sudo zpool create -f \
@@ -366,65 +340,19 @@ sudo zpool create -f \
 
 echo "Creating 'zroot/root' -> '/'"
 sudo zfs create -o mountpoint=legacy zroot/root
-sudo zfs snapshot zroot/root@blank
 sudo mount -t zfs zroot/root /mnt
 
-# create the boot parition after creating root
+# create the boot partition after creating root
 echo "Mounting '$BOOTDISK' (ESP) -> '/mnt/boot'"
 sudo mount --mkdir "$BOOTDISK" /mnt/boot
 
-echo "Creating 'zroot/nix' -> '/mnt/boot'"
+echo "Creating 'zroot/nix' -> '/mnt/nix'"
 sudo zfs create -o mountpoint=legacy zroot/nix
 sudo mount --mkdir -t zfs zroot/nix /mnt/nix
 
-echo "Creating 'zroot/tmp' -> '/mnt/tmp'"
-sudo zfs create -o mountpoint=legacy zroot/tmp
-sudo mount --mkdir -t zfs zroot/tmp /mnt/tmp
-
-echo "Creating 'root/cache' -> '/mnt/tmp'"
-sudo zfs create -o mountpoint=legacy zroot/cache
-sudo mount --mkdir -t zfs zroot/cache /mnt/cache
-
-# handle persist, possibly from snapshot
-restore_snapshot=$(yesno "Do you want to restore from a persist snapshot?")
-if [[ "$restore_snapshot" == "y" ]]; then
-snapshot_type=$(yesno "Is snapshot a file?")
-    if [[ "$snapshot_type" == "y" ]]; then
-        echo "Tip: use 'zfs send zroot/persist@snapshotname > /path/to/snapshotfile ' to create snapshot file."
-        echo "Enter full path to snapshot: "
-        read -r snapshot_file_path
-        echo ""
-
-        echo "Receiving 'zroot/persist' from snapshot '${snapshot_file_path}'"
-        # shellcheck disable=SC2024 (sudo doesn't affect redirects)
-        sudo zfs receive -o mountpoint=legacy zroot/persist < "$snapshot_file_path"
-    else
-snapshot_name=$(zfs list -H -t snapshot -r | fzf --prompt="Select snapshot to restore from: " | awk '{print $1}')
-        echo "Selected snapshot: $snapshot_name"
-        if zfs list "zroot/persist" &> /dev/null; then
-            for i in {5..0}; do
-                message="Destroying 'zroot/persist' in $i seconds... <Ctrl + C> to EXIT NOW!\r"
-                echo -e "\x1b[30;47m $message \x1b[0m"
-                sleep 1
-            done
-            echo ""
-            zfs destroy -r zroot/persist
-            echo "'zroot/persist' destroyed!"
-        fi
-        echo ""
-        echo "Receiving 'zroot/persist' from snapshot '${snapshot_name}''"
-        sudo zfs send -v $snapshot_name | sudo zfs receive -v -F -o mountpoint=legacy zroot/persist
-        echo "Completed persist snapshot send: "
-        zfs list -o 'name,refer' -t snapshot zroot/persist
-        zfs list -o 'name,used' zroot/persist
-    fi
-else
-    echo "Creating empty 'zroot/persist' -> '/mnt/persist'"
-    sudo zfs create -o mountpoint=legacy zroot/persist
-fi
-
-echo "Mounting 'zroot/persist' -> /mnt/persist"
-sudo mount --mkdir -t zfs zroot/persist /mnt/persist
+echo "Creating 'zroot/home' -> '/mnt/home'"
+sudo zfs create -o mountpoint=legacy zroot/home
+sudo mount --mkdir -t zfs zroot/home /mnt/home
 
 echo ""
 echo "ZFS mounts:"
@@ -451,10 +379,10 @@ echo ""
 echo "Current Directory: $(pwd)"
 flake_path=$(yesno "Use current pwd as flake path?")
 if [[ $flake_path == "y" ]]; then
-    echo "Recovering NixOS"
+    echo "Installing NixOS"
     sudo nixos-install --flake .#$host
 else
     read -rp "Enter git rev for flake (default: master): " git_rev
-    echo "Recovering NixOS..."
+    echo "Installing NixOS..."
     sudo nixos-install --flake "github:gelnana/nixos_config/${git_rev:-master}#$host"
 fi
