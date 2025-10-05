@@ -13,7 +13,6 @@
   # run unpatched binaries on nixos
   programs.nix-ld.enable = true;
 
-  # setup "appimage-run" interpreter to run appimages directly wihout issues
   boot.binfmt.registrations.appimage = {
     wrapInterpreterInShell = false;
     interpreter = "${pkgs.appimage-run}/bin/appimage-run";
@@ -38,7 +37,6 @@
   };
 
   nix = {
-    # channel.enable = false;
     gc = {
       # Automatic garbage collection
       automatic = true;
@@ -61,10 +59,9 @@
     };
     settings = {
       auto-optimise-store = true; # Optimise symlinks
-      # re-evaluate on every rebuild instead of "cached failure of attribute" error
+
       eval-cache = false;
       warn-dirty = false;
-      # removes ~/.nix-profile and ~/.nix-defexpr
       use-xdg-base-directories = true;
 
       # use flakes

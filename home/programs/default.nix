@@ -30,5 +30,6 @@
     ++ [
       ./web/firefox.nix
       ./xdg.nix
+      ./plasma.nix
     ];
 }

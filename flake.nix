@@ -83,6 +83,7 @@
     ...
   } @ inputs: let
     username = "gelnana";
+    userVars = import ./users/${username}/variables.nix;
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
@@ -97,7 +98,7 @@
 
     createCommonArgs = system: {
       inherit self inputs nixpkgs lib pkgs system username;
-      specialArgs = {inherit self inputs username lib;};
+      specialArgs = {inherit self inputs username lib userVars;};
     };
 
     commonArgs = createCommonArgs system;

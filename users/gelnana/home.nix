@@ -36,7 +36,9 @@
       enableObs = true;
       enableAudioControl = true;
       enableImageViewer = true;
+      enableClementine = true;
       enableDownloaders = true;
+      enableSpotify = true;
     };
 
     # Creative

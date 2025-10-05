@@ -1,4 +1,5 @@
 {
+  inputs,
   pkgs,
   lib,
   config,
@@ -24,6 +25,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
+      inputs.fenix.packages.${pkgs.system}.stable.toolchain
       git
       gcc
       gnumake
