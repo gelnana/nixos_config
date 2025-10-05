@@ -23,7 +23,7 @@ in {
       };
 
       secrets = {
-        "${username}-password".neededForUsers = true;
+        "gel-password".neededForUsers = true;
 
         github_ssh_key = {
           path = "${homeDir}/.ssh/id_github";

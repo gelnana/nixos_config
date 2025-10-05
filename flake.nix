@@ -82,7 +82,7 @@
     home-manager,
     ...
   } @ inputs: let
-    username = "gelnana";
+    username = "gel";
     userVars = import ./users/${username}/variables.nix;
     system = "x86_64-linux";
     pkgs = import nixpkgs {
@@ -107,10 +107,9 @@
       inputs.stylix.nixosModules.stylix
       inputs.catppuccin.nixosModules.catppuccin
       inputs.musnix.nixosModules.musnix
-      # inputs.impermanence.nixosModules.impermanence
-      # inputs.sops-nix.nixosModules.sops
+      inputs.sops-nix.nixosModules.sops
 
-      # ./modules/services/sops.nix
+      ./modules/services/sops.nix
       ./modules/utilities/system.nix
       ./modules/services/nix.nix
       ./modules/utilities/main-user.nix
