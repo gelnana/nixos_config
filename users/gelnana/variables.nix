@@ -34,4 +34,31 @@
     "x-scheme-handler/https"
     "x-scheme-handler/unknown"
   ];
+  fonts = {
+    packages = {
+      sfPro = "apple-fonts.sf-pro-nerd";
+      sfMono = "apple-fonts.sf-mono-nerd";
+      notoEmoji = "pkgs.noto-fonts-emoji";
+    };
+
+    names = {
+      serif = "SFProText Nerd Font";
+      sansSerif = "SFProText Nerd Font";
+      monospace = "SFMono Nerd Font";
+      emoji = "Noto Color Emoji";
+      
+      terminal = {
+        family = "SF Pro, JuliaMono";
+        bold = "SF Pro Bold";
+        italic = "SF Pro Italic";
+        boldItalic = "SF Pro Bold Italic";
+      };
+    };
+    sizes = {
+      applications = 10;
+      desktop = 10;
+      popups = 10;
+      terminal = 10;
+    };
+  };
 }

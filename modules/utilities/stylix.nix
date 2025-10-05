@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  userVars,
   ...
 }: let
   apple-fonts = inputs.apple-fonts.packages.${pkgs.system};
@@ -25,30 +26,25 @@ in {
     fonts = {
       serif = {
         package = apple-fonts.sf-pro-nerd;
-        name = "SFProText Nerd Font";
+        name = userVars.fonts.names.serif;
       };
 
       sansSerif = {
         package = apple-fonts.sf-pro-nerd;
-        name = "SFProText Nerd Font";
+        name = userVars.fonts.names.sansSerif;
       };
 
       monospace = {
         package = apple-fonts.sf-mono-nerd;
-        name = "SFMono Nerd Font";
+        name = userVars.fonts.names.monospace;
       };
 
       emoji = {
         package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
+        name = userVars.fonts.names.emoji;
       };
-      sizes = {
-        # font size in pt
-        applications = 10;
-        desktop = 10;
-        popups = 10;
-        terminal = 10;
-      };
+
+      sizes = userVars.fonts.sizes;
     };
   };
 }

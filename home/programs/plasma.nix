@@ -12,7 +12,7 @@
         widgets = [
           {
             kickoff = {
-              icon = "nix-snowflake-white";
+              icon = "../../.icons/Enso.svg";
               sortAlphabetically = true;
             };
           }
@@ -20,13 +20,20 @@
           {
             digitalClock = {
               date = {
-                format.custom = "ddd, MMM dd • yyyy-MM-dd •";
+                format.custom = "ddd, MMM dd • yyyy-MM-dd ";
                 position = "besideTime";
               };
             };
           }
-          "org.kde.plasma.panelspacer"
           "org.kde.plasma.systemtray"
+          {
+          systemTray.items = {
+              shown = [
+                "org.kde.plasma.battery"
+                "org.kde.plasma.networkmanagement"
+                "org.kde.plasma.volume"
+              ];
+            };
           "org.kde.plasma.showdesktop"
         ];
       }
@@ -48,7 +55,20 @@
         ];
       }
     ];
-
+    kwin.effects = {
+        forceblur.enable = true;
+      };
+        fonts = {
+      general = defaultFont;
+      fixedWidth = {
+        inherit (defaultFont) pointSize;
+        family = userVars.fonts.names.monospace;
+      };
+      small = defaultFont;
+      toolbar = defaultFont;
+      menu = defaultFont;
+      windowTitle = defaultFont;
+    };
     configFile = {
       "kdeglobals"."General"."TerminalApplication" = userVars.defaultTerminal;
     };

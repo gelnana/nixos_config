@@ -2,6 +2,7 @@
   lib,
   config,
   pkgs,
+  userVars,
   ...
 }: let
   cfg = config.custom.shell.terminals;
@@ -18,7 +19,7 @@ in {
 
       fontFamily = lib.mkOption {
         type = lib.types.str;
-        default = "SF Pro, JuliaMono";
+        default = userVars.fonts.names.terminal.family;
         description = "Font family for Kitty";
       };
 
@@ -38,11 +39,12 @@ in {
         window_padding_width = 5;
         copy_on_select = "clipboard";
         font_family = cfg.kitty.fontFamily;
-        bold_font = "SF Pro Bold";
-        italic_font = "SF Pro Italic";
-        bold_italic_font = "SF Pro Bold Italic";
+        bold_font = userVars.fonts.names.terminal.bold;
+        italic_font = userVars.fonts.names.terminal.italic;
+        bold_italic_font = userVars.fonts.names.terminal.boldItalic;
         enable_ligatures = cfg.kitty.enableLigatures;
       };
     };
   };
 }
+
