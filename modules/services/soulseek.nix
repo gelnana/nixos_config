@@ -1,5 +1,9 @@
-{ lib, config, pkgs, ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   cfg = config.custom.soulseek;
 in {
   options.custom.soulseek = {
@@ -46,7 +50,10 @@ in {
         };
       });
       default = [
-        { from = 2234; to = 2234; }
+        {
+          from = 2234;
+          to = 2234;
+        }
       ];
       description = "UDP port ranges to open for Soulseek";
     };
@@ -54,7 +61,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     # Install the Soulseek client
-    environment.systemPackages = [ cfg.package ];
+    environment.systemPackages = [cfg.package];
 
     # Open firewall ports
     networking.firewall = lib.mkIf cfg.openFirewall {

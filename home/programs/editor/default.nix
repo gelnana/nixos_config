@@ -1,4 +1,9 @@
-{ config, lib, inputs, ... }: let
+{
+  config,
+  lib,
+  inputs,
+  ...
+}: let
   utils = inputs.nixCats.utils;
 in {
   imports = [
@@ -25,7 +30,15 @@ in {
       # the .replace vs .merge options are for modules based on existing configurations,
       # they refer to how multiple categoryDefinitions get merged together by the module.
       # for useage of this section, refer to :h nixCats.flake.outputs.categories
-      categoryDefinitions.replace = ({ pkgs, settings, categories, extra, name, mkPlugin, ... }@packageDef: {
+      categoryDefinitions.replace = {
+        pkgs,
+        settings,
+        categories,
+        extra,
+        name,
+        mkPlugin,
+        ...
+      } @ packageDef: {
         # to define and use a new category, simply add a new list to a set here,
         # and later, you will include categoryname = true; in the set you
         # provide when you build the package using this builder function.
@@ -101,7 +114,6 @@ in {
             haskellPackages.haskell-debug-adapter
             haskellPackages.ghci-dap
             haskellPackages.hoogle
-
           ];
 
           # C/C++
@@ -141,14 +153,16 @@ in {
             texlab
             pandoc
           ];
-          tidal = with pkgs; [
-            haskellPackages.tidal
-            supercollider-with-plugins
-            ghc
-            cabal-install
-          ]  ++ (lib.optionals (pkgs ? superdirt) [ pkgs.superdirt ])
-            ++ (lib.optionals (pkgs ? sc3-plugins) [ pkgs.sc3-plugins ]);
-            # Container/DevOps
+          tidal = with pkgs;
+            [
+              haskellPackages.tidal
+              supercollider-with-plugins
+              ghc
+              cabal-install
+            ]
+            ++ (lib.optionals (pkgs ? superdirt) [pkgs.superdirt])
+            ++ (lib.optionals (pkgs ? sc3-plugins) [pkgs.sc3-plugins]);
+          # Container/DevOps
           devops = with pkgs; [
             docker-compose-language-service
             dockerfile-language-server
@@ -228,8 +242,10 @@ in {
             neotest-rust
           ];
 
-          tidal = with pkgs.vimPlugins; [
-          ] ++ ( lib.optionals (pkgs ? vim-tidal) [ pkgs.vim-tidal ]);
+          tidal = with pkgs.vimPlugins;
+            [
+            ]
+            ++ (lib.optionals (pkgs ? vim-tidal) [pkgs.vim-tidal]);
 
           writing = with pkgs.vimPlugins; [
             render-markdown-nvim
@@ -266,19 +282,18 @@ in {
         # shared libraries to be added to LD_LIBRARY_PATH
         # variable available to nvim runtime
         sharedLibraries = {
-          general = with pkgs; [ ];
+          general = with pkgs; [];
         };
 
         # environmentVariables:
         # this section is for environmentVariables that should be available
         # at RUN TIME for plugins. Will be available to path within neovim terminal
         environmentVariables = {
-
         };
 
         # categories of the function you would have passed to withPackages
         python3.libraries = {
-            latex = (_: [ pkgs.python313Packages.pylatexenc pkgs.python313Packages.pylatex ]);
+          latex = _: [pkgs.python313Packages.pylatexenc pkgs.python313Packages.pylatex];
         };
 
         # If you know what these are, you can provide custom ones by category here.
@@ -289,13 +304,17 @@ in {
           #   '' --set CATTESTVAR2 "It worked again!"''
           # ];
         };
-      });
+      };
 
       # see :help nixCats.flake.outputs.packageDefinitions
       packageDefinitions.replace = {
         # These are the names of your packages
         # you can include as many as you wish.
-        neovim = {pkgs, name, ... }: {
+        neovim = {
+          pkgs,
+          name,
+          ...
+        }: {
           # they contain a settings set defined above
           # see :help nixCats.flake.outputs.settings
           settings = {
@@ -305,7 +324,7 @@ in {
             # unwrappedCfgPath = "/path/to/here";
             # IMPORTANT:
             # your alias may not conflict with your other packages.
-            aliases = [ "vim" "homeVim" ];
+            aliases = ["vim" "homeVim"];
             # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
             hosts.python3.enable = true;
             hosts.node.enable = true;
@@ -339,8 +358,6 @@ in {
             colorscheme = {
               translucent = true;
             };
-
-
           };
         };
       };

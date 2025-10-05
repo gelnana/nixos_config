@@ -3,8 +3,7 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   cfg = config.custom.programs.reaper;
 
   # Helper function to create plugin paths
@@ -39,46 +38,49 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      # The DAW
-      reaper
-    ] ++ lib.optionals cfg.enablePlugins [
-      # Synths
-      helm
-      oxefmsynth
-      bespokesynth
-      fluidsynth
+    home.packages = with pkgs;
+      [
+        # The DAW
+        reaper
+      ]
+      ++ lib.optionals cfg.enablePlugins [
+        # Synths
+        helm
+        oxefmsynth
+        bespokesynth
+        fluidsynth
 
-      # Effects
-      aether-lv2
-      x42-plugins
-      airwindows-lv2
-      mda_lv2
-      noise-repellent
-      speech-denoiser
-      mod-distortion
-      fomp
-      gxplugins-lv2
-      fverb
-      mooSpace
-      boops
-      zam-plugins
-      molot-lite
-      bankstown-lv2
+        # Effects
+        aether-lv2
+        x42-plugins
+        airwindows-lv2
+        mda_lv2
+        noise-repellent
+        speech-denoiser
+        mod-distortion
+        fomp
+        gxplugins-lv2
+        fverb
+        mooSpace
+        boops
+        zam-plugins
+        molot-lite
+        bankstown-lv2
 
-      # Utilities
-      midi-trigger
-      bshapr
-      bchoppr
+        # Utilities
+        midi-trigger
+        bshapr
+        bchoppr
 
-      # Soundfonts
-      soundfont-generaluser
-      soundfont-ydp-grand
-    ] ++ lib.optionals cfg.enableYabridge [
-      # Windows VST bridge
-      yabridge
-      yabridgectl
-    ];
+        # Soundfonts
+        soundfont-generaluser
+        soundfont-ydp-grand
+      ]
+      ++ lib.optionals cfg.enableYabridge [
+        # Windows VST bridge
+        yabridge
+        yabridgectl
+      ];
 
     # Plugin path environment variables
     home.sessionVariables = {

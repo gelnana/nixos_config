@@ -1,6 +1,6 @@
 {
   nixConfig = {
-    extra-substituters = [ "https://nix-community.cachix.org" ];
+    extra-substituters = ["https://nix-community.cachix.org"];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
@@ -63,16 +63,26 @@
       flake = false;
     };
 
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
+
     # impermanence.url = "github:nix-community/impermanence";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
-  let
+  outputs = {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  } @ inputs: let
     username = "gelnana";
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
-      config = { allowUnfree = true; };
+      config = {allowUnfree = true;};
     };
 
     lib = import ./lib.nix {
@@ -83,12 +93,12 @@
 
     createCommonArgs = system: {
       inherit self inputs nixpkgs lib pkgs system username;
-      specialArgs = { inherit self inputs username lib; };
+      specialArgs = {inherit self inputs username lib;};
     };
 
     commonArgs = createCommonArgs system;
 
-    aliasHmModule = pkgs.lib.mkAliasOptionModule ["hm"] [ "home-manager" "users" username ];
+    aliasHmModule = pkgs.lib.mkAliasOptionModule ["hm"] ["home-manager" "users" username];
 
     allModules = [
       inputs.stylix.nixosModules.stylix
@@ -137,9 +147,11 @@
         specialArgs = commonArgs.specialArgs;
         modules =
           allModules
-          ++ (if hostname == "laptop"
-                then [ inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia ]
-                else [])
+          ++ (
+            if hostname == "laptop"
+            then [inputs.nixos-hardware.nixosModules.dell-xps-15-7590-nvidia]
+            else []
+          )
           ++ [
             aliasHmModule
             ./hosts/${hostname}
@@ -149,17 +161,17 @@
             homeManagerModule
           ];
       };
-  in
-  {
+  in {
     nixosConfigurations = {
       desktop = mkSystem "desktop";
-      laptop  = mkSystem "laptop";
+      laptop = mkSystem "laptop";
     };
 
     homeConfigurations = {
-      "${username}" = home-manager.lib.homeManagerConfiguration (commonArgs // {
-        modules = [ ./users/${username}/home.nix ];
-      });
+      "${username}" = home-manager.lib.homeManagerConfiguration (commonArgs
+        // {
+          modules = [./users/${username}/home.nix];
+        });
     };
 
     formatter.${commonArgs.system} = nixpkgs.legacyPackages.${commonArgs.system}.alejandra;

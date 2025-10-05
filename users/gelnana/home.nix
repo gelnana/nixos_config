@@ -1,20 +1,16 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   imports = [
     ../../home/core.nix
     ../../home/programs
     ../../home/shell
   ];
-    # Enable programs
+  # Enable programs
   custom.programs = {
-
     # Core utilities
     archives.enable = true;
     communications.enable = true;
     downloads.enable = true;
     organization.enable = true;
-
 
     # Dev utils
     utils.enable = true;
@@ -65,40 +61,39 @@
       enable = true;
       enableDavinciResolve = true;
     };
-
   };
-    custom.shell = {
+  custom.shell = {
+    enable = true;
+    defaultEditor = "neovim";
+    defaultBrowser = "firefox";
+    defaultTerminal = "kitty";
+
+    common = {
       enable = true;
-      defaultEditor = "neovim";
-      defaultBrowser = "firefox";
-      defaultTerminal = "kitty";
+      enableDirenv = true;
+      enableFastfetch = true;
+      enableDevTools = true;
+    };
 
-      common = {
+    nushell = {
+      enable = true;
+      enableCarapace = true;
+    };
+
+    starship = {
+      enable = true;
+      enableNushell = true;
+      enableBash = false;
+      enableZsh = false;
+    };
+
+    terminals = {
+      enable = true;
+      kitty = {
         enable = true;
-        enableDirenv = true;
-        enableFastfetch = true;
-        enableDevTools = true;
+        fontFamily = "SF Pro, JuliaMono";
+        enableLigatures = true;
       };
-
-      nushell = {
-        enable = true;
-        enableCarapace = true;
-      };
-
-      starship = {
-        enable = true;
-        enableNushell = true;
-        enableBash = false;
-        enableZsh = false;
-      };
-
-      terminals = {
-        enable = true;
-        kitty = {
-          enable = true;
-          fontFamily = "SF Pro, JuliaMono";
-          enableLigatures = true;
-        };
     };
   };
 }

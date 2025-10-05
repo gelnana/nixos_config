@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }: {
-
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -48,25 +52,24 @@
       archive = false;
     };
 
+    hardware.bluetooth = {
+      enable = true;
+      powerOnBoot = false;
+      showBattery = true;
+    };
 
-      hardware.bluetooth = {
-        enable = true;
-        powerOnBoot = false;
-        showBattery = true;
-      };
-
-      hardware.laptop = {
-        enable = true;
-        powerManagement = "tlp";
-        tlp = {
-          batterySaver = true;
-          chargeThresholds = {
-            start = 40;
-            stop = 80;
-          };
+    hardware.laptop = {
+      enable = true;
+      powerManagement = "tlp";
+      tlp = {
+        batterySaver = true;
+        chargeThresholds = {
+          start = 40;
+          stop = 80;
         };
       };
     };
+  };
 
   system.stateVersion = "25.05";
 }

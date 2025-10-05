@@ -1,5 +1,8 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   cfg = config.custom.hardware.bluetooth;
 in {
   options.custom.hardware.bluetooth = {
@@ -34,6 +37,5 @@ in {
     };
 
     services.blueman.enable = cfg.enableBlueman;
-
   };
 }

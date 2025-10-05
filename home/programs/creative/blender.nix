@@ -1,6 +1,9 @@
-{ lib, config, pkgs, ... }:
-
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   cfg = config.custom.programs.blender;
 in {
   options.custom.programs.blender = {
@@ -14,7 +17,9 @@ in {
   };
 
   config = {
-    home.packages = if cfg.enable then [ cfg.package ] else [];
+    home.packages =
+      if cfg.enable
+      then [cfg.package]
+      else [];
   };
 }
-

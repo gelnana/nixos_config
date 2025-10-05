@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   cfg = config.custom.programs.archives;
 in {
   options.custom.programs.archives = {
@@ -26,11 +29,23 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; lib.concatLists[
-      (if cfg.p7zip then [ pkgs.p7zip ] else [])
-      (if cfg.unrar then [ pkgs.unrar ] else [])
-      (if cfg.unar then [ pkgs.unar ] else [])
-    ];
+    home.packages = with pkgs;
+      lib.concatLists [
+        (
+          if cfg.p7zip
+          then [pkgs.p7zip]
+          else []
+        )
+        (
+          if cfg.unrar
+          then [pkgs.unrar]
+          else []
+        )
+        (
+          if cfg.unar
+          then [pkgs.unar]
+          else []
+        )
+      ];
   };
 }
-

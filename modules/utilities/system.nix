@@ -1,4 +1,9 @@
-{ pkgs, lib, username, ... }: {
+{
+  pkgs,
+  lib,
+  username,
+  ...
+}: {
   # Boot configuration
   boot.plymouth = {
     enable = true;

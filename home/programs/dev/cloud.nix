@@ -1,9 +1,11 @@
-{ lib, pkgs, config, ... }:
-
-let
-  cfg = config.custom.programs.cloud;
-in
 {
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
+  cfg = config.custom.programs.cloud;
+in {
   options.custom.programs.cloud = {
     enable = lib.mkEnableOption "Enable cloud utilities";
 
@@ -33,12 +35,28 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; lib.concatLists [
-      (if cfg.dockerCompose then [ pkgs.docker-compose ] else [])
-      (if cfg.kubectl then [ pkgs.kubectl ] else [])
-      (if cfg.nodejs then [ pkgs.nodejs ] else [])
-      (if cfg.ansible then [ pkgs.ansible ] else [])
-    ];
+    home.packages = with pkgs;
+      lib.concatLists [
+        (
+          if cfg.dockerCompose
+          then [pkgs.docker-compose]
+          else []
+        )
+        (
+          if cfg.kubectl
+          then [pkgs.kubectl]
+          else []
+        )
+        (
+          if cfg.nodejs
+          then [pkgs.nodejs]
+          else []
+        )
+        (
+          if cfg.ansible
+          then [pkgs.ansible]
+          else []
+        )
+      ];
   };
 }
-

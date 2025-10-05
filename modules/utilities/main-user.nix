@@ -1,5 +1,10 @@
-{ lib, config, pkgs, username ? "gelnana", ... }:
-let
+{
+  lib,
+  config,
+  pkgs,
+  username ? "gelnana",
+  ...
+}: let
   cfg = config.main-user;
 in {
   options.main-user = {
@@ -53,6 +58,6 @@ in {
 
     security.sudo.enable = cfg.enableSudo;
 
-    environment.shells = [ cfg.shell ];
+    environment.shells = [cfg.shell];
   };
 }

@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   cfg = config.custom.programs.organization;
 in {
   options.custom.programs.organization = {
@@ -26,11 +29,23 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; lib.concatLists[
-      (if cfg.calibre then [ pkgs.calibre ] else [])
-      (if cfg.zotero_7 then [ pkgs.zotero_7 ] else [])
-      (if cfg.qnotero then [ pkgs.qnotero ] else [])
-    ];
+    home.packages = with pkgs;
+      lib.concatLists [
+        (
+          if cfg.calibre
+          then [pkgs.calibre]
+          else []
+        )
+        (
+          if cfg.zotero_7
+          then [pkgs.zotero_7]
+          else []
+        )
+        (
+          if cfg.qnotero
+          then [pkgs.qnotero]
+          else []
+        )
+      ];
   };
 }
-

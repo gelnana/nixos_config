@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   cfg = config.custom.programs.communications;
 in {
   options.custom.programs.communications = {
@@ -14,9 +17,13 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; lib.concatLists [ 
-      (if cfg.discord then [ pkgs.discord ] else [])
-    ];
+    home.packages = with pkgs;
+      lib.concatLists [
+        (
+          if cfg.discord
+          then [pkgs.discord]
+          else []
+        )
+      ];
   };
 }
-

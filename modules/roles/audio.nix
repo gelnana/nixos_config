@@ -1,5 +1,10 @@
-{ pkgs, lib, config, username, ... }:
-let
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  ...
+}: let
   cfg = config.custom.audio;
 in {
   options.custom.audio = {
@@ -36,21 +41,24 @@ in {
       rtcqs.enable = true;
     };
 
-    users.users.${username}.extraGroups = ["audio"]
+    users.users.${username}.extraGroups =
+      ["audio"]
       ++ lib.optional cfg.enableJack "jackaudio";
 
-    environment.systemPackages = with pkgs; [
-      sox
-      alsa-lib
-      alsa-utils
-      pavucontrol
-      helvum
-      easyeffects
-      pulseaudio
-    ] ++ lib.optionals cfg.enableJack [
-      qjackctl
-      qpwgraph
-      jack2
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        sox
+        alsa-lib
+        alsa-utils
+        pavucontrol
+        helvum
+        easyeffects
+        pulseaudio
+      ]
+      ++ lib.optionals cfg.enableJack [
+        qjackctl
+        qpwgraph
+        jack2
+      ];
   };
 }

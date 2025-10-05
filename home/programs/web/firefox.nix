@@ -1,6 +1,9 @@
-{ lib, config, pkgs, ... }:
-
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   cfg = config.custom.programs.firefox;
 in {
   options.custom.programs.firefox = {
@@ -8,7 +11,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.firefox-wayland ];
+    home.packages = [pkgs.firefox-wayland];
 
     programs.firefox = {
       enable = true;

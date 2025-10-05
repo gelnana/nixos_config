@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   cfg = config.custom.shell.common;
   Image = "${config.home.homeDirectory}/.nixos/.icons/eye.gif";
 in {
@@ -53,7 +57,10 @@ in {
           type = "kitty-icat";
           source = cfg.fastfetchLogo;
           height = 21;
-          padding = { left = 10; right = 10; };
+          padding = {
+            left = 10;
+            right = 10;
+          };
         };
         display = {
           separator = " | ";
@@ -61,7 +68,11 @@ in {
         };
         modules = [
           # ───────── Hardware ─────────
-          { type = "custom"; format = "┌─────────────Hardware─────────────┐"; outputColor = "cyan"; }
+          {
+            type = "custom";
+            format = "┌─────────────Hardware─────────────┐";
+            outputColor = "cyan";
+          }
           {
             type = "host";
             key = "  PC";
@@ -96,10 +107,18 @@ in {
             keyColor = "red";
             format = "{used}/{total}";
           }
-          { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
+          {
+            type = "custom";
+            format = "└──────────────────────────────────┘";
+            outputColor = "cyan";
+          }
 
           # ───────── Software ─────────
-          { type = "custom"; format = "┌─────────────Software─────────────┐"; outputColor = "cyan"; }
+          {
+            type = "custom";
+            format = "┌─────────────Software─────────────┐";
+            outputColor = "cyan";
+          }
           {
             type = "os";
             key = "󰜗 OS ";
@@ -146,7 +165,11 @@ in {
             key = "│ └ ";
             keyColor = "blue";
           }
-          { type = "custom"; format = "└──────────────────────────────────┘"; outputColor = "cyan"; }
+          {
+            type = "custom";
+            format = "└──────────────────────────────────┘";
+            outputColor = "cyan";
+          }
         ];
       };
     };

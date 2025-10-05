@@ -1,5 +1,9 @@
-{ pkgs, lib, config, ... }:
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   cfg = config.custom.gaming;
 in {
   options.custom.gaming = {
@@ -44,17 +48,19 @@ in {
     };
 
     # Game launchers and tools
-    environment.systemPackages = with pkgs; [
-      lutris
-      bottles
-      heroic
-      gamescope
-      corectrl
-    ] ++ lib.optionals cfg.enableWine [
-      wineWowPackages.stagingFull
-      winetricks
-      dxvk
-    ];
+    environment.systemPackages = with pkgs;
+      [
+        lutris
+        bottles
+        heroic
+        gamescope
+        corectrl
+      ]
+      ++ lib.optionals cfg.enableWine [
+        wineWowPackages.stagingFull
+        winetricks
+        dxvk
+      ];
 
     # Gaming cachix
     nix.settings = {
@@ -63,6 +69,5 @@ in {
         "nix-gaming.cachix.org-1:nbjlureqMbRAxR1gJ/f3hxemL9svXaZF/Ees8vCUUs4="
       ];
     };
-
   };
 }

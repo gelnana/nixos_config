@@ -1,6 +1,9 @@
-{ lib, config, username, ... }:
-
-let
+{
+  lib,
+  config,
+  username,
+  ...
+}: let
   cfg = config.custom.zfs.storage;
 in {
   options.custom.zfs.storage = {
@@ -13,8 +16,8 @@ in {
 
   config = lib.mkIf cfg.enable {
     boot.zfs.extraPools =
-      lib.optional cfg.data "data" ++
-      lib.optional cfg.archive "archives";
+      lib.optional cfg.data "data"
+      ++ lib.optional cfg.archive "archives";
 
     fileSystems = lib.mkMerge [
       (lib.mkIf cfg.data {
@@ -49,5 +52,4 @@ in {
       "L+ /home/${username}/Archives - - - - /archives/media"
     ];
   };
-
 }

@@ -1,5 +1,8 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   cfg = config.custom.shell.nushell;
 in {
   options.custom.shell.nushell = {

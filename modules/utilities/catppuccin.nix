@@ -1,6 +1,11 @@
-{ config, pkgs, lib, ... }:
-
-let cfg = config.custom.themes.catppuccin; in {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  cfg = config.custom.themes.catppuccin;
+in {
   options.custom.themes.catppuccin = {
     enable = lib.mkEnableOption "Enable Catppuccin theme";
     flavor = lib.mkOption {

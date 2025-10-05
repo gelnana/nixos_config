@@ -1,5 +1,8 @@
-{ config, lib, ... }:
-let
+{
+  config,
+  lib,
+  ...
+}: let
   cfg = config.custom.shell;
   d = config.xdg.dataHome;
   c = config.xdg.configHome;

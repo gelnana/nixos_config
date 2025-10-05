@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   cfg = config.custom.ssh or {};
 in {
   options.custom.ssh = {
@@ -34,9 +37,9 @@ in {
         X11Forwarding = cfg.enableX11Forwarding;
         PermitRootLogin = cfg.permitRootLogin;
         PasswordAuthentication = cfg.passwordAuthentication;
-        };
+      };
       openFirewall = cfg.openFirewall;
       allowSFTP = true;
     };
-};
+  };
 }

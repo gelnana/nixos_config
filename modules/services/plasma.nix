@@ -1,6 +1,10 @@
-{ pkgs, config, lib, inputs, ... }:
-
-let
+{
+  pkgs,
+  config,
+  lib,
+  inputs,
+  ...
+}: let
   cfg = config.custom.programs.plasma;
 in {
   options.custom.programs.plasma = {
@@ -37,21 +41,24 @@ in {
     };
   };
 
-  config = lib.mkIf cfg.enable ({
-
+  config = lib.mkIf cfg.enable {
     services.xserver.enable = lib.mkIf (cfg.enableSddm || cfg.enablePlasma) true;
     services.displayManager.sddm.enable = lib.mkIf cfg.enableSddm true;
     services.desktopManager.plasma6.enable = lib.mkIf cfg.enablePlasma true;
 
     environment.systemPackages = lib.concatLists [
-      (if cfg.enableKdePackages then [ pkgs.kdePackages.full ] else [])
-      (if cfg.enableForceBlur then [ inputs.kwin-effects-forceblur.packages.${pkgs.system}.default ] else [])
+      (
+        if cfg.enableKdePackages
+        then [pkgs.kdePackages.full]
+        else []
+      )
+      (
+        if cfg.enableForceBlur
+        then [inputs.kwin-effects-forceblur.packages.${pkgs.system}.default]
+        else []
+      )
     ];
 
-    environment.plasma6.excludePackages = with pkgs; [ pkgs.kdePackages.konsole pkgs.kdePackages.kwallet ];
-
-
     programs.kdeconnect.enable = lib.mkIf cfg.enableKdeconnect true;
-
-  });
+  };
 }

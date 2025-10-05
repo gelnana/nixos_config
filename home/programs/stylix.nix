@@ -1,9 +1,11 @@
-{ config, pkgs, lib, ... }:
-
-let
-  appleFonts = null; # or pkgs.apple-fonts
-in
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  appleFonts = null; # or pkgs.apple-fonts
+in {
   options.programs.stylix = {
     enable = lib.mkEnableOption "Enable Stylix user integration";
     autoEnable = lib.mkOption {

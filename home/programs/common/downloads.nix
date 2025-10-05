@@ -1,6 +1,9 @@
-{ lib, pkgs, config, ... }:
-
-let
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
   cfg = config.custom.programs.downloads;
 in {
   options.custom.programs.downloads = {
@@ -14,9 +17,13 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; lib.concatLists[
-      (if cfg.qbittorrent then [ pkgs.qbittorrent ] else [])
-    ];
+    home.packages = with pkgs;
+      lib.concatLists [
+        (
+          if cfg.qbittorrent
+          then [pkgs.qbittorrent]
+          else []
+        )
+      ];
   };
 }
-

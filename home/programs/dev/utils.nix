@@ -1,9 +1,11 @@
-{ lib, pkgs, config, ... }:
-
-let
-  cfg = config.custom.programs.utils;
-in
 {
+  lib,
+  pkgs,
+  config,
+  ...
+}: let
+  cfg = config.custom.programs.utils;
+in {
   options.custom.programs.utils = {
     enable = lib.mkEnableOption "Enable utility programs";
 
@@ -32,20 +34,40 @@ in
     };
 
     age = lib.mkOption {
-        type = lib.types.bool;
-        default = true;
-        description = "Install age encryption";
-      };
+      type = lib.types.bool;
+      default = true;
+      description = "Install age encryption";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; lib.concatLists [
-      (if cfg.ripgrep then [ pkgs.ripgrep ] else [])
-      (if cfg.yqGo then [ pkgs.yq ] else [])
-      (if cfg.htop then [ pkgs.htop ] else [])
-      (if cfg.jupyterAll then [ pkgs.jupyter ] else [])
-      (if cfg.age then [ pkgs.age ] else [])
-    ];
+    home.packages = with pkgs;
+      lib.concatLists [
+        (
+          if cfg.ripgrep
+          then [pkgs.ripgrep]
+          else []
+        )
+        (
+          if cfg.yqGo
+          then [pkgs.yq]
+          else []
+        )
+        (
+          if cfg.htop
+          then [pkgs.htop]
+          else []
+        )
+        (
+          if cfg.jupyterAll
+          then [pkgs.jupyter]
+          else []
+        )
+        (
+          if cfg.age
+          then [pkgs.age]
+          else []
+        )
+      ];
   };
 }
-

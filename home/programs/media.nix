@@ -1,5 +1,9 @@
-{ pkgs, lib, config, ... }:
-let
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}: let
   cfg = config.custom.programs.media;
 in {
   options.custom.programs.media = {
@@ -9,38 +13,38 @@ in {
       enable = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Enable MPV video player with scripts";
+        description = "MPV video player";
       };
 
       enableScripts = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Enable MPV scripts (MPRIS, uosc, etc)";
+        description = "MPV scripts";
       };
     };
 
     enableObs = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Enable OBS Studio";
+      description = "OBS Studio";
     };
 
     enableAudioControl = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Install audio control tools (pavucontrol, playerctl)";
+      description = "pavucontrol, playerctl";
     };
 
     enableImageViewer = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Install imv image viewer";
+      description = "imv";
     };
 
     enableDownloaders = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Install yt-dlp and aria2";
+      description = "yt-dlp and aria2";
     };
   };
 

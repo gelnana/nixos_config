@@ -1,9 +1,10 @@
-{pkgs, inputs, ... }:
-let
-  apple-fonts = inputs.apple-fonts.packages.${pkgs.system};
-
-in
 {
+  pkgs,
+  inputs,
+  ...
+}: let
+  apple-fonts = inputs.apple-fonts.packages.${pkgs.system};
+in {
   stylix = {
     enable = true;
     autoEnable = true;
@@ -17,9 +18,9 @@ in
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
 
     opacity = {
-        applications = 0.93;
-        terminal = 0.93;
-      };
+      applications = 0.93;
+      terminal = 0.93;
+    };
     # Fonts
     fonts = {
       serif = {
@@ -42,12 +43,12 @@ in
         name = "Noto Color Emoji";
       };
       sizes = {
-          # font size in pt
-          applications = 10;
-          desktop = 10;
-          popups = 10;
-          terminal = 10;
-        };
+        # font size in pt
+        applications = 10;
+        desktop = 10;
+        popups = 10;
+        terminal = 10;
+      };
     };
   };
 }

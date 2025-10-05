@@ -1,5 +1,8 @@
-{ lib, config, ... }:
-let
+{
+  lib,
+  config,
+  ...
+}: let
   cfg = config.custom.hardware.laptop;
 in {
   options.custom.hardware.laptop = {
@@ -52,7 +55,10 @@ in {
         CPU_MIN_PERF_ON_AC = 0;
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = if cfg.tlp.batterySaver then 20 else 50;
+        CPU_MAX_PERF_ON_BAT =
+          if cfg.tlp.batterySaver
+          then 20
+          else 50;
 
         START_CHARGE_THRESH_BAT0 = cfg.tlp.chargeThresholds.start;
         STOP_CHARGE_THRESH_BAT0 = cfg.tlp.chargeThresholds.stop;
