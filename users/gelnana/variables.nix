@@ -1,5 +1,5 @@
 {
-  # Default applications
+  # Defaults
   defaultBrowser = "firefox";
   defaultTerminal = "kitty";
   defaultEditor = "neovim";

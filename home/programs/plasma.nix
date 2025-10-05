@@ -16,7 +16,7 @@
         widgets = [
           {
             kickoff = {
-              icon = ../../.icons/Enso.svg;
+              icon = "${builtins.toString inputs.self}/.icons/Enso.svg";
               sortAlphabetically = true;
             };
           }
@@ -60,17 +60,23 @@
       }
     ];
 
-    fonts = {
-      general = userVars.defaultFont;
-      fixedWidth = {
-        inherit (userVars.defaultFont) pointSize;
-        family = userVars.fonts.names.monospace;
+    fonts = let
+      g = {
+        family = userVars.fonts.names.sansSerif;
+        pointSize = userVars.fonts.sizes.desktop;
       };
-      small = userVars.defaultFont;
-      toolbar = userVars.defaultFont;
-      menu = userVars.defaultFont;
-      windowTitle = userVars.defaultFont;
+    in {
+      general = g;
+      fixedWidth = {
+        family = userVars.fonts.names.monospace;
+        pointSize = userVars.fonts.sizes.desktop;
+      };
+      small = g;
+      toolbar = g;
+      menu = g;
+      windowTitle = g;
     };
+
 
     configFile = {
       "kwinrc"."Plugins"."blurEnabled" = false;

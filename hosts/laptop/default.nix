@@ -35,11 +35,6 @@
       enableJack = false;
     };
 
-    dev = {
-      enable = true;
-      enableDocker = true;
-    };
-
     # Services
     ssh = {
       enable = true;
