@@ -60,8 +60,6 @@
       }
     ];
 
-    kwin.effects.forceblur.enable = true;
-
     fonts = {
       general = userVars.defaultFont;
       fixedWidth = {
@@ -74,7 +72,10 @@
       windowTitle = userVars.defaultFont;
     };
 
-    configFile."kdeglobals"."General"."TerminalApplication" =
-      userVars.defaultTerminal;
+    configFile = {
+      "kwinrc"."Plugins"."blurEnabled" = false;
+      "kwinrc"."Plugins"."forceblurEnabled" = true;
+      "kdeglobals"."General"."TerminalApplication" = userVars.defaultTerminal;
+    };
   };
 }
