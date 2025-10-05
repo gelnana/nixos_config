@@ -141,6 +141,10 @@
         extraSpecialArgs = commonArgs.specialArgs;
         users.${username} = import ./users/${username}/home.nix;
         backupFileExtension = null;
+        modules = [
+          inputs.plasma-manager.homeManagerModules.plasma-manager
+          inputs.kwin-effects-forceblur.homeManagerModules.forceblur
+        ];
       };
     };
 
