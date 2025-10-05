@@ -19,13 +19,13 @@ in {
     shell = lib.mkOption {
       type = lib.types.package;
       default = pkgs.nushell;
-      description = "Default shell for the user";
+      description = "default shell for the user";
     };
 
     initialPassword = lib.mkOption {
       type = lib.types.str;
       default = "changeme";
-      description = "Initial password (change after first login!)";
+      description = "initial password";
     };
 
     extraGroups = lib.mkOption {
@@ -37,13 +37,13 @@ in {
         "audio"
         "input"
       ];
-      description = "Additional groups for the user";
+      description = "additional groups for the user";
     };
 
     enableSudo = lib.mkOption {
       type = lib.types.bool;
       default = true;
-      description = "Enable sudo for wheel group";
+      description = "enable sudo for wheel group";
     };
   };
 

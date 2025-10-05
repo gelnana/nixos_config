@@ -69,6 +69,10 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # impermanence.url = "github:nix-community/impermanence";
   };
 
