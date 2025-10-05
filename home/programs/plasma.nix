@@ -25,10 +25,10 @@
             digitalClock = {
               date = {
                 format.custom = "yyyy-MM-dd";
-                position = "aboveTime";
+                position = "besideTime";
               };
               font = {
-                family = userVars.fonts.names.monospace;
+                family = userVars.fonts.names.sansSerif;
                 size = 8;
               };
             };
