@@ -27,6 +27,10 @@
                 format.custom = "ddd, MMM dd • yyyy-MM-dd";
                 position = "besideTime";
               };
+              font = {
+                family = userVars.fonts.names.sansSerif;
+                size = 8;
+              };
             };
           }
           {
@@ -71,10 +75,7 @@
         pointSize = userVars.fonts.sizes.desktop;
       };
       small = g;
-      toolbar = {
-        family = userVars.fonts.names.sansSerif;
-        pointSize = 8;
-      };
+      toolbar = g;
       menu = g;
       windowTitle = g;
     };
