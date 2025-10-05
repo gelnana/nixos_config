@@ -25,24 +25,10 @@ in {
     fastfetchLogo = lib.mkOption {
       type = lib.types.str;
       default = Image;
-      description = "Path to fastfetch logo image";
+      description = "Fastfetch logo path";
     };
 
-    enableDevTools = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable development tools (alejandra, deadnix, statix)";
-    };
   };
-
-  config = lib.mkIf cfg.enable {
-    home.packages = with pkgs;
-      lib.optional cfg.enableDevTools julia-mono
-      ++ lib.optional cfg.enableDevTools devenv
-      ++ lib.optionals cfg.enableDevTools [
-        deadnix
-        statix
-      ];
 
     programs.direnv = lib.mkIf cfg.enableDirenv {
       enable = true;

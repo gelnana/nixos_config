@@ -19,15 +19,12 @@
       ./dev/utils.nix
     ]
     ++ [
-      ./creative/video.nix
       ./creative/art.nix
-      ./creative/blender.nix
       ./creative/reaper.nix
     ]
     ++ [
       ./games/launchers.nix
       ./games/modding.nix
-      ./games/utilities.nix
     ]
     ++ [
       ./web/firefox.nix
