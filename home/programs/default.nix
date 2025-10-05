@@ -12,6 +12,7 @@
       ./common/communications.nix
       ./common/downloads.nix
       ./common/organization.nix
+      ./common/media.nix
     ]
     ++ [
       ./dev/git.nix
@@ -29,7 +30,5 @@
     ++ [
       ./web/firefox.nix
       ./xdg.nix
-      ./media.nix
-      ./impermanence.nix
     ];
 }
