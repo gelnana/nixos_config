@@ -1,5 +1,9 @@
-{config, userVars, ...}: let
-  associations =  {
+{
+  config,
+  userVars,
+  ...
+}: let
+  associations = {
     "audio/*" = userVars.desktopFiles.mpv;
     "video/*" = userVars.desktopFiles.mpv;
     "image/*" = userVars.desktopFiles.imageViewer;

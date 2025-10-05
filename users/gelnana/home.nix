@@ -48,8 +48,6 @@
       enablePlugins = true;
       enableYabridge = true;
     };
-
-
   };
   custom.shell = {
     enable = true;

@@ -46,7 +46,7 @@
       sansSerif = "SFProText Nerd Font";
       monospace = "SFMono Nerd Font";
       emoji = "Noto Color Emoji";
-      
+
       terminal = {
         family = "SF Pro, JuliaMono";
         bold = "SF Pro Bold";

@@ -1,6 +1,10 @@
-{ inputs, userVars, ... }:
 {
-  imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
+  inputs,
+  userVars,
+  ...
+}: {
+  imports = [inputs.plasma-manager.homeManagerModules.plasma-manager];
+
   programs.plasma = {
     enable = true;
 
@@ -12,7 +16,7 @@
         widgets = [
           {
             kickoff = {
-              icon = "../../.icons/Enso.svg";
+              icon = ../../.icons/Enso.svg;
               sortAlphabetically = true;
             };
           }
@@ -20,23 +24,23 @@
           {
             digitalClock = {
               date = {
-                format.custom = "ddd, MMM dd • yyyy-MM-dd ";
+                format.custom = "ddd, MMM dd • yyyy-MM-dd";
                 position = "besideTime";
               };
             };
           }
           "org.kde.plasma.systemtray"
           {
-          systemTray.items = {
-              shown = [
-                "org.kde.plasma.battery"
-                "org.kde.plasma.networkmanagement"
-                "org.kde.plasma.volume"
-              ];
-            };
+            systemTray.items.shown = [
+              "org.kde.plasma.battery"
+              "org.kde.plasma.networkmanagement"
+              "org.kde.plasma.volume"
+            ];
+          }
           "org.kde.plasma.showdesktop"
         ];
       }
+
       {
         location = "bottom";
         lengthMode = "fit";
@@ -55,22 +59,22 @@
         ];
       }
     ];
-    kwin.effects = {
-        forceblur.enable = true;
-      };
-        fonts = {
-      general = defaultFont;
+
+    kwin.effects.forceblur.enable = true;
+
+    fonts = {
+      general = userVars.defaultFont;
       fixedWidth = {
-        inherit (defaultFont) pointSize;
+        inherit (userVars.defaultFont) pointSize;
         family = userVars.fonts.names.monospace;
       };
-      small = defaultFont;
-      toolbar = defaultFont;
-      menu = defaultFont;
-      windowTitle = defaultFont;
+      small = userVars.defaultFont;
+      toolbar = userVars.defaultFont;
+      menu = userVars.defaultFont;
+      windowTitle = userVars.defaultFont;
     };
-    configFile = {
-      "kdeglobals"."General"."TerminalApplication" = userVars.defaultTerminal;
-    };
+
+    configFile."kdeglobals"."General"."TerminalApplication" =
+      userVars.defaultTerminal;
   };
 }

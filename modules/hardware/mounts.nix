@@ -46,7 +46,36 @@ in {
         };
       })
     ];
+    services.sanoid = {
+      enable = true;
+      datasets = {
+        "data/active" = {
+          autosnap = true;
+          autoprune = true;
+          hourly = 24;
+          daily = 7;
+          weekly = 4;
+          monthly = 6;
+        };
+        "archives/backups" = {
+          autosnap = true;
+          autoprune = true;
+          daily = 7;
+          weekly = 4;
+          monthly = 12;
+        };
+      };
+    };
 
+    services.syncoid = {
+      enable = true;
+      replicationJobs."data-active-to-archives" = {
+        source = "data/active";
+        target = "archives/backups/data-active";
+        recursive = true;
+        sendOptions = ["--compressed" "--large-block" "--embed"];
+      };
+    };
     systemd.tmpfiles.rules = [
       "L+ /home/${username}/Data - - - - /data/active"
       "L+ /home/${username}/Archives - - - - /archives/media"

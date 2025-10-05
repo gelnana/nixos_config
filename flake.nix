@@ -113,12 +113,12 @@
       # ./modules/services/sops.nix
       ./modules/utilities/system.nix
       ./modules/services/nix.nix
-      # ./modules/roles/impermanence.nix
       ./modules/utilities/main-user.nix
       ./modules/hardware/mounts.nix
 
       ./modules/roles/audio.nix
       ./modules/roles/gaming.nix
+      ./modules/services/security.nix
       ./modules/roles/dev.nix
 
       ./modules/hardware/zfs.nix

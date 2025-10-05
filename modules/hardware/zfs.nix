@@ -41,6 +41,7 @@
 
   environment.systemPackages = [
     pkgs.sanoid
+    pkgs.syncoid
   ];
 
   systemd.services.systemd-udev-settle.enable = true;
