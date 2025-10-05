@@ -69,13 +69,14 @@ in {
 
     services.syncoid = {
       enable = true;
-      replicationJobs."data-active-to-archives" = {
+      jobs."data-active-to-archives" = {
         source = "data/active";
         target = "archives/backups/data-active";
         recursive = true;
         sendOptions = ["--compressed" "--large-block" "--embed"];
       };
     };
+
     systemd.tmpfiles.rules = [
       "L+ /home/${username}/Data - - - - /data/active"
       "L+ /home/${username}/Archives - - - - /archives/media"
