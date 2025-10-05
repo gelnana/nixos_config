@@ -24,11 +24,11 @@
           {
             digitalClock = {
               date = {
-                format.custom = "ddd, MMM dd • yyyy-MM-dd";
-                position = "besideTime";
+                format.custom = "yyyy-MM-dd";
+                position = "aboveTime";
               };
               font = {
-                family = userVars.fonts.names.sansSerif;
+                family = userVars.fonts.names.monospace;
                 size = 8;
               };
             };
