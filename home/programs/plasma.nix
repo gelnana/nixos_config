@@ -29,7 +29,6 @@
               };
             };
           }
-          "org.kde.plasma.systemtray"
           {
             systemTray.items.shown = [
               "org.kde.plasma.battery"
@@ -72,7 +71,10 @@
         pointSize = userVars.fonts.sizes.desktop;
       };
       small = g;
-      toolbar = g;
+      toolbar = {
+        family = userVars.fonts.names.sansSerif;
+        pointSize = 8;
+      };
       menu = g;
       windowTitle = g;
     };
