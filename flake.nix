@@ -98,16 +98,14 @@
 
     commonArgs = createCommonArgs system;
 
-    aliasHmModule = pkgs.lib.mkAliasOptionModule ["hm"] ["home-manager" "users" username];
-
     allModules = [
       inputs.stylix.nixosModules.stylix
       inputs.catppuccin.nixosModules.catppuccin
       inputs.musnix.nixosModules.musnix
       # inputs.impermanence.nixosModules.impermanence
-      inputs.sops-nix.nixosModules.sops
+      # inputs.sops-nix.nixosModules.sops
 
-      ./modules/services/sops.nix
+      # ./modules/services/sops.nix
       ./modules/utilities/system.nix
       ./modules/services/nix.nix
       # ./modules/roles/impermanence.nix
@@ -153,7 +151,6 @@
             else []
           )
           ++ [
-            aliasHmModule
             ./hosts/${hostname}
             ./hosts/${hostname}/hardware.nix
             ./users/${username}/nixos.nix

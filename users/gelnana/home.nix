@@ -40,27 +40,14 @@
     };
 
     # Creative
+    art.enable = true;
     reaper = {
       enable = true;
       enablePlugins = true;
       enableYabridge = true;
     };
 
-    blender.enable = true;
 
-    art = {
-      enable = true;
-      enableKrita = true;
-      enableGimp = true;
-      enableInkscape = true;
-      enableClementine = true;
-      enableLibreOffice = true;
-    };
-
-    video = {
-      enable = true;
-      enableDavinciResolve = true;
-    };
   };
   custom.shell = {
     enable = true;
@@ -72,7 +59,6 @@
       enable = true;
       enableDirenv = true;
       enableFastfetch = true;
-      enableDevTools = true;
     };
 
     nushell = {
