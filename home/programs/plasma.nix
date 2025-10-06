@@ -84,6 +84,12 @@
     configFile = {
       "kwinrc"."Plugins"."blurEnabled" = false;
       "kwinrc"."Plugins"."forceblurEnabled" = true;
+      "kwinrc"."Effect-Round-Corners" = {
+          ActiveOutlineUseCustom = false;
+          ActiveOutlineUsePalette = true;
+          InactiveCornerRadius = 5;
+          Size = 5;
+      };
       "kdeglobals"."General"."TerminalApplication" = userVars.defaultTerminal;
     };
   };
