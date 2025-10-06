@@ -8,7 +8,6 @@
   custom.programs = {
     # Core utilities
     archives.enable = true;
-    communications.enable = true;
     downloads.enable = true;
     organization.enable = true;
 

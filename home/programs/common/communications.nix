@@ -1,18 +1,14 @@
 {
-  lib,
-  pkgs,
-  config,
+  inputs,
   ...
-}: let
-  cfg = config.custom.programs.communications;
-in {
-  options.custom.programs.communications = {
-    enable = lib.mkEnableOption "Enable communication tools";
-  };
-
-  config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      discord
-    ];
-  };
+}:
+{
+  imports = [
+    inputs.nixcord.homeModules.nixcord
+  ];
+    programs.nixcord = {
+      enable = true;
+      vesktop.enable = true;
+      dorion.enable = true;
+    };
 }
