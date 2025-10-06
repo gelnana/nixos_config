@@ -2,7 +2,7 @@
   lib,
   config,
   pkgs,
-  username ? "gelnana",
+  username ? "gel",
   ...
 }: let
   cfg = config.main-user;
@@ -20,12 +20,6 @@ in {
       type = lib.types.package;
       default = pkgs.nushell;
       description = "default shell for the user";
-    };
-
-    initialPassword = lib.mkOption {
-      type = lib.types.str;
-      default = "changeme";
-      description = "initial password";
     };
 
     extraGroups = lib.mkOption {
@@ -50,7 +44,6 @@ in {
   config = lib.mkIf cfg.enable {
     users.users.${cfg.userName} = {
       isNormalUser = true;
-      initialPassword = cfg.initialPassword;
       description = cfg.userName;
       shell = cfg.shell;
       extraGroups = cfg.extraGroups;
