@@ -9,6 +9,6 @@
     programs.nixcord = {
       enable = true;
       vesktop.enable = true;
-      dorion.enable = true;
+      dorion.enable = false;
     };
 }
