@@ -137,7 +137,7 @@ in {
 
         # Media
         "L+ /home/${username}/Pictures - - - - /data/media/pictures"
-        "L+ /home/${username}/Video - - - - /data/media/video"
+        "L+ /home/${username}/Videos - - - - /data/media/video"
         "L+ /home/${username}/Games - - - - /data/media/games"
         "L+ /home/${username}/Music - - - - /data/media/music"
       ]
