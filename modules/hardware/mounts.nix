@@ -27,10 +27,6 @@ in {
           device = "data/active/documents";
           fsType = "zfs";
         };
-        "/data/active/projects" = {
-          device = "data/active/projects";
-          fsType = "zfs";
-        };
         "/data/active/work" = {
           device = "data/active/work";
           fsType = "zfs";
@@ -132,7 +128,7 @@ in {
         "d /data/media/pictures/Screenshots 0755 ${username} users -"
 
         "L+ /home/${username}/Documents - - - - /data/active/documents"
-        "L+ /home/${username}/Projects - - - - /data/active/projects"
+        "L+ /home/${username}/Projects - - - - /data/projects"
         "L+ /home/${username}/Work - - - - /data/active/work"
 
         # Media
