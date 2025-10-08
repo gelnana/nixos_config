@@ -24,7 +24,7 @@
       ./creative/reaper.nix
     ]
     ++ [
-      ./games/launchers.nix
+      ./games/games.nix
     ]
     ++ [
       ./web/firefox.nix
