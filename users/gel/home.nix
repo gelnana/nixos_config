@@ -25,7 +25,7 @@
       enable = true;
     };
 
-    game-launchers = true;
+    games.enable = true;
 
 
     # Media
