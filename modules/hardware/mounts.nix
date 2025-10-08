@@ -121,7 +121,16 @@ in {
 
     systemd.tmpfiles.rules =
       lib.optionals cfg.data [
-        # Active
+        "d /data/active/documents 0755 ${username} users -"
+        "d /data/active/projects 0755 ${username} users -"
+        "d /data/active/work 0755 ${username} users -"
+        "d /data/media/pictures 0755 ${username} users -"
+        "d /data/media/video 0755 ${username} users -"
+        "d /data/media/games 0755 ${username} users -"
+        "d /data/media/music 0755 ${username} users -"
+
+        "d /data/media/pictures/Screenshots 0755 ${username} users -"
+
         "L+ /home/${username}/Documents - - - - /data/active/documents"
         "L+ /home/${username}/Projects - - - - /data/active/projects"
         "L+ /home/${username}/Work - - - - /data/active/work"
@@ -133,6 +142,7 @@ in {
         "L+ /home/${username}/Music - - - - /data/media/music"
       ]
       ++ lib.optionals cfg.archive [
+        "d /archives/media 0755 ${username} users -"
         "L+ /home/${username}/Archives - - - - /archives/media"
       ];
   };
