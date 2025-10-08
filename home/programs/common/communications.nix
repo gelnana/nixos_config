@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -11,4 +12,7 @@
       vesktop.enable = true;
       dorion.enable = false;
     };
+    home.packages = with pkgs; [
+    zoom-us
+  ];
 }
