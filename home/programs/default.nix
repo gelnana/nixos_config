@@ -25,7 +25,6 @@
     ]
     ++ [
       ./games/launchers.nix
-      ./games/modding.nix
     ]
     ++ [
       ./web/firefox.nix

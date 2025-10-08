@@ -25,6 +25,9 @@
       enable = true;
     };
 
+    game-launchers = true;
+
+
     # Media
     media = {
       enable = true;
