@@ -22,7 +22,6 @@ in {
         "/data/active" = {
           device = "data/active";
           fsType = "zfs";
-          options = [ "mountpoint=legacy" ];
         };
         "/data/active/documents" = {
           device = "data/active/documents";
@@ -36,7 +35,6 @@ in {
         "/data/media" = {
           device = "data/media";
           fsType = "zfs";
-          options = [ "mountpoint=legacy" ];
         };
         "/data/media/pictures" = {
           device = "data/media/pictures";
@@ -58,7 +56,6 @@ in {
         "/data/archive" = {
           device = "data/archive";
           fsType = "zfs";
-          options = [ "mountpoint=legacy" ];
         };
       })
 
