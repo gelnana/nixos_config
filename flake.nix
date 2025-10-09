@@ -75,6 +75,11 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-index-database = {
+        url = "github:nix-community/nix-index-database";
+        inputs.nixpkgs.follows = "nixpkgs";
+      }
     # impermanence.url = "github:nix-community/impermanence";
   };
 
@@ -108,6 +113,7 @@
     allModules = [
       inputs.stylix.nixosModules.stylix
       inputs.catppuccin.nixosModules.catppuccin
+      inputs.nix-index-database.nixosModules.nix-index
       inputs.musnix.nixosModules.musnix
       inputs.sops-nix.nixosModules.sops
 
