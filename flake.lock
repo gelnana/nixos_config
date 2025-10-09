@@ -490,6 +490,26 @@
         "type": "github"
       }
     },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759637156,
+        "narHash": "sha256-8NI1SqntLfKl6Q0Luemc3aIboezSJElofUrqipF5g78=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "0ca69684091aa3a6b1fe994c4afeff305b15e915",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
     "nixCats": {
       "locked": {
         "lastModified": 1758545673,
@@ -832,6 +852,7 @@
         "kwin-effects-kinetic": "kwin-effects-kinetic",
         "musnix": "musnix",
         "nix-gaming": "nix-gaming",
+        "nix-index-database": "nix-index-database",
         "nixCats": "nixCats",
         "nixcord": "nixcord",
         "nixos-hardware": "nixos-hardware",

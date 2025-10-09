@@ -49,7 +49,7 @@ in {
     environment.systemPackages = lib.concatLists [
       (
         if cfg.enableKdePackages
-        then [ pkgs.kdePackages.full pkgs.kde-rounded-corners ]
+        then [pkgs.kdePackages.full pkgs.kde-rounded-corners]
         else []
       )
       (
@@ -57,7 +57,6 @@ in {
         then [inputs.kwin-effects-forceblur.packages.${pkgs.system}.default]
         else []
       )
-
     ];
 
     programs.kdeconnect.enable = lib.mkIf cfg.enableKdeconnect true;

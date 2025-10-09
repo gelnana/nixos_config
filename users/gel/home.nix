@@ -27,7 +27,6 @@
 
     games.enable = true;
 
-
     # Media
     media = {
       enable = true;

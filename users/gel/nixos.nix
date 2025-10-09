@@ -14,7 +14,7 @@
     enable = true;
     userName = "gel";
   };
-    users.users.gel = {
-      hashedPasswordFile = config.sops.secrets."gel-password".path;
+  users.users.gel = {
+    hashedPasswordFile = config.sops.secrets."gel-password".path;
   };
 }
