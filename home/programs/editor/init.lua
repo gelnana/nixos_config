@@ -942,9 +942,9 @@ require('lze').load {
 
 {
   "haskell-tools.nvim",
-  enabled = nixCats('haskell') or false,
+  enabled = nixCats('haskell'),
   lazy = false,
-  after = function()
+  config = function()
     local ht = require('haskell-tools')
     
     vim.api.nvim_create_autocmd("FileType", {
