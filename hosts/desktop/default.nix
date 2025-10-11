@@ -37,7 +37,7 @@
     };
 
     # Virtualization
-    virtualization = true;
+    virtualisation.enable = true;
 
     # Services
     ssh = {
