@@ -7,6 +7,7 @@
 }: let
   cfg = config.custom.audio;
 in {
+
   options.custom.audio = {
     enable = lib.mkEnableOption "audio support with PipeWire";
 

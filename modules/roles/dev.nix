@@ -8,6 +8,13 @@
 let
   cfg = config.custom.virtualisation;
 in {
+
+{
+  options.custom.virtualisation = {
+    enable = lib.mkEnableOption "virtualisation support";
+
+  };
+  
   config = lib.mkMerge [
     {
       environment.systemPackages = with pkgs;
