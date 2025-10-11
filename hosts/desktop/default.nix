@@ -36,6 +36,9 @@
       enableJack = false;
     };
 
+    # Virtualization
+    virtualization = true;
+
     # Services
     ssh = {
       enable = true;
