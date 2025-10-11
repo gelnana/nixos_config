@@ -676,37 +676,7 @@ require('lze').load {
   },
 {
   "haskell-tools.nvim",
-  enabled = nixCats('haskell'),
-  lazy = false,
-  after = function()
-    local ht = require('haskell-tools')
-    
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "haskell", "lhaskell" },
-      callback = function()
-        local bufnr = vim.api.nvim_get_current_buf()
-        local opts = { noremap = true, silent = true, buffer = bufnr }
-        
-        vim.keymap.set('n', '<space>cl', vim.lsp.codelens.run, opts)
-        
-        -- Hoogle search for the type signature of the definition under the cursor
-        vim.keymap.set('n', '<space>hs', ht.hoogle.hoogle_signature, opts)
-        
-        vim.keymap.set('n', '<space>ea', ht.lsp.buf_eval_all, opts)
-        
-        vim.keymap.set('n', '<leader>rr', ht.repl.toggle, opts)
-        
-        vim.keymap.set('n', '<leader>rf', function()
-          ht.repl.toggle(vim.api.nvim_buf_get_name(0))
-        end, opts)
-        
-        -- Quit repl
-        vim.keymap.set('n', '<leader>rq', ht.repl.quit, opts)
-        
-        vim.keymap.set('n', '<leader>ht', ht.tags.generate_project_tags, vim.tbl_extend('force', opts, { desc = 'Generate project tags' }))
-      end,
-    })
-  end,
+  lazy = false;
 },
 
 }
