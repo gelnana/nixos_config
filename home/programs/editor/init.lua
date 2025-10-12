@@ -481,6 +481,8 @@ require('lze').load {
         { "<leader>t_", hidden = true },
         { "<leader>w", group = "[w]orkspace" },
         { "<leader>w_", hidden = true },
+        { "<leader>h", group = "[h]askell" },
+        { "<leader>h_", hidden = true },
         { "<leader>l", group = "[l]atex" },
         { "<leader>l_", hidden = true },
       }
@@ -678,43 +680,6 @@ require('lze').load {
     "haskell-tools.nvim",
     enabled = nixCats('haskell') or false,
     lazy = false,
-    after = function()
-    local ht = require('haskell-tools')
-    local bufnr = vim.api.nvim_get_current_buf()
-    local opts = {
-      hls = {
-        on_attach = lsp_on_attach,
-        capabilities = vim.lsp.protocol.make_client_capabilities(),
-        settings = {
-          haskell = {
-            formattingProvider = "ormolu",
-              checkProject = true,
-          }
-        }
-      },
-      tools = {
-        repl = {
-          handler = 'toggleterm',
-          auto_focus = true,
-        },
-        hover = {
-          border = 'rounded',
-        },
-      },
-    }
-
-    ht.start_or_attach(opts)
-
-    local nmap = function(keys, func, desc)
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'Haskell: ' .. desc })
-    end
-
-    nmap('<leader>hs', ht.hoogle.hoogle_signature, '[S]earch signature')
-    nmap('<leader>he', ht.lsp.buf_eval_all, '[E]val buffer')
-    nmap('<leader>ht', ht.repl.toggle, '[T]oggle REPL')
-    nmap('<leader>hq', ht.repl.quit, '[Q]uit REPL')
-    nmap('<leader>hr', ':HsCodeAction<CR>', 'Code [A]ction')
-    end,
   },
 
 }
@@ -763,6 +728,49 @@ local function lsp_on_attach(_, bufnr)
 
 end
 
+  vim.g.haskell_tools = {
+    tools = {
+      repl = {
+        handler = 'builtin',
+      },
+    },
+    hls = {
+      on_attach = lsp_on_attach,
+      settings = {
+        haskell = {
+          formattingProvider = 'ormolu',
+            checkProject = true,
+        },
+      },
+    },
+  }
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "haskell", "lhaskell", "cabal", "cabalproject" },
+    callback = function(event)
+    local ht = require('haskell-tools')
+    local bufnr = event.buf
+
+    vim.keymap.set('n', '<space>cl', vim.lsp.codelens.run, { buffer = bufnr, noremap = true, silent = true, desc = 'Run code lens' })
+
+    vim.keymap.set('n', '<leader>hs', ht.hoogle.hoogle_signature, { buffer = bufnr, desc = 'Haskell: [S]earch signature' })
+
+    vim.keymap.set('n', '<leader>he', ht.lsp.buf_eval_all, { buffer = bufnr, desc = 'Haskell: [E]val all snippets' })
+
+    vim.keymap.set('n', '<leader>hr', ht.repl.toggle, { buffer = bufnr, desc = 'Haskell: Toggle [R]EPL' })
+    vim.keymap.set('n', '<leader>hf', function()
+    ht.repl.toggle(vim.api.nvim_buf_get_name(0))
+    end, { buffer = bufnr, desc = 'Haskell: REPL for [F]ile' })
+    vim.keymap.set('n', '<leader>hq', ht.repl.quit, { buffer = bufnr, desc = 'Haskell: [Q]uit REPL' })
+    vim.keymap.set('n', '<leader>hl', ht.repl.reload, { buffer = bufnr, desc = 'Haskell: Re[l]oad REPL' })
+
+    vim.keymap.set('n', '<leader>ht', ht.repl.cword_type, { buffer = bufnr, desc = 'Haskell: [T]ype' })
+    vim.keymap.set('n', '<leader>hi', ht.repl.cword_info, { buffer = bufnr, desc = 'Haskell: [I]nfo' })
+
+    vim.keymap.set('n', '<leader>hp', ht.project.open_project_file, { buffer = bufnr, desc = 'Haskell: [P]roject file' })
+    vim.keymap.set('n', '<leader>hc', ht.project.open_package_cabal, { buffer = bufnr, desc = 'Haskell: [C]abal file' })
+    vim.keymap.set('n', '<leader>hy', ht.project.open_package_yaml, { buffer = bufnr, desc = 'Haskell: package.[y]aml' })
+    end,
+  })
 -- NOTE: Register a handler from lzextras. This one makes it so that
 -- you can set up lsps within lze specs,
 -- and trigger vim.lsp.enable and the rtp config collection only on the correct filetypes
