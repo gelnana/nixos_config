@@ -674,10 +674,48 @@ require('lze').load {
       })
     end,
   },
-{
-  "haskell-tools.nvim",
-  lazy = false;
-},
+  {
+    "haskell-tools.nvim",
+    enabled = nixCats('haskell') or false,
+    lazy = false,
+    after = function()
+    local ht = require('haskell-tools')
+    local bufnr = vim.api.nvim_get_current_buf()
+    local opts = {
+      hls = {
+        on_attach = lsp_on_attach,
+        capabilities = vim.lsp.protocol.make_client_capabilities(),
+        settings = {
+          haskell = {
+            formattingProvider = "ormolu",
+              checkProject = true,
+          }
+        }
+      },
+      tools = {
+        repl = {
+          handler = 'toggleterm',
+          auto_focus = true,
+        },
+        hover = {
+          border = 'rounded',
+        },
+      },
+    }
+
+    ht.start_or_attach(opts)
+
+    local nmap = function(keys, func, desc)
+    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = 'Haskell: ' .. desc })
+    end
+
+    nmap('<leader>hs', ht.hoogle.hoogle_signature, '[S]earch signature')
+    nmap('<leader>he', ht.lsp.buf_eval_all, '[E]val buffer')
+    nmap('<leader>ht', ht.repl.toggle, '[T]oggle REPL')
+    nmap('<leader>hq', ht.repl.quit, '[Q]uit REPL')
+    nmap('<leader>hr', ':HsCodeAction<CR>', 'Code [A]ction')
+    end,
+  },
 
 }
 
