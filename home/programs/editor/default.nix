@@ -105,11 +105,14 @@ in {
 
           # Haskell
           haskell = with pkgs; [
-            stack
             haskell-language-server
             ormolu
             hlint
             ghc
+            cabal-install
+            haskellPackages.fast-tags
+            haskellPackages.haskell-debug-adapter
+            haskellPackages.ghci-dap
             haskellPackages.hoogle
           ];
 
