@@ -45,7 +45,7 @@
       enableX11Forwarding = false;
     };
 
-    custom.vpn = {
+    vpn = {
       enable = true;
       autoStart = true;
       enableCLI = true;

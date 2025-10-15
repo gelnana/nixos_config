@@ -121,7 +121,7 @@
       ./modules/core/users.nix
       ./modules/core/security.nix
 
-      ./modules/hardware/common.nix
+      ./modules/hardware/hardware.nix
       ./modules/hardware/storage/zfs.nix
       ./modules/hardware/storage/mounts.nix
       ./modules/hardware/bluetooth.nix
