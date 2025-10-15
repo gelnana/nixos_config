@@ -115,28 +115,28 @@
       inputs.musnix.nixosModules.musnix
       inputs.sops-nix.nixosModules.sops
 
-      ./modules/services/sops.nix
-      ./modules/utilities/system.nix
-      ./modules/services/nix.nix
-      ./modules/utilities/main-user.nix
-      ./modules/hardware/mounts.nix
+      ./modules/core/system.nix
+      ./modules/core/nix.nix
+      ./modules/core/sops.nix
+      ./modules/core/users.nix
+      ./modules/core/security.nix
 
-      ./modules/roles/audio.nix
-      ./modules/roles/gaming.nix
-      ./modules/services/security.nix
-      ./modules/roles/dev.nix
-
-      ./modules/hardware/zfs.nix
-      ./modules/hardware/hardware.nix
+      ./modules/hardware/common.nix
+      ./modules/hardware/storage/zfs.nix
+      ./modules/hardware/storage/mounts.nix
       ./modules/hardware/bluetooth.nix
       ./modules/hardware/laptop.nix
 
-      ./modules/services/ssh.nix
-      ./modules/services/soulseek.nix
-      ./modules/services/plasma.nix
+      ./modules/networking/vpn.nix
+      ./modules/networking/ssh.nix
 
-      ./modules/utilities/catppuccin.nix
-      ./modules/utilities/stylix.nix
+      ./modules/desktop/plasma.nix
+      ./modules/desktop/theme/catppuccin.nix
+      ./modules/desktop/theme/stylix.nix
+
+      ./modules/features/audio.nix
+      ./modules/features/dev.nix
+      ./modules/features/gaming.nix
     ];
 
     homeManagerModule = {

@@ -44,6 +44,12 @@
       enableX11Forwarding = false;
     };
 
+    custom.vpn = {
+      enable = true;
+      autoStart = true;
+      enableCLI = true;
+    };
+
     zfs.storage = {
       enable = true;
       data = true;
