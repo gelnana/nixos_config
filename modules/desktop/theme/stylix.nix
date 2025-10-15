@@ -14,7 +14,7 @@ in {
     polarity = "dark";
 
     # Wallpaper
-    image = self + "/wallpapers/2.jpg";
+    image = self + "/wallpapers/2.png";
 
     # Base16 scheme: Catppuccin Mocha
     base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
