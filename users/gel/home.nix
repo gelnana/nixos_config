@@ -5,6 +5,9 @@
     ../../home/shell
   ];
   # Enable programs
+  stylix.enable = true;
+  stylix.autoEnable = true;
+
   custom.programs = {
     # Core utilities
     archives.enable = true;
