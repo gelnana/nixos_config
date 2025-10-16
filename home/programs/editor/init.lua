@@ -1120,7 +1120,10 @@ require('lze').load {
     })
   end,
 },
-
+{
+  "zotcite",
+  enabled = nixCats('writing') or false,
+},
 -- LSP configurations for LaTeX
 {
   "texlab",

@@ -250,6 +250,7 @@ in {
           writing = with pkgs.vimPlugins; [
             render-markdown-nvim
             vimtex
+            zotcite
             texpresso-vim
           ];
 
@@ -324,7 +325,7 @@ in {
             # unwrappedCfgPath = "/path/to/here";
             # IMPORTANT:
             # your alias may not conflict with your other packages.
-            aliases = ["vim" "homeVim"];
+            aliases = ["vim" "nVim"];
             # neovim-unwrapped = inputs.neovim-nightly-overlay.packages.${pkgs.system}.neovim;
             hosts.python3.enable = true;
             hosts.node.enable = true;
