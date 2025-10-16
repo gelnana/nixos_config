@@ -17,11 +17,10 @@ in {
       statix
       deadnix
       ripgrep
-      yq
+      yq-go
       htop
       jupyter
       papis
-      yq
     ];
   };
 }
