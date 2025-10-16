@@ -20,7 +20,7 @@ in {
       yq
       htop
       jupyter
-      papi
+      papis
       yq
     ];
   };
