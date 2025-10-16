@@ -9,7 +9,6 @@ in {
   options.custom.programs.utils = {
     enable = lib.mkEnableOption "Utilities";
   };
-
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
       devenv
@@ -21,6 +20,8 @@ in {
       yq
       htop
       jupyter
+      papi
+      yq
     ];
   };
 }

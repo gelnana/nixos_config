@@ -143,7 +143,6 @@ in {
           database = with pkgs; [
             sqlite
             postgresql
-            # sqls  # SQL language server
           ];
 
           # Documentation and writing
@@ -224,6 +223,7 @@ in {
 
           # Database
           database = with pkgs.vimPlugins; [
+            sqlite-lua
             vim-dadbod
             vim-dadbod-ui
             vim-dadbod-completion
@@ -251,6 +251,7 @@ in {
             render-markdown-nvim
             vimtex
             texpresso-vim
+            papis-nvim
           ];
 
           general = with pkgs.vimPlugins; [

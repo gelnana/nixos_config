@@ -1120,6 +1120,17 @@ require('lze').load {
     })
   end,
 },
+
+{
+  "papis.nvim",
+  enabled = nixCats('writing') or false,
+  after = function()
+    require('papis').setup({
+      enable_keymaps = true,
+    })
+  end,
+},
+
 -- LSP configurations for LaTeX
 {
   "texlab",

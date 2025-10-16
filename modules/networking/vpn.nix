@@ -28,10 +28,10 @@ in {
       package = pkgs.mullvad-vpn;
     };
 
-    boot.kernelModules = [ "tun" ];
+    boot.kernelModules = ["tun"];
 
     systemd.services.mullvad-daemon = lib.mkIf cfg.autoStart {
-      wantedBy = [ "multi-user.target" ];
+      wantedBy = ["multi-user.target"];
     };
 
     environment.systemPackages = with pkgs; [
