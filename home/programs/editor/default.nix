@@ -250,7 +250,6 @@ in {
           writing = with pkgs.vimPlugins; [
             render-markdown-nvim
             vimtex
-            zotcite
             texpresso-vim
           ];
 
