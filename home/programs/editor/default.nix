@@ -185,6 +185,7 @@ in {
             nui-nvim
             plenary-nvim
             nvim-web-devicons
+            yazi-nvim
           ];
         };
 

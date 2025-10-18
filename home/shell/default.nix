@@ -13,6 +13,7 @@ in {
     ./nushell
     ./starship.nix
     ./terminals.nix
+    ./yazi.nix
   ];
 
   options.custom.shell = {

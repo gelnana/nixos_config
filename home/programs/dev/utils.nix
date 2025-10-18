@@ -17,10 +17,10 @@ in {
       statix
       deadnix
       ripgrep
+      duckdb
       yq-go
       htop
       papis
-      yazi
     ];
   };
 }
