@@ -21,7 +21,7 @@ in {
 
     defaultEditor = lib.mkOption {
       type = lib.types.str;
-      default = "neovim";
+      default = "nvim";
       description = "Default editor";
     };
 
