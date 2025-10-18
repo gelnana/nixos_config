@@ -50,6 +50,8 @@ in {
         vi = "neovim";
         vim = "neovim";
         nvim = "neovim";
+        # development environments
+        jupdev = "nix-shell -p 'python3.withPackages(ps: with ps; [ numpy pandas jupyter euporie ])'"
       };
     };
 

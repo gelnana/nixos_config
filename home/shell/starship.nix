@@ -35,6 +35,7 @@ in {
       enableBashIntegration = cfg.enableBash;
       enableZshIntegration = cfg.enableZsh;
       enableNushellIntegration = cfg.enableNushell;
+      presets = ["jetpack"];
 
       settings = {
         character = {

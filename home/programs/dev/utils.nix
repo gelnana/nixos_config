@@ -19,8 +19,8 @@ in {
       ripgrep
       yq-go
       htop
-      jupyter
       papis
+      yazi
     ];
   };
 }
