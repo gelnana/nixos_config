@@ -79,7 +79,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    
     # impermanence.url = "github:nix-community/impermanence";
   };
 

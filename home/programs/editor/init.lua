@@ -166,6 +166,11 @@ require("snacks").setup({
   gitbrowse = {},
   scope = {},
 })
+
+-- file manager
+vim.keymap.set("n", "~", function()
+  require("yazi").yazi()
+end)
 vim.keymap.set("n", "-", function() Snacks.explorer.open() end, { desc = 'Snacks Explorer' })
 vim.keymap.set("n", "<c-\\>", function() Snacks.terminal.open() end, { desc = 'Snacks Terminal' })
 vim.keymap.set("n", "<leader>_", function() Snacks.lazygit.open() end, { desc = 'Snacks LazyGit' })
