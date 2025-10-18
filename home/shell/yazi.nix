@@ -10,6 +10,7 @@
       mount = pkgs.yaziPlugins.mount;
       git = pkgs.yaziPlugins.git;
       lazygit = pkgs.yaziPlugins.lazygit;
+      projects = pkgs.yaziPlugins.projects;
       ouch = pkgs.yaziPlugins.ouch;
       chmod = pkgs.yaziPlugins.chmod;
       starship = pkgs.yaziPlugins.starship;
