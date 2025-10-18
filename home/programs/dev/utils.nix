@@ -19,8 +19,11 @@ in {
       ripgrep
       duckdb
       yq-go
+      yt-dlp
       htop
       papis
+      ouch
+      lazygit
     ];
   };
 }

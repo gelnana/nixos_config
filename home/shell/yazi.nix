@@ -9,12 +9,20 @@
     plugins = {
       mount = pkgs.yaziPlugins.mount;
       git = pkgs.yaziPlugins.git;
+      lazygit = pkgs.yaziPlugins.lazygit;
       ouch = pkgs.yaziPlugins.ouch;
       chmod = pkgs.yaziPlugins.chmod;
       starship = pkgs.yaziPlugins.starship;
       zfs = pkgs.yaziPlugins.time-travel;
       duckdb = pkgs.yaziPlugins.duckdb;
     };
+
+    initLua = ''
+	require("starship"):setup()
+	require("projects"):setup()
+	require("git"):setup()
+	require("duckdb"):setup()
+    '';
 
     enableBashIntegration = true;
     enableZshIntegration = true;
